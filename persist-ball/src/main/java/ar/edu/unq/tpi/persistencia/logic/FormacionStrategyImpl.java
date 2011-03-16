@@ -1,17 +1,21 @@
 package ar.edu.unq.tpi.persistencia.logic;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.text.Position;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
+import ar.edu.unq.tpi.persistencia.bean.Titular;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.FormacionStrategy;
 
 public class FormacionStrategyImpl implements FormacionStrategy{
-	private List<Posicion> posicion;
+	private List<Posicion> posiciones;
 	private List<Jugador> jugadores;
+	
+	public FormacionStrategyImpl(List<Posicion> posiciones) {
+		this.setPosiciones(posiciones);
+	}
 	
 	public Jugador mejorJugador(Posicion posicion){
 		Jugador jugadorMax = null;
@@ -30,32 +34,33 @@ public class FormacionStrategyImpl implements FormacionStrategy{
 		return jugadorMax;
 	}
 
-	protected void crearPosEquipoTitular(){
-		this.getPosicion().add(Posicion.ARQUERO);
-		this.getPosicion().add(Posicion.VOLANTE_DEFENCIVO);
-		this.getPosicion().add(Posicion.VOLANTE_DEFENCIVO);
-		this.getPosicion().add(Posicion.MEDIA_PUNTA);
-		this.getPosicion().add(Posicion.MEDIA_PUNTA);
-		this.getPosicion().add(Posicion.CENTRAL);
-		this.getPosicion().add(Posicion.DELANTERO);
-		this.getPosicion().add(Posicion.DELANTERO);
-		this.getPosicion().add(Posicion.ENGANCHE);
-		this.getPosicion().add(Posicion.VOLANTE_LATERAL);
-		this.getPosicion().add(Posicion.VOLANTE_LATERAL);
+	protected List<Titular> armarTitulares(){
+		List<Titular> titulares = new ArrayList<Titular>();
+		for (Posicion posicion : this.getPosiciones()) {
+			titulares.add(new Titular(this.mejorJugador(posicion), posicion));
+		}
+		return  titulares;
 	}
 	
 	@Override
 	public Formacion armarFormacion(Equipo equipo) {
-		return null;
+		this.jugadores = equipo.getJugadores();
+		Formacion formacion = new Formacion();
+		formacion.setEquipo(equipo);
+		formacion.setTitulares(this.armarTitulares());
+		formacion.setSuplentes(this.jugadores);
+		
+		return formacion;
 	}
 
-	public void setPosicion(List<Posicion> posicion) {
-		this.posicion = posicion;
+	public void setPosiciones(List<Posicion> posiciones) {
+		this.posiciones = posiciones;
 	}
 
-	public List<Posicion> getPosicion() {
-		return posicion;
+	public List<Posicion> getPosiciones() {
+		return posiciones;
 	}
+
 
 
 }

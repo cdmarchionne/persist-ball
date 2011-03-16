@@ -8,13 +8,27 @@ public class Tecnico implements Nombrable{
 	
 	private FormacionStrategy formacionStrategy;
 	
+	
+	public Tecnico(FormacionStrategy formacionStrategy) {
+		this.formacionStrategy = formacionStrategy;				
+	}
+	
 	@Override
 	public String getNombre() {
+		//FIXME
 		return null;
 	}
 
 	public Formacion armarFormacion(Equipo equipo) {
-		return formacionStrategy.armarFormacion(equipo);
+		return getFormacionStrategy().armarFormacion(equipo);
+	}
+
+	public void setFormacionStrategy(FormacionStrategy formacionStrategy) {
+		this.formacionStrategy = formacionStrategy;
+	}
+
+	public FormacionStrategy getFormacionStrategy() {
+		return formacionStrategy;
 	}
 
 }

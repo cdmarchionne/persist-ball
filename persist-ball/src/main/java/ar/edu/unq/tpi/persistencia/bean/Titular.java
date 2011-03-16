@@ -7,6 +7,10 @@ public class Titular {
 	private Posicion posicion;
 	
 	
+	public Titular(Jugador jugador, Posicion posicion2) {
+		this.jugador = jugador;
+		this.posicion = posicion2;
+	}
 	public void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
 	}
