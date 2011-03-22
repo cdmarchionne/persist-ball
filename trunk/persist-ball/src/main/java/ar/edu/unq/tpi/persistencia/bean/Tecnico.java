@@ -7,16 +7,18 @@ import ar.edu.unq.tpi.persistencia.logic.Formacion;
 public class Tecnico implements Nombrable{
 	
 	private FormacionStrategy formacionStrategy;
+	private String nombre;
 	
+	public Tecnico() {
+	}
 	
-	public Tecnico(FormacionStrategy formacionStrategy) {
+	public Tecnico(FormacionStrategy formacionStrategy, String nombre) {
 		this.formacionStrategy = formacionStrategy;				
 	}
 	
 	@Override
 	public String getNombre() {
-		//FIXME
-		return null;
+		return nombre;
 	}
 
 	public Formacion armarFormacion(Equipo equipo) {
