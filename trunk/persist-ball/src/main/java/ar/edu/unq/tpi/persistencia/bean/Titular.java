@@ -24,4 +24,35 @@ public class Titular {
 		return jugador;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((jugador == null) ? 0 : jugador.hashCode());
+		result = prime * result
+		+ ((posicion == null) ? 0 : posicion.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Titular other = (Titular) obj;
+		if (jugador == null) {
+			if (other.jugador != null)
+				return false;
+		} else if (!jugador.equals(other.jugador))
+			return false;
+		if (posicion != other.posicion)
+			return false;
+		return true;
+	}
+	
+	public String toString(){
+		return "Jugador: " + this.jugador.getNombre() + " Pos: " + this.posicion ;
+	}
 }
