@@ -9,6 +9,10 @@ import org.junit.Test;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
 
+/**
+ * @author Ronny
+ *
+ */
 public class TestJugador {
     
     
