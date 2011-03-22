@@ -39,7 +39,7 @@ public class FormacionStrategyImpl implements FormacionStrategy{
 		for (Posicion posicion : this.getPosiciones()) {
 			titulares.add(new Titular(this.mejorJugador(posicion), posicion));
 		}
-		return  titulares;
+		return titulares;
 	}
 	
 	@Override
