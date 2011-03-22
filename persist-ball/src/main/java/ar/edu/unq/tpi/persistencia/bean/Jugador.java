@@ -9,12 +9,20 @@ import ar.edu.unq.tpi.persistencia.interfaces.Nombrable;
 
 public class Jugador implements Nombrable{
 	private List<Habilidad> habilidades = new ArrayList<Habilidad>();
+	private String nombre;
 
 	@Override
 	public String getNombre() {
 		return null;
 	}
 	
+	public Jugador(){}
+	
+	public Jugador(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
+
 	public void addHabilidad(Habilidad habilidad){
 		this.getHabilidades().add(habilidad);
 	}

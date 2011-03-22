@@ -5,6 +5,7 @@ import java.util.List;
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
 import ar.edu.unq.tpi.persistencia.bean.Titular;
+import ar.edu.unq.tpi.utils.ListUtils;
 
 public class Formacion {
 	private List<Titular> titulares;
@@ -29,5 +30,9 @@ public class Formacion {
 	public void setEquipo(Equipo equipo) {
 		this.equipo = equipo;
 	}
-
+	
+	@Override
+	public boolean equals(Object obj) {
+		return ListUtils.compareLists(this.titulares, ((Formacion) obj).getTitulares());
+	}
 }

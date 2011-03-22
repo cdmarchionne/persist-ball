@@ -3,8 +3,7 @@ package ar.edu.unq.tpi.persistencia.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +39,7 @@ public class TestFormacionStrategyImpl {
 		
 		formacionStrategy = new FormacionStrategyImpl(strategyPosiciones);
 		
-		tecnico = new Tecnico(formacionStrategy);
+		tecnico = new Tecnico(formacionStrategy,"");
 		
 		List<Habilidad> habs1 = new ArrayList<Habilidad>();
 		habA1 = new HabilidadImpl(Posicion.ARQUERO, 10); //
@@ -49,7 +48,7 @@ public class TestFormacionStrategyImpl {
 		habs1.add(habA1);
 		habs1.add(habC1);
 		habs1.add(habD1);
-		jugador1 = new Jugador();
+		jugador1 = new Jugador("player1");
 		jugador1.setHabilidades(habs1);
 		
 		List<Habilidad> habs2 = new ArrayList<Habilidad>();
@@ -59,7 +58,7 @@ public class TestFormacionStrategyImpl {
 		habs2.add(habA2);
 		habs2.add(habC2);
 		habs2.add(habD2);
-		jugador2 = new Jugador();
+		jugador2 = new Jugador("player2");
 		jugador2.setHabilidades(habs2);
 		
 		List<Habilidad> habs3 = new ArrayList<Habilidad>();
@@ -69,7 +68,7 @@ public class TestFormacionStrategyImpl {
 		habs3.add(habA3);
 		habs3.add(habC3);
 		habs3.add(habD3);
-		jugador3 = new Jugador();
+		jugador3 = new Jugador("player3");
 		jugador3.setHabilidades(habs3);
 		
 		List<Habilidad> habs4 = new ArrayList<Habilidad>();
@@ -79,7 +78,7 @@ public class TestFormacionStrategyImpl {
 		habs4.add(habA4);
 		habs4.add(habC4);
 		habs4.add(habD4);
-		jugador4 = new Jugador();
+		jugador4 = new Jugador("player4");
 		jugador4.setHabilidades(habs4);
 		
 		List<Habilidad> habs5 = new ArrayList<Habilidad>();
@@ -89,7 +88,7 @@ public class TestFormacionStrategyImpl {
 		habs5.add(habA5);
 		habs5.add(habC5);
 		habs5.add(habD5);
-		jugador5 = new Jugador();
+		jugador5 = new Jugador("player5");
 		jugador5.setHabilidades(habs5);
 		
 		List<Habilidad> habs6 = new ArrayList<Habilidad>();
@@ -99,7 +98,7 @@ public class TestFormacionStrategyImpl {
 		habs6.add(habA6);
 		habs6.add(habC6);
 		habs6.add(habD6);
-		jugador6 = new Jugador();
+		jugador6 = new Jugador("player6");
 		jugador6.setHabilidades(habs6);
 		
 		List<Jugador> jugadoresDelEquipo = new ArrayList<Jugador>();
@@ -133,7 +132,10 @@ public class TestFormacionStrategyImpl {
 		formacionEsperada.setSuplentes(suplentesEsperados);
 		formacionEsperada.setEquipo(equipo);
 		
-		Assert.assertEquals(formacionEsperada.getTitulares(),mejorFormacion.getTitulares());
+		System.out.println(mejorFormacion.getTitulares());
+		System.out.println(formacionEsperada.getTitulares());
+		
+		Assert.assertEquals(mejorFormacion, formacionEsperada);
 		
 	}
 }
