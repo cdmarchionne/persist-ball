@@ -14,7 +14,7 @@ public class TestEquipo {
 	@Before
 	public void setUp(){
 		tecnico = mock(Tecnico.class);
-		equipo = new Equipo(tecnico);
+		equipo = new Equipo(tecnico, "Equipo1");
 	}
 	
 	@Test

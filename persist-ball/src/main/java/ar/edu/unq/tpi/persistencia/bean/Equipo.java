@@ -10,19 +10,21 @@ public class Equipo implements Nombrable{
 	
 	private Tecnico tecnico;
 	private List<Jugador> jugadores = new ArrayList<Jugador>();
+	private String nombre;
 	
 	public Equipo() {
 	}
 
-	public Equipo(Tecnico tecnico) {
+	public Equipo(Tecnico tecnico, String nombre) {
 		this();
+		this.nombre = nombre;
 		this.tecnico = tecnico;
 	}
 	
 
 	@Override
 	public String getNombre() {
-		return null;
+		return nombre;
 	}
 
 	public Formacion armarFormacion() {
