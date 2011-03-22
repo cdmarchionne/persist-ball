@@ -13,6 +13,7 @@ import ar.edu.unq.tpi.persistencia.bean.Tecnico;
 import ar.edu.unq.tpi.persistencia.bean.Titular;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
+import ar.edu.unq.tpi.utils.ListUtils;
 
 public class TestFormacionStrategyImpl {
 	
@@ -138,4 +139,11 @@ public class TestFormacionStrategyImpl {
 		Assert.assertEquals(mejorFormacion, formacionEsperada);
 		
 	}
+	
+	@Test
+	public void testFormacionTitularesNoEnSuplentes(){
+		
+		Assert.assertTrue(ListUtils.titularesNoEnSuplentes(tecnico.armarFormacion(equipo)));
+	}
+	
 }
