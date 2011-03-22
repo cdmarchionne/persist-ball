@@ -7,7 +7,13 @@ public class HabilidadImpl implements Habilidad {
 	private Posicion posicion;
 	private int valor;
 
+	public HabilidadImpl(){}
 	
+	public HabilidadImpl(Posicion posicion, int valor) {
+		this.posicion = posicion;
+		this.valor = valor;
+	}
+
 	@Override
 	public int getValor(Posicion posicion) {
 	    if(this.posicion.equals(posicion)){
