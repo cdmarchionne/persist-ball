@@ -10,13 +10,11 @@ import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
 
 /**
- * @author Ronny
  *
  */
 public class TestJugador {
-    
-    
-    private Jugador jugador;
+
+	private Jugador jugador;
     private Posicion posicion;
     private Habilidad habilidad;
     
@@ -29,16 +27,16 @@ public class TestJugador {
     
     @Test
     public void getValorHabilidad(){
-    	Assert.assertSame("Error ", 0, jugador.getValorHabilidad(posicion));
+    	Assert.assertSame("Error el No tiene esa habilidad ", 0, jugador.getValorHabilidad(posicion));
     	jugador.addHabilidad(habilidad);
-        Assert.assertSame("Error ", 4, jugador.getValorHabilidad(posicion));
+        Assert.assertSame("Error El jugador tiene esa habilidad", 4, jugador.getValorHabilidad(posicion));
     }
     
     @Test
     public void addHabilidad(){
-    	Assert.assertFalse("", jugador.getHabilidades().contains(habilidad));
+    	Assert.assertFalse("Error: El jugador no tiene esa habilidad ", jugador.getHabilidades().contains(habilidad));
     	jugador.addHabilidad(habilidad);
-    	Assert.assertTrue("", jugador.getHabilidades().contains(habilidad));
+    	Assert.assertTrue("Error: el jugador tiene esa habilidad", jugador.getHabilidades().contains(habilidad));
     }
 
 }
