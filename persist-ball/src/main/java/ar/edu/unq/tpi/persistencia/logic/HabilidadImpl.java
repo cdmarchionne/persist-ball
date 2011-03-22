@@ -10,6 +10,9 @@ public class HabilidadImpl implements Habilidad {
 	
 	@Override
 	public int getValor(Posicion posicion) {
+	    if(this.posicion.equals(posicion)){
+	        return valor;
+	    }
 		return 0;
 	}
 

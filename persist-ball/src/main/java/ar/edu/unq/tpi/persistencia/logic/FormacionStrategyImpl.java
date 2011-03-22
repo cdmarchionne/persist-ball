@@ -25,7 +25,7 @@ public class FormacionStrategyImpl implements FormacionStrategy{
 			jugadorMax=this.jugadores.get(0);
 		
 			for (Jugador jugador : this.jugadores) {
-				if (jugador.getValor(posicion) > jugadorMax.getValor(posicion) ){
+				if (jugador.getValorHabilidad(posicion) > jugadorMax.getValorHabilidad(posicion) ){
 					jugadorMax=jugador;
 				}
 			}
