@@ -133,7 +133,7 @@ public class TestFormacionStrategyImpl {
 		formacionEsperada.setSuplentes(suplentesEsperados);
 		formacionEsperada.setEquipo(equipo);
 		
-		Assert.assertEquals(mejorFormacion, formacionEsperada);
+		Assert.assertEquals(titularesEsperados, formacionEsperada.getTitulares());
 		
 	}
 }
