@@ -15,22 +15,26 @@ public class Jugador implements Nombrable{
 		return null;
 	}
 	
-	public List<Habilidad> getHabilidades(){
-		return this.habilidades;
-	}
-	
-	public void setHabilidades(List<Habilidad> habs){
-		this.habilidades = habs;
+	public void addHabilidad(Habilidad habilidad){
+		this.getHabilidades().add(habilidad);
 	}
 	
 	public int getValorHabilidad(Posicion posicion) {
 	    int max=0;
-	    for (Habilidad habilidad : this.habilidades) {
+	    for (Habilidad habilidad : this.getHabilidades()) {
 	        if(habilidad.getValor(posicion) > max){
 	            max= habilidad.getValor(posicion);
 	        }
         }
 		return max;
+	}
+
+	public void setHabilidades(List<Habilidad> habilidades) {
+		this.habilidades = habilidades;
+	}
+
+	public List<Habilidad> getHabilidades() {
+		return habilidades;
 	}
 
 }
