@@ -17,6 +17,30 @@ public class PartidoCopa extends Partido {
 	}
 
 	public Equipo getGanador(){
+//		Equipo ganadorIda,ganadorVuelta;
+//		int puntajeEquipo1=0;
+//		
+//		ganadorIda= this.partidoIda.getGanador();
+//		ganadorVuelta= this.partidoVuelta.getGanador();
+//		
+//		if (ganadorIda==this.getEquipo1()){
+//			puntajeEquipo1+=2;
+//		}
+//		else if (ganadorIda==null){
+//				puntajeEquipo1+=1;
+//			}
+//
+//		if (ganadorVuelta==this.getEquipo1()){
+//			puntajeEquipo1+=2;
+//		}
+//		else if (ganadorVuelta==null){
+//				puntajeEquipo1+=1;
+//			}
+//		
+//
+//		
+//		
+//		golesEquipo1=getPartidoIda().getGolesEquipo1()
 		return null;
 	}
 
