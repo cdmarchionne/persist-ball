@@ -13,7 +13,7 @@ public class Jugador implements Nombrable{
 
 	@Override
 	public String getNombre() {
-		return null;
+		return nombre;
 	}
 	
 	public Jugador(){}
