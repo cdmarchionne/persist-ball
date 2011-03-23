@@ -13,7 +13,7 @@ import ar.edu.unq.tpi.persistencia.bean.Tecnico;
 import ar.edu.unq.tpi.persistencia.bean.Titular;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
-import ar.edu.unq.tpi.utils.ListUtils;
+import ar.edu.unq.tpi.persistencia.utils.ListUtils;
 
 public class TestFormacionStrategyImpl {
 	
@@ -133,11 +133,7 @@ public class TestFormacionStrategyImpl {
 		formacionEsperada.setSuplentes(suplentesEsperados);
 		formacionEsperada.setEquipo(equipo);
 		
-		System.out.println(mejorFormacion.getTitulares());
-		System.out.println(formacionEsperada.getTitulares());
-		
-		Assert.assertEquals(mejorFormacion, formacionEsperada);
-		
+		Assert.assertTrue(ListUtils.compareLists(formacionEsperada.getTitulares(),mejorFormacion.getTitulares()));
 	}
 	
 	@Test

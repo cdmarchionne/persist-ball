@@ -1,4 +1,4 @@
-package ar.edu.unq.tpi.utils;
+package ar.edu.unq.tpi.persistencia.utils;
 
 import java.util.List;
 
