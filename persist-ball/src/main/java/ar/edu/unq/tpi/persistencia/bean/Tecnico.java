@@ -15,7 +15,7 @@ public class Tecnico implements Nombrable{
 	public Tecnico(FormacionStrategy formacionStrategy, String nombre) {
 		this.formacionStrategy = formacionStrategy;				
 	}
-	
+	 
 	@Override
 	public String getNombre() {
 		return nombre;
