@@ -32,9 +32,11 @@ public class PartidoCopa extends Partido {
     
     public void jugarPartidoIda(){
     	partidoIda = buildPartido();
+    	partidoIda.jugarPartido();
     }
     public void jugarPartidoVuelta(){
     	partidoVuelta = buildPartido();
+    	partidoVuelta.jugarPartido();
         if(golesEquipo1() == golesEquipo2()){
         	jugoPenales = true;
         	irAPenales();
@@ -56,8 +58,7 @@ public class PartidoCopa extends Partido {
 	}
 
 	protected PartidoSimple buildPartido() {
-		return new PartidoSimple(getEquipo1().armarFormacion(), getEquipo2().armarFormacion(),
-    				(int)Math.random()*10, (int)Math.random()*10);
+		return new PartidoSimple(getEquipo1().armarFormacion(), getEquipo2().armarFormacion());
 	}
 
     public PartidoSimple getPartidoIda() {
