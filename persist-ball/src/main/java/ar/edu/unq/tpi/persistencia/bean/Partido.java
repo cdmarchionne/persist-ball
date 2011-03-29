@@ -1,7 +1,8 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-public abstract class Partido {
-
+public abstract class Partido extends Entity{
+	private static final long serialVersionUID = 1L;
+	
 	private Equipo equipo1,equipo2;
 	
 	public abstract Equipo getGanador();

@@ -7,7 +7,7 @@ import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
 import ar.edu.unq.tpi.persistencia.interfaces.Nombrable;
 
-public class Jugador implements Nombrable{
+public class Jugador extends Entity implements Nombrable{
 	private List<Habilidad> habilidades = new ArrayList<Habilidad>();
 	private String nombre;
 
