@@ -19,7 +19,7 @@ public class PartidoCopa extends Partido {
 
     @Override
     public Equipo getGanador() {
-        private int golesEquipo1, golesEquipo2;
+        int golesEquipo1, golesEquipo2;
 
         golesEquipo1 = partidoIda.getGolesEquipo1() + partidoVuelta.getGolesEquipo1();
         golesEquipo2 = partidoIda.getGolesEquipo2() + partidoVuelta.getGolesEquipo2();
@@ -34,30 +34,6 @@ public class PartidoCopa extends Partido {
             return this.getEquipo2();
 
         return null;
-        // Equipo ganadorIda,ganadorVuelta;
-        // int puntajeEquipo1=0;
-        //
-        // ganadorIda= this.partidoIda.getGanador();
-        // ganadorVuelta= this.partidoVuelta.getGanador();
-        //
-        // if (ganadorIda==this.getEquipo1()){
-        // puntajeEquipo1+=2;
-        // }
-        // else if (ganadorIda==null){
-        // puntajeEquipo1+=1;
-        // }
-        //
-        // if (ganadorVuelta==this.getEquipo1()){
-        // puntajeEquipo1+=2;
-        // }
-        // else if (ganadorVuelta==null){
-        // puntajeEquipo1+=1;
-        // }
-        //
-        //
-        //
-        //
-        // golesEquipo1=getPartidoIda().getGolesEquipo1()
     }
 
     public PartidoSimple getPartidoIda() {
