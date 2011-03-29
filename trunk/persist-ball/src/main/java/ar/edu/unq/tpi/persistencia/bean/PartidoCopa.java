@@ -5,36 +5,60 @@ public class PartidoCopa extends Partido {
 
     private int golesPenalesEquipo1, golesPenalesEquipo2;
 
+	private boolean jugoPenales = false;
+
     public PartidoCopa() {
     }
 
-    public PartidoCopa(final PartidoSimple partidoIda, final PartidoSimple partidoVuelta,
-            final int golesPenalesEquipo1, final int golesPenalesEquipo2) {
+    public PartidoCopa(Equipo equipo1, Equipo equipo2) {
         super();
-        this.partidoIda = partidoIda;
-        this.partidoVuelta = partidoVuelta;
-        this.golesPenalesEquipo1 = golesPenalesEquipo1;
-        this.golesPenalesEquipo2 = golesPenalesEquipo2;
+        this.setEquipo1(equipo1);
+        this.setEquipo2(equipo2);
     }
 
     @Override
     public Equipo getGanador() {
-        int golesEquipo1, golesEquipo2;
 
-        golesEquipo1 = partidoIda.getGolesEquipo1() + partidoVuelta.getGolesEquipo1();
-        golesEquipo2 = partidoIda.getGolesEquipo2() + partidoVuelta.getGolesEquipo2();
-
-        if (golesEquipo1 > golesEquipo2)
+        if(jugoPenales){
+	        if (golesPenalesEquipo1 > golesPenalesEquipo2)
+	        	return this.getEquipo1();
+	        else
+	        	return this.getEquipo2();
+        }else if (golesEquipo1() > golesEquipo2())
             return this.getEquipo1();
-        else if (golesEquipo1 < golesEquipo2)
+        else         
             return this.getEquipo2();
-        else if (golesPenalesEquipo1 > golesPenalesEquipo2)
-            return this.getEquipo1();
-        else if (golesPenalesEquipo1 < golesPenalesEquipo2)
-            return this.getEquipo2();
-
-        return null;
     }
+    
+    public void jugarPartidoIda(){
+    	partidoIda = buildPartido();
+    }
+    public void jugarPartidoVuelta(){
+    	partidoVuelta = buildPartido();
+        if(golesEquipo1() == golesEquipo2()){
+        	jugoPenales = true;
+        	irAPenales();
+        }
+    }
+
+	protected int golesEquipo2() {
+		return partidoIda.getGolesEquipo2() + partidoVuelta.getGolesEquipo2();
+	}
+
+	protected int golesEquipo1() {
+		return partidoIda.getGolesEquipo1() + partidoVuelta.getGolesEquipo1();
+	}
+
+	protected void irAPenales() {
+		golesPenalesEquipo1 = (int)Math.random()*10;
+		golesPenalesEquipo2 = (int)Math.random()*10;
+		
+	}
+
+	protected PartidoSimple buildPartido() {
+		return new PartidoSimple(getEquipo1().armarFormacion(), getEquipo2().armarFormacion(),
+    				(int)Math.random()*10, (int)Math.random()*10);
+	}
 
     public PartidoSimple getPartidoIda() {
         return partidoIda;
