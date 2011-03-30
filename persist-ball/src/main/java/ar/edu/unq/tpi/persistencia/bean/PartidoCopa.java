@@ -5,8 +5,6 @@ public class PartidoCopa extends Partido {
 
     private int golesPenalesEquipo1, golesPenalesEquipo2;
 
-	private boolean jugoPenales = false;
-
     public PartidoCopa() {
     }
 
@@ -19,7 +17,7 @@ public class PartidoCopa extends Partido {
     @Override
     public Equipo getGanador() {
 
-        if(jugoPenales){
+        if(golesEquipo1() == golesEquipo2()){
 	        if (golesPenalesEquipo1 > golesPenalesEquipo2)
 	        	return this.getEquipo1();
 	        else
@@ -35,9 +33,6 @@ public class PartidoCopa extends Partido {
     	this.partidoVuelta = partidoSimple2;
     	this.golesPenalesEquipo1 = golesPenales1;
     	this.golesPenalesEquipo2 = golesPenales2;
-        if(golesEquipo1() == golesEquipo2()){
-        	jugoPenales = true;
-        }
     }
     
 
