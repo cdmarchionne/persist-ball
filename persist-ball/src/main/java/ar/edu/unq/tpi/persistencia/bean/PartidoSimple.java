@@ -1,8 +1,9 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-import ar.edu.unq.tpi.persistencia.logic.Formacion;
 
 public class PartidoSimple extends Partido {
+	private static final long serialVersionUID = 1L;
+	
 	private int golesEquipo1, golesEquipo2;
 
 	public PartidoSimple() {
