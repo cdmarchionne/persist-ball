@@ -1,28 +1,33 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-import junit.framework.Assert;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import ar.edu.unq.tpi.persistencia.logic.Formacion;
 
 public class TestPartidoCopa {
 	
-	private PartidoSimple partidoIda, partidoVuelta;
 	private PartidoCopa partidoCopa;
+	private Equipo equipo1, equipo2;
+	private Formacion formacion1, formacion2;
 	
 	@Before
 	public void setup(){
-		partidoVuelta = mock(PartidoSimple.class);
-		partidoIda = mock(PartidoSimple.class);
-//		partidoCopa = new PartidoCopa(partidoIda, partidoVuelta, 5, 4);
-		when(partidoIda.getGolesEquipo1()).thenReturn(5);
-		when(partidoIda.getGolesEquipo2()).thenReturn(3);
-		when(partidoVuelta.getGolesEquipo1()).thenReturn(1);
-		when(partidoVuelta.getGolesEquipo2()).thenReturn(3);
-	}
-	
+		equipo1 = mock(Equipo.class);
+		equipo2 = mock(Equipo.class);
+		
+		formacion1 = mock(Formacion.class);
+		formacion2 = mock(Formacion.class);
+		
+		partidoCopa = new PartidoCopa(equipo1, equipo2);
+		
+		when(equipo1.armarFormacion()).thenReturn(formacion1);
+		when(equipo2.armarFormacion()).thenReturn(formacion2);
+		
+	}	
 	@Test
 	public void testGanador(){
 //		Assert.assertEquals(, partidoCopa.getGanador())
