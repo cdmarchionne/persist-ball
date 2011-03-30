@@ -3,18 +3,15 @@ package ar.edu.unq.tpi.persistencia.bean;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 
 public class PartidoSimple extends Partido {
-	private Formacion formacion1, formacion2;
 	private int golesEquipo1, golesEquipo2;
 
 	public PartidoSimple() {
 	}
 
-	public PartidoSimple(Formacion formacion1, Formacion formacion2,int golesEquipo1, int golesEquipo2) {
+	public PartidoSimple(Equipo equipo1, Equipo equipo2) {
 		super();
-		this.formacion1 = formacion1;
-		this.formacion2 = formacion2;
-		this.golesEquipo1 = golesEquipo1;
-		this.golesEquipo2 = golesEquipo2;
+		this.setEquipo1(equipo1);
+		this.setEquipo2(equipo2);
 	}
 
 	public Equipo getGanador(){
@@ -26,21 +23,10 @@ public class PartidoSimple extends Partido {
 		}
 		return null;
 	}
-
-	public Formacion getFormacion1() {
-		return formacion1;
-	}
-
-	public void setFormacion1(Formacion formacion1) {
-		this.formacion1 = formacion1;
-	}
-
-	public Formacion getFormacion2() {
-		return formacion2;
-	}
-
-	public void setFormacion2(Formacion formacion2) {
-		this.formacion2 = formacion2;
+	
+	public void simularPartido(int golesEquipo1, int golesEquipo2) {
+		this.golesEquipo1 = golesEquipo1;
+		this.golesEquipo2 = golesEquipo2;
 	}
 
 	public int getGolesEquipo1() {
