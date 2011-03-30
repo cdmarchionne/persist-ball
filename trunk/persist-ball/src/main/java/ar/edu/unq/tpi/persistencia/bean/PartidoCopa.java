@@ -76,4 +76,9 @@ public class PartidoCopa extends Partido {
         this.golesPenalesEquipo2 = golesPenalesEquipo2;
     }
 
+	public void simularPartido(PartidoSimple partidoSimple1, PartidoSimple partidoSimple2) {
+		this.simularPartido(partidoSimple1, partidoSimple2, 0, 0);
+		
+	}
+
 }
