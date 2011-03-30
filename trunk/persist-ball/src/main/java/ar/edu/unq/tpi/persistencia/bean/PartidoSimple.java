@@ -9,18 +9,13 @@ public class PartidoSimple extends Partido {
 	public PartidoSimple() {
 	}
 
-	public PartidoSimple(Formacion formacion1, Formacion formacion2) {
+	public PartidoSimple(Formacion formacion1, Formacion formacion2,int golesEquipo1, int golesEquipo2) {
 		super();
 		this.formacion1 = formacion1;
 		this.formacion2 = formacion2;
+		this.golesEquipo1 = golesEquipo1;
+		this.golesEquipo2 = golesEquipo2;
 	}
-	
-	
-	public void jugarPartido(){
-		golesEquipo1 = (int)Math.random()*10;
-		golesEquipo2 = (int)Math.random()*10;
-	}
-	
 
 	public Equipo getGanador(){
 		if (golesEquipo1>golesEquipo2){

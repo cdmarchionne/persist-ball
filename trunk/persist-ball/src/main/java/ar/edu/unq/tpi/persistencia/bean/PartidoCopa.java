@@ -30,18 +30,16 @@ public class PartidoCopa extends Partido {
             return this.getEquipo2();
     }
     
-    public void jugarPartidoIda(){
-    	partidoIda = buildPartido();
-    	partidoIda.jugarPartido();
-    }
-    public void jugarPartidoVuelta(){
-    	partidoVuelta = buildPartido();
-    	partidoVuelta.jugarPartido();
+    public void simularPartido(PartidoSimple partidoSimple1, PartidoSimple partidoSimple2, int golesPenales1, int golesPenales2){
+    	this.partidoIda = partidoSimple1;
+    	this.partidoVuelta = partidoSimple2;
+    	this.golesPenalesEquipo1 = golesPenales1;
+    	this.golesPenalesEquipo2 = golesPenales2;
         if(golesEquipo1() == golesEquipo2()){
         	jugoPenales = true;
-        	irAPenales();
         }
     }
+    
 
 	protected int golesEquipo2() {
 		return partidoIda.getGolesEquipo2() + partidoVuelta.getGolesEquipo2();
@@ -49,16 +47,6 @@ public class PartidoCopa extends Partido {
 
 	protected int golesEquipo1() {
 		return partidoIda.getGolesEquipo1() + partidoVuelta.getGolesEquipo1();
-	}
-
-	protected void irAPenales() {
-		golesPenalesEquipo1 = (int)Math.random()*10;
-		golesPenalesEquipo2 = (int)Math.random()*10;
-		
-	}
-
-	protected PartidoSimple buildPartido() {
-		return new PartidoSimple(getEquipo1().armarFormacion(), getEquipo2().armarFormacion());
 	}
 
     public PartidoSimple getPartidoIda() {
