@@ -1,10 +1,19 @@
 package ar.edu.unq.tpi.persistencia.logic;
 
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
 
-public class HabilidadImpl implements Habilidad {
+
+@Entity
+public class HabilidadImpl extends ar.edu.unq.tpi.persistencia.bean.Entity implements Habilidad {
+    
+    @Enumerated
 	private Posicion posicion;
+    @Basic
 	private int valor;
 
 	public HabilidadImpl(){}
