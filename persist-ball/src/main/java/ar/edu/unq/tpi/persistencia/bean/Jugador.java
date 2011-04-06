@@ -1,27 +1,21 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.Entity;
 
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
 import ar.edu.unq.tpi.persistencia.interfaces.Nombrable;
 
-@javax.persistence.Entity
-public class Jugador extends Entity implements Nombrable{
-    
-    @OneToMany
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-    @Transient
-	private List<Habilidad> habilidades = new ArrayList<Habilidad>();
-	
+@Entity
+public class Jugador extends PersistentObject implements Nombrable{
+	private static final long serialVersionUID = 351122077442453571L;
+
+//	@OneToMany
+//    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+//	private List<Habilidad> habilidades = new ArrayList<Habilidad>();
 	
 	@Basic
 	private String nombre;
@@ -35,7 +29,7 @@ public class Jugador extends Entity implements Nombrable{
 	
 	public Jugador(String nombre) {
 		super();
-		this.nombre = nombre;
+		this.setNombre(nombre);
 	}
 
 	public void addHabilidad(Habilidad habilidad){
@@ -53,11 +47,16 @@ public class Jugador extends Entity implements Nombrable{
 	}
 
 	public void setHabilidades(List<Habilidad> habilidades) {
-		this.habilidades = habilidades;
+//		this.habilidades = habilidades;
 	}
 
 	public List<Habilidad> getHabilidades() {
-		return habilidades;
+		return null;
+//		return habilidades;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 }

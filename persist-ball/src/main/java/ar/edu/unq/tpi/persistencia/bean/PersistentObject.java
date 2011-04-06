@@ -6,12 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import javax.persistence.Version;
+
+import ar.edu.unq.tpi.persistencia.enums.PersistenObject;
 
 
 @MappedSuperclass
-public class Entity implements Serializable{
+public class PersistentObject implements Serializable, PersistenObject{
 	private static final long serialVersionUID = 1L;
 	
     @Version
