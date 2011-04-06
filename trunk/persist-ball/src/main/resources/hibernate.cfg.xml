@@ -28,10 +28,10 @@
 		        <property name="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</property>
                 
                 <!-- Drop and re-create the database schema on startup -->
-<!--                 <property name="hbm2ddl.auto">create</property> -->
+                <property name="hbm2ddl.auto">create</property>
                <mapping class="ar.edu.unq.tpi.persistencia.bean.Jugador"/>
-<!--                <mapping class=" ar.edu.unq.tpi.persistencia.bean.HabilidadImpl"/> -->
-<!--                <mapping class=" ar.edu.unq.tpi.persistencia.bean.Habilidad"/> -->
+               <mapping class="ar.edu.unq.tpi.persistencia.logic.HabilidadImpl"/>
+               <mapping class="ar.edu.unq.tpi.persistencia.interfaces.Habilidad"/>
         
         </session-factory>
 </hibernate-configuration>
