@@ -23,10 +23,18 @@ public class PersistenceManager {
     private PersistenceManager() {
     }
     
+    private void initializeSchema() {
+        SchemaExport exporter = new SchemaExport(cfg);
+        clearCurrentSession();
+        exporter.drop(true, true);
+        exporter.create(true, true);
+    }
+    
 
 	protected void build() {
 		sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();
+//        initializeSchema();
 	}
 
     /**
@@ -53,7 +61,22 @@ public class PersistenceManager {
 		return session;
     }
 
+    /**
+     * Flushes and clears the Hibernate Session.
+     */
+    public void clearCurrentSession() {
+        final Session currentSession = this.getCurrentSession();
+        currentSession.flush();
+        currentSession.clear();
+    }
+
+    public void flush() {
+        final Session currentSession = this.getCurrentSession();
+        currentSession.flush();
+    }
+
 	public void close() {
+		this.clearCurrentSession();
 		this.session.close(); 
 	} 
 
