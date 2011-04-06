@@ -53,22 +53,7 @@ public class PersistenceManager {
 		return session;
     }
 
-    /**
-     * Flushes and clears the Hibernate Session.
-     */
-    public void clearCurrentSession() {
-        final Session currentSession = this.getCurrentSession();
-        currentSession.flush();
-        currentSession.clear();
-    }
-
-    public void flush() {
-        final Session currentSession = this.getCurrentSession();
-        currentSession.flush();
-    }
-
 	public void close() {
-		this.clearCurrentSession();
 		this.session.close(); 
 	} 
 
