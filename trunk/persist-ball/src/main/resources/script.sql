@@ -31,7 +31,11 @@ create table if not exists Habilidad (
 	position int(2), 
 	valor int(2), default NULL
 	stateVersion bigint(20) NOT NULL default 0,
+	jugador_id int NOT NULL,
+	DTYPE varchar(31) not NULL,
 	PRIMARY KEY(id)
+	KEY `FK_Habilidad_Jugador` (`jugador_id`),
+	CONSTRAINT `FK_Habilidad_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`)
 	
 ) ENGINE=INNODB;
 
