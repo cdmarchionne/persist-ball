@@ -3,6 +3,7 @@ package ar.edu.unq.tpi.persistencia.utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 public class PersistenceManager {
 
@@ -21,6 +22,7 @@ public class PersistenceManager {
 
     private PersistenceManager() {
     }
+    
 
 	protected void build() {
 		sessionFactory = cfg.buildSessionFactory();

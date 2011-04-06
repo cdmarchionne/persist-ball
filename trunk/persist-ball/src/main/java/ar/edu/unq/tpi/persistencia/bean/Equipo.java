@@ -6,7 +6,7 @@ import java.util.List;
 import ar.edu.unq.tpi.persistencia.interfaces.Nombrable;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 
-public class Equipo extends Entity implements Nombrable{
+public class Equipo extends PersistentObject implements Nombrable{
 	
 	private Tecnico tecnico;
 	private List<Jugador> jugadores = new ArrayList<Jugador>();

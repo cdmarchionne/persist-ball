@@ -1,6 +1,6 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-public abstract class Partido extends Entity{
+public abstract class Partido extends PersistentObject{
 	private static final long serialVersionUID = 1L;
 	
 	private Equipo equipo1,equipo2;
