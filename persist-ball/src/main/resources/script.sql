@@ -1,5 +1,5 @@
 
--- Para importarlo hay q ejecutar: 'mysql < script.sql'
+-- Para importarlo hay q ejecutar el script CargarDB.bat
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -12,7 +12,7 @@ USE `Persistencia`;
 -- --------------------------------------------------------
 -- Estructura de la tabla `Jugador`
 -- --------------------------------------------------------
-drop table if exists `Jugador`
+-- drop table if exists `Jugador`
 create table if not exists Jugador (
 	id int NOT NULL AUTO_INCREMENT,
 	nombre varchar(100),
@@ -25,15 +25,15 @@ create table if not exists Jugador (
 -- --------------------------------------------------------
 -- Estructura de la tabla `Habilidad`
 -- --------------------------------------------------------
-drop table if exists `Habilidad`
+-- drop table if exists `Habilidad`
 create table if not exists Habilidad (
 	id int NOT NULL AUTO_INCREMENT,
-	position int(2), 
-	valor int(2), default NULL
+	position int(2),
+	valor int(2) default NULL,
 	stateVersion bigint(20) NOT NULL default 0,
 	jugador_id int NOT NULL,
 	DTYPE varchar(31) not NULL,
-	PRIMARY KEY(id)
+	PRIMARY KEY(id),
 	KEY `FK_Habilidad_Jugador` (`jugador_id`),
 	CONSTRAINT `FK_Habilidad_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`)
 	
@@ -42,7 +42,7 @@ create table if not exists Habilidad (
 -- --------------------------------------------------------
 -- Estructura de la tabla `JugadorHabilidad`
 -- --------------------------------------------------------
-drop table if exists `JugadorHabilidad`
+-- drop table if exists `JugadorHabilidad`
 create table if not exists JugadorHabilidad (
 	jugador_id int NOT NULL,
 	habilidad_id int NOT NULL,
