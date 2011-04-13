@@ -21,11 +21,11 @@ public class PersistenceManager {
     }
 
     private PersistenceManager() {
+    	initializeSchema();
     }
     
     private void initializeSchema() {
         SchemaExport exporter = new SchemaExport(cfg);
-        clearCurrentSession();
         exporter.drop(true, true);
         exporter.create(true, true);
     }
@@ -34,7 +34,6 @@ public class PersistenceManager {
 	protected void build() {
 		sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();
-//        initializeSchema();
 	}
 
     /**

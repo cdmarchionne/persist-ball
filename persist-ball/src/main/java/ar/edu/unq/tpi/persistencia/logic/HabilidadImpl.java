@@ -8,7 +8,7 @@ import ar.edu.unq.tpi.persistencia.interfaces.Habilidad;
 
 @Entity
 public class HabilidadImpl extends Habilidad {
-    
+	private static final long serialVersionUID = 1L;
 
 	public HabilidadImpl(){}
 	

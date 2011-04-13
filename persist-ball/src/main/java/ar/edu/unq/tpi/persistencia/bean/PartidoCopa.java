@@ -1,7 +1,9 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
 public class PartidoCopa extends Partido {
-    private PartidoSimple partidoIda, partidoVuelta;
+	private static final long serialVersionUID = 1L;
+
+	private PartidoSimple partidoIda, partidoVuelta;
 
     private int golesPenalesEquipo1, golesPenalesEquipo2;
 

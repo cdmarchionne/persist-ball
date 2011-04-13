@@ -2,14 +2,27 @@ package ar.edu.unq.tpi.persistencia.logic;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
+import ar.edu.unq.tpi.persistencia.bean.PersistentObject;
 import ar.edu.unq.tpi.persistencia.bean.Titular;
-import ar.edu.unq.tpi.persistencia.utils.ListUtils;
 
-public class Formacion {
+@Entity
+public class Formacion extends PersistentObject{
+	private static final long serialVersionUID = 1L;
+
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Titular> titulares;
+	
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Jugador> suplentes;
+	
+	@OneToOne(cascade=CascadeType.ALL)
 	private Equipo equipo;
 	
 	public List<Titular> getTitulares() {

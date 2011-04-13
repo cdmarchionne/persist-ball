@@ -2,7 +2,6 @@ package ar.edu.unq.tpi.persistencia.utils;
 
 import java.util.List;
 
-import ar.edu.unq.tpi.persistencia.bean.Jugador;
 import ar.edu.unq.tpi.persistencia.bean.Titular;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 

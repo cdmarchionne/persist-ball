@@ -3,16 +3,18 @@ package ar.edu.unq.tpi.persistencia.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
 import ar.edu.unq.tpi.persistencia.bean.Titular;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.interfaces.FormacionStrategy;
 
-public class FormacionStrategyImpl implements FormacionStrategy{
-	private List<Posicion> posiciones;
-	private List<Jugador> jugadores;
-	
+@Entity
+public class FormacionStrategyImpl extends FormacionStrategy{
+	private static final long serialVersionUID = 1L;
+
 	public FormacionStrategyImpl(List<Posicion> posiciones) {
 		this.setPosiciones(posiciones);
 	}
@@ -20,16 +22,16 @@ public class FormacionStrategyImpl implements FormacionStrategy{
 	public Jugador mejorJugador(Posicion posicion){
 		Jugador jugadorMax = null;
 		
-		if(!this.jugadores.isEmpty()){
+		if(!this.getJugadores().isEmpty()){
 			
-			jugadorMax=this.jugadores.get(0);
+			jugadorMax=this.getJugadores().get(0);
 		
-			for (Jugador jugador : this.jugadores) {
+			for (Jugador jugador : this.getJugadores()) {
 				if (jugador.getValorHabilidad(posicion) > jugadorMax.getValorHabilidad(posicion) ){
 					jugadorMax=jugador;
 				}
 			}
-			this.jugadores.remove(jugadorMax);	
+			this.getJugadores().remove(jugadorMax);	
 		}
 		return jugadorMax;
 	}
@@ -44,23 +46,13 @@ public class FormacionStrategyImpl implements FormacionStrategy{
 	
 	@Override
 	public Formacion armarFormacion(Equipo equipo) {
-		this.jugadores = equipo.getJugadores();
+		this.setJugadores(equipo.getJugadores());
 		Formacion formacion = new Formacion();
 		formacion.setEquipo(equipo);
 		formacion.setTitulares(this.armarTitulares());
-		formacion.setSuplentes(this.jugadores);
+		formacion.setSuplentes(this.getJugadores());
 		
 		return formacion;
 	}
-
-	public void setPosiciones(List<Posicion> posiciones) {
-		this.posiciones = posiciones;
-	}
-
-	public List<Posicion> getPosiciones() {
-		return posiciones;
-	}
-
-
 
 }
