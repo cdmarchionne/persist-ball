@@ -1,10 +1,23 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-import ar.edu.unq.tpi.persistencia.enums.Posicion;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
 
-public class Titular {
+import ar.edu.unq.tpi.persistencia.enums.Posicion;
+import ar.edu.unq.tpi.persistencia.logic.Formacion;
+
+@Entity
+public class Titular extends PersistentObject{
+	private static final long serialVersionUID = 1L;
+	
+	@OneToOne(cascade=CascadeType.ALL)
 	private Jugador jugador;
+	
+	@Enumerated
 	private Posicion posicion;
+	
 	
 	
 	public Titular(Jugador jugador, Posicion posicion2) {

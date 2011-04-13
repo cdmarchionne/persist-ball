@@ -1,5 +1,8 @@
 package ar.edu.unq.tpi.persistencia.enums;
 
+import javax.persistence.Table;
+
+@Table(name="Position")
 public enum Posicion {
 	ARQUERO,
 	LATERAL,

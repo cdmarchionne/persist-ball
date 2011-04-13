@@ -2,11 +2,10 @@ package ar.edu.unq.tpi.persistencia.interfaces;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ar.edu.unq.tpi.persistencia.bean.Jugador;
 import ar.edu.unq.tpi.persistencia.bean.PersistentObject;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 
@@ -15,13 +14,10 @@ import ar.edu.unq.tpi.persistencia.enums.Posicion;
 public abstract class Habilidad extends PersistentObject {
 	private static final long serialVersionUID = 1L;
 	
-    @Enumerated
+    @Enumerated(EnumType.STRING)
 	private Posicion posicion;
     @Basic
 	private int valor;
-    
-    @ManyToOne
-    private Jugador jugador;
     
 
 	public abstract int getValor(Posicion posicion);
@@ -43,13 +39,4 @@ public abstract class Habilidad extends PersistentObject {
 		return valor;
 	}
 
-
-	public void setJugador(Jugador jugador) {
-		this.jugador = jugador;
-	}
-
-
-	public Jugador getJugador() {
-		return jugador;
-	}
 }
