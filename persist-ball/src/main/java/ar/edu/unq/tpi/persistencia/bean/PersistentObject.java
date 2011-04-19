@@ -10,20 +10,19 @@ import javax.persistence.Version;
 
 import ar.edu.unq.tpi.persistencia.enums.PersistenObject;
 
-
 @MappedSuperclass
-public class PersistentObject implements Serializable, PersistenObject{
-	private static final long serialVersionUID = 1L;
-	
+public class PersistentObject implements Serializable, PersistenObject {
+    private static final long serialVersionUID = 1L;
+
     @Version
     @GeneratedValue
     private Long stateVersion;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // @IgnoreProperty
+    @Override
     public Long getStateVersion() {
         return stateVersion;
     }
@@ -32,11 +31,11 @@ public class PersistentObject implements Serializable, PersistenObject{
         return stateVersion != null;
     }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(final Integer id) {
+        this.id = id;
+    }
 
-	public Integer getId() {
-		return id;
-	}	
+    public Integer getId() {
+        return id;
+    }
 }

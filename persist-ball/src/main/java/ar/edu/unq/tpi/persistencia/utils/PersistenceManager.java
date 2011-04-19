@@ -8,10 +8,12 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 public class PersistenceManager {
 
     private static PersistenceManager INSTANCE;
-    private  org.hibernate.classic.Session session;
-    private  AnnotationConfiguration cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
-    private SessionFactory sessionFactory;
 
+    private org.hibernate.classic.Session session;
+
+    private AnnotationConfiguration cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
+
+    private SessionFactory sessionFactory;
 
     public static PersistenceManager getInstance() {
         if (INSTANCE == null) {
@@ -21,30 +23,30 @@ public class PersistenceManager {
     }
 
     private PersistenceManager() {
-    	initializeSchema();
+        this.initializeSchema();
+        this.build();
     }
-    
+
     private void initializeSchema() {
         SchemaExport exporter = new SchemaExport(cfg);
         exporter.drop(true, true);
         exporter.create(true, true);
     }
-    
 
-	protected void build() {
-		sessionFactory = cfg.buildSessionFactory();
+    protected void build() {
+        sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();
-	}
+    }
 
     /**
      * Returns the Hibernate configuration object
      */
     public AnnotationConfiguration getConfiguration() {
-        return this.cfg;
+        return cfg;
     }
 
     public SessionFactory getDefaultSessionFactory() {
-        return this.sessionFactory;
+        return sessionFactory;
     }
 
     /**
@@ -55,9 +57,10 @@ public class PersistenceManager {
     }
 
     public Session getCurrentSession() {
-    	if(!session.isOpen())
-    		session = sessionFactory.openSession();
-		return session;
+        if (!session.isOpen()) {
+            session = sessionFactory.openSession();
+        }
+        return session;
     }
 
     /**
@@ -74,10 +77,9 @@ public class PersistenceManager {
         currentSession.flush();
     }
 
-	public void close() {
-		this.clearCurrentSession();
-		this.session.close(); 
-	} 
+    public void close() {
+        // this.clearCurrentSession();
+        session.close();
+    }
 
-
-} 
+}
