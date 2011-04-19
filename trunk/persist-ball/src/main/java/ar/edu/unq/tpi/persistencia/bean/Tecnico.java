@@ -1,6 +1,7 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -9,37 +10,38 @@ import ar.edu.unq.tpi.persistencia.interfaces.Nombrable;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 
 @Entity
-public class Tecnico extends PersistentObject implements Nombrable{
-	private static final long serialVersionUID = -7283264065297827705L;
+public class Tecnico extends PersistentObject implements Nombrable {
+    private static final long serialVersionUID = -7283264065297827705L;
 
-	@OneToOne
-	private FormacionStrategy formacionStrategy;
-	
-	@Basic
-	private String nombre;
-	
-	public Tecnico() {
-	}
-	
-	public Tecnico(FormacionStrategy formacionStrategy, String nombre) {
-		this.formacionStrategy = formacionStrategy;				
-	}
-	 
-	@Override
-	public String getNombre() {
-		return nombre;
-	}
+    @OneToOne(cascade = CascadeType.ALL)
+    private FormacionStrategy formacionStrategy;
 
-	public Formacion armarFormacion(Equipo equipo) {
-		return getFormacionStrategy().armarFormacion(equipo);
-	}
+    @Basic
+    private String nombre;
 
-	public void setFormacionStrategy(FormacionStrategy formacionStrategy) {
-		this.formacionStrategy = formacionStrategy;
-	}
+    public Tecnico() {
+    }
 
-	public FormacionStrategy getFormacionStrategy() {
-		return formacionStrategy;
-	}
+    public Tecnico(final FormacionStrategy formacionStrategy, final String unNombre) {
+        nombre = unNombre;
+        this.formacionStrategy = formacionStrategy;
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Formacion armarFormacion(final Equipo equipo) {
+        return this.getFormacionStrategy().armarFormacion(equipo);
+    }
+
+    public void setFormacionStrategy(final FormacionStrategy formacionStrategy) {
+        this.formacionStrategy = formacionStrategy;
+    }
+
+    public FormacionStrategy getFormacionStrategy() {
+        return formacionStrategy;
+    }
 
 }
