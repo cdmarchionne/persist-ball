@@ -23,12 +23,13 @@ public class PersistenceManager {
     }
 
     private PersistenceManager() {
-        this.initializeSchema();
+        // this.initializeSchema();
         this.build();
     }
 
     private void initializeSchema() {
         SchemaExport exporter = new SchemaExport(cfg);
+        exporter.setOutputFile("script-hibernate.sql");
         exporter.drop(true, true);
         exporter.create(true, true);
     }
@@ -49,13 +50,6 @@ public class PersistenceManager {
         return sessionFactory;
     }
 
-    /**
-     * This destroys the sessionFactory and forces hibernate to a full reload.
-     */
-    public void destroy() {
-        INSTANCE = null;
-    }
-
     public Session getCurrentSession() {
         if (!session.isOpen()) {
             session = sessionFactory.openSession();
@@ -64,21 +58,13 @@ public class PersistenceManager {
     }
 
     /**
-     * Flushes and clears the Hibernate Session.
+     * This destroys the sessionFactory and forces hibernate to a full reload.
      */
-    public void clearCurrentSession() {
-        final Session currentSession = this.getCurrentSession();
-        currentSession.flush();
-        currentSession.clear();
-    }
-
-    public void flush() {
-        final Session currentSession = this.getCurrentSession();
-        currentSession.flush();
+    public void destroy() {
+        INSTANCE = null;
     }
 
     public void close() {
-        // this.clearCurrentSession();
         session.close();
     }
 

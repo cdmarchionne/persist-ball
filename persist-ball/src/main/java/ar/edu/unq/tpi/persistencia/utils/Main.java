@@ -3,8 +3,9 @@ package ar.edu.unq.tpi.persistencia.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
@@ -36,18 +37,24 @@ public class Main {
 
     protected static void mainConcurrente() {
         final Home<Jugador> home = new Home<Jugador>(Jugador.class);
-        ScheduledExecutorService newScheduledThreadPool = Executors.newScheduledThreadPool(100);
-        for (int i = 0; i < 100; i++) {
+        ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(10);
+        final CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
+        for (int i = 0; i < 10; i++) {
             newScheduledThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
-                    home.save(new Jugador("Jugador "));
+                    try {
+                        cyclicBarrier.await();
+                        home.save(new Jugador("Jugador "));
+                    } catch (Exception e) {
+                        throw new RuntimeException("el cyclicBarrier tuvo problemas ", e);
+                    }
                 }
             });
         }
     }
 
-    protected static void mainSave() {
+    protected static void crearEquipoConJugadores() {
         final Home<Equipo> home = new Home<Equipo>(Equipo.class);
 
         Tecnico tecnico = new Tecnico(new FormacionStrategyImpl(Arrays.asList(Posicion.values())), "DT");
@@ -60,19 +67,18 @@ public class Main {
         home.save(equipo);
     }
 
-    public static void mainLoad() {
+    public static void cargarEquipoYGuardarFormacion() {
         final Home<Equipo> home = new Home<Equipo>(Equipo.class);
         Equipo byName = home.getByName("Estrellas");
-        // Equipo byName = home.getById(1);
         Formacion armarFormacion = byName.armarFormacion();
         System.out.println(byName.getNombre());
         new Home<Formacion>(Formacion.class).save(armarFormacion);
     }
 
     public static void main(final String[] args) {
-        mainSave();
+        crearEquipoConJugadores();
+        cargarEquipoYGuardarFormacion();
         // mainConcurrente();
-        mainLoad();
         PersistenceManager.getInstance().close();
     }
 

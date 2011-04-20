@@ -25,7 +25,8 @@ public class Formacion extends PersistentObject {
     private List<Titular> titulares = new ArrayList<Titular>();
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "formacion_suplentes")
+    @JoinTable(name = "formacion_suplente")
+    @JoinColumn(columnDefinition = "suplente_id")
     private List<Jugador> suplentes = new ArrayList<Jugador>();
 
     @OneToOne(cascade = CascadeType.ALL)
