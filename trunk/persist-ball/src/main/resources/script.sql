@@ -1,4 +1,3 @@
-
 -- Para importarlo hay q ejecutar el script CargarDB.bat
 
 -- ----------------------------------------------------------------------
@@ -50,11 +49,11 @@ DROP TABLE IF EXISTS `Formacion_suplente`;
 CREATE TABLE IF NOT EXISTS `Formacion_suplente` (
 	`formacion_id` INT(11) NOT NULL,
 	`suplente_id` INT(11) NOT NULL,
-	PRIMARY KEY (`suplentes_id`, `formacion_id`),
+	PRIMARY KEY (`suplente_id`, `formacion_id`),
 	KEY `FK_FormacionJugador_Equipo` (`formacion_id`),
-	KEY `FK_FormacionJugador_Jugadores` (`suplentes_id`),
+	KEY `FK_FormacionJugador_Jugadores` (`suplente_id`),
 	CONSTRAINT `FK_FormacionJugador_Equipo` FOREIGN KEY (`formacion_id`) REFERENCES `Formacion` (`id`),
-	CONSTRAINT `FK_FormacionJugador_Jugadores` FOREIGN KEY (`suplentes_id`) REFERENCES `Jugador` (`id`)
+	CONSTRAINT `FK_FormacionJugador_Jugadores` FOREIGN KEY (`suplente_id`) REFERENCES `Jugador` (`id`)
 )
 ENGINE = INNODB;
 
@@ -109,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `Jugador` (
 	`nombre` VARCHAR(100),
 	`stateVersion` bigint(20) NOT NULL default 0,
 	`equipo_id` INT(11) NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
 	KEY `FK_Jugador_Equipo` (`equipo_id`),
 	CONSTRAINT `FK_Jugador_Equipo` FOREIGN KEY (`equipo_id`) REFERENCES `Equipo` (`id`)
 ) ENGINE=INNODB;
@@ -142,7 +141,7 @@ CREATE TABLE IF NOT EXISTS  `Titular` (
 	PRIMARY KEY (`id`),
 	KEY `FK_Titular_Jugador` (`jugador_id`),
 	KEY `FK_Titular_Formacion` (`formacion_id`),
-	CONSTRAINT `FK_Titular_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`)
+	CONSTRAINT `FK_Titular_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`),
 	CONSTRAINT `FK_Titular_Formacion` FOREIGN KEY (`formacion_id`) REFERENCES `Formacion` (`id`)
 )
 ENGINE = INNODB;
