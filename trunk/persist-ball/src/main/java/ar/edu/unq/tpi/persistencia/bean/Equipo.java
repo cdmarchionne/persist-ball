@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Index;
+
 import ar.edu.unq.tpi.persistencia.interfaces.Nombrable;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 
@@ -27,6 +29,7 @@ public class Equipo extends PersistentObject implements Nombrable {
 
     @Basic
     @Column(unique = true)
+    @Index(name = "nombre")
     private String nombre;
 
     public Equipo() {

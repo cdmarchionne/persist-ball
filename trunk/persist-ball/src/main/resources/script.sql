@@ -18,7 +18,7 @@ USE `Persistencia`;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Equipo`;
 CREATE TABLE IF NOT EXISTS `Equipo` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11)  AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) NULL,
 	`nombre` VARCHAR(255) NULL,
 	`tecnico_id` INT(11) NULL,
@@ -33,7 +33,7 @@ ENGINE = INNODB;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Formacion`;
 CREATE TABLE IF NOT EXISTS  `Formacion` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11)  AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) NULL,
 	`equipo_id` INT(11) NULL,
 	PRIMARY KEY (`id`),
@@ -47,13 +47,13 @@ ENGINE = INNODB;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Formacion_suplente`;
 CREATE TABLE IF NOT EXISTS `Formacion_suplente` (
-	`formacion_id` INT(11) NOT NULL,
-	`suplente_id` INT(11) NOT NULL,
-	PRIMARY KEY (`suplente_id`, `formacion_id`),
+	`formacion_id` INT(11) ,
+	`suplentes_id` INT(11) ,
+	PRIMARY KEY (`suplentes_id`, `formacion_id`),
 	KEY `FK_FormacionJugador_Equipo` (`formacion_id`),
-	KEY `FK_FormacionJugador_Jugadores` (`suplente_id`),
+	KEY `FK_FormacionJugador_Jugadores` (`suplentes_id`),
 	CONSTRAINT `FK_FormacionJugador_Equipo` FOREIGN KEY (`formacion_id`) REFERENCES `Formacion` (`id`),
-	CONSTRAINT `FK_FormacionJugador_Jugadores` FOREIGN KEY (`suplente_id`) REFERENCES `Jugador` (`id`)
+	CONSTRAINT `FK_FormacionJugador_Jugadores` FOREIGN KEY (`suplentes_id`) REFERENCES `Jugador` (`id`)
 )
 ENGINE = INNODB;
 
@@ -62,8 +62,8 @@ ENGINE = INNODB;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `FormacionStrategy`;
 CREATE TABLE IF NOT EXISTS  `FormacionStrategy` (
-	`DTYPE` VARCHAR(31) NOT NULL,
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`DTYPE` VARCHAR(31) ,
+	`id` INT(11)  AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) NULL,
 	PRIMARY KEY (`id`)
 )
@@ -74,9 +74,9 @@ ENGINE = INNODB;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `FormacionStrategy_posiciones`;
 CREATE TABLE IF NOT EXISTS `FormacionStrategy_posiciones` (
-	`FormacionStrategy_id` INT(11) NOT NULL,
+	`FormacionStrategy_id` INT(11) ,
 	`posicion` VARCHAR(255) NULL,
-	`order_index` INT(11) NOT NULL,
+	`order_index` INT(11) ,
 	PRIMARY KEY (`FormacionStrategy_id`, `order_index`),
 	KEY `FK_FSP_FormacionStrategy` (`FormacionStrategy_id`),
 	CONSTRAINT `FK_FSP_FormacionStrategy` FOREIGN KEY (`FormacionStrategy_id`) REFERENCES `FormacionStrategy` (`id`)
@@ -88,12 +88,12 @@ ENGINE = INNODB;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Habilidad`;
 CREATE TABLE IF NOT EXISTS `Habilidad` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`position` VARCHAR(255) NULL,
+	`id` INT(11)  AUTO_INCREMENT,
+	`posicion` VARCHAR(255) NULL,
 	`valor` INT(2) NULL,
-	`stateVersion` BIGINT(20) NOT NULL DEFAULT '0',
-	`jugador_id` INT(11) NOT NULL,
-	`DTYPE` VARCHAR(31) NOT NULL,
+	`stateVersion` BIGINT(20)  DEFAULT '0',
+	`jugador_id` INT(11) ,
+	`DTYPE` VARCHAR(31) ,
 	PRIMARY KEY (`id`),
 	KEY `FK_Habilidad_Jugador` (`jugador_id`),
 	CONSTRAINT `FK_Habilidad_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`)
@@ -104,10 +104,10 @@ CREATE TABLE IF NOT EXISTS `Habilidad` (
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Jugador`;
 CREATE TABLE IF NOT EXISTS `Jugador` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11)  AUTO_INCREMENT,
 	`nombre` VARCHAR(100),
-	`stateVersion` bigint(20) NOT NULL default 0,
-	`equipo_id` INT(11) NOT NULL,
+	`stateVersion` bigint(20)  default 0,
+	`equipo_id` INT(11) ,
 	PRIMARY KEY (`id`),
 	KEY `FK_Jugador_Equipo` (`equipo_id`),
 	CONSTRAINT `FK_Jugador_Equipo` FOREIGN KEY (`equipo_id`) REFERENCES `Equipo` (`id`)
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `Jugador` (
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Tecnico`;
 CREATE TABLE IF NOT EXISTS  `Tecnico` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11)  AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) NULL,
 	`nombre` VARCHAR(255) NULL,
 	`formacionStrategy_id` INT(11) NULL,
@@ -133,7 +133,7 @@ ENGINE = INNODB;
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `Titular`;
 CREATE TABLE IF NOT EXISTS  `Titular` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11)  AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) NULL,
 	`posicion` VARCHAR(255) NULL,
 	`jugador_id` INT(11) NULL,

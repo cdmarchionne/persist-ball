@@ -6,15 +6,12 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import ar.edu.unq.tpi.persistencia.bean.PersistentObject;
 import ar.edu.unq.tpi.persistencia.exception.UserException;
 import ar.edu.unq.tpi.persistencia.utils.PersistenceManager;
 
 public class Home<T extends PersistentObject> {
-
-    private final static SessionFactory SESSION_FACTORY = PersistenceManager.getInstance().getDefaultSessionFactory();
 
     private Class<T> clazz;
 
@@ -29,7 +26,7 @@ public class Home<T extends PersistentObject> {
             session.delete(pgo);
             session.getTransaction().commit();
         } catch (final HibernateException e) {
-            throw new UserException("Error removing object " + pgo, e);
+            throw new UserException("Error eliminando el objeto " + pgo, e);
         }
     }
 
@@ -40,7 +37,7 @@ public class Home<T extends PersistentObject> {
             session.update(pgo);
             session.getTransaction().commit();
         } catch (final HibernateException e) {
-            throw new UserException("Error updating object " + pgo, e);
+            throw new RuntimeException("Error actualizando el objeto " + pgo, e);
         }
     }
 
@@ -51,7 +48,7 @@ public class Home<T extends PersistentObject> {
             session.save(pgo);
             session.getTransaction().commit();
         } catch (final HibernateException e) {
-            throw new RuntimeException("Error updating object " + pgo, e);
+            throw new RuntimeException("Error guardando el objeto " + pgo, e);
         }
     }
 
@@ -62,7 +59,7 @@ public class Home<T extends PersistentObject> {
             session.saveOrUpdate(pgo);
             session.getTransaction().commit();
         } catch (final HibernateException e) {
-            throw new RuntimeException("Error updating object " + pgo, e);
+            throw new RuntimeException("Error guardando/actualizando el objeto " + pgo, e);
         }
     }
 
@@ -70,11 +67,11 @@ public class Home<T extends PersistentObject> {
         try {
             final T object = (T) this.session().get(this.getPersistentClass(), id);
             if (object == null)
-                throw new UserException("No object was found of class " + this.getPersistentClass().getName()
-                        + " with identifier " + id);
+                throw new UserException("No se encontro un objeto de la clase " + this.getPersistentClass().getName()
+                        + " con id " + id);
             return object;
         } catch (final HibernateException e) {
-            throw new UserException("Error loading object " + this.getPersistentClass().getName() + "#" + id, e);
+            throw new UserException("Error cargando el objeto " + this.getPersistentClass().getName() + "#" + id, e);
         }
     }
 
@@ -86,11 +83,11 @@ public class Home<T extends PersistentObject> {
             query.setParameter("name", name);
             final T object = (T) query.uniqueResult();
             if (object == null)
-                throw new UserException("No object was found of class " + this.getPersistentClass().getName()
-                        + " with name " + name);
+                throw new UserException("No se encontro un objeto de la clase " + this.getPersistentClass().getName()
+                        + " con nombre " + name);
             return object;
         } catch (final HibernateException e) {
-            throw new UserException("Error loading object " + this.getPersistentClass().getName() + "#" + name, e);
+            throw new UserException("Error cargando el objeto " + this.getPersistentClass().getName() + "#" + name, e);
         }
     }
 
