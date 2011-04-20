@@ -44,29 +44,13 @@ CREATE TABLE IF NOT EXISTS  `Formacion` (
 ENGINE = INNODB;
 
 -- --------------------------------------------------------
--- Relacion de los Jugadores Titulares en la Formacion
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `Formacion_titular`;
-CREATE TABLE IF NOT EXISTS `Formacion_titular` (
-	`formacion_id` INT(11) NOT NULL,
-	`titulares_id` INT(11) NOT NULL,
-	PRIMARY KEY (`titulares_id`),
-	-- UNIQUE INDEX `titulares_id` (`titulares_id`),
-	KEY `FK_FormacionTitular_Equipo` (`formacion_id`),
-	KEY `FK_FormacionTitular_Jugadores` (`titulares_id`),
-	CONSTRAINT `FK_FormacionTitular_Equipo` FOREIGN KEY (`formacion_id`) REFERENCES `Formacion` (`id`),
-	CONSTRAINT `FK_FormacionTitular_Titular` FOREIGN KEY (`titulares_id`) REFERENCES `Titular` (`id`)
-)
-ENGINE = INNODB;
-
--- --------------------------------------------------------
 -- Relacion de los Jugadores Suplentes en la Formacion
 -- --------------------------------------------------------
-DROP TABLE IF EXISTS `Formacion_jugador`;
-CREATE TABLE IF NOT EXISTS `Formacion_jugador` (
+DROP TABLE IF EXISTS `Formacion_suplente`;
+CREATE TABLE IF NOT EXISTS `Formacion_suplente` (
 	`formacion_id` INT(11) NOT NULL,
-	`suplentes_id` INT(11) NOT NULL,
-	PRIMARY KEY (`suplentes_id`),
+	`suplente_id` INT(11) NOT NULL,
+	PRIMARY KEY (`suplentes_id`, `formacion_id`),
 	KEY `FK_FormacionJugador_Equipo` (`formacion_id`),
 	KEY `FK_FormacionJugador_Jugadores` (`suplentes_id`),
 	CONSTRAINT `FK_FormacionJugador_Equipo` FOREIGN KEY (`formacion_id`) REFERENCES `Formacion` (`id`),
@@ -92,7 +76,7 @@ ENGINE = INNODB;
 DROP TABLE IF EXISTS `FormacionStrategy_posiciones`;
 CREATE TABLE IF NOT EXISTS `FormacionStrategy_posiciones` (
 	`FormacionStrategy_id` INT(11) NOT NULL,
-	`posicion` INT(11) NULL,
+	`posicion` VARCHAR(255) NULL,
 	`order_index` INT(11) NOT NULL,
 	PRIMARY KEY (`FormacionStrategy_id`, `order_index`),
 	KEY `FK_FSP_FormacionStrategy` (`FormacionStrategy_id`),
@@ -106,7 +90,7 @@ ENGINE = INNODB;
 DROP TABLE IF EXISTS `Habilidad`;
 CREATE TABLE IF NOT EXISTS `Habilidad` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`position` INT(2) NULL,
+	`position` VARCHAR(255) NULL,
 	`valor` INT(2) NULL,
 	`stateVersion` BIGINT(20) NOT NULL DEFAULT '0',
 	`jugador_id` INT(11) NOT NULL,
@@ -124,21 +108,10 @@ CREATE TABLE IF NOT EXISTS `Jugador` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`nombre` VARCHAR(100),
 	`stateVersion` bigint(20) NOT NULL default 0,
+	`equipo_id` INT(11) NOT NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=INNODB;
-
--- --------------------------------------------------------
--- Estructura de la tabla `JugadorHabilidad`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `JugadorHabilidad`;
-CREATE TABLE IF NOT EXISTS `JugadorHabilidad` (
-	`jugador_id` INT NOT NULL,
-	`habilidad_id` INT NOT NULL,
-	PRIMARY KEY(jugador_id,habilidad_id),
-	KEY `FK_JugadorHabilidad_Jugador` (`jugador_id`),
-	KEY `FK_JugadorHabilidad_Habilidad` (`habilidad_id`),
-	CONSTRAINT `FK_JugadorHabilidad_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`),
-	CONSTRAINT `FK_JugadorHabilidad_Habilidad` FOREIGN KEY (`habilidad_id`) REFERENCES `Habilidad` (`id`)
+	KEY `FK_Jugador_Equipo` (`equipo_id`),
+	CONSTRAINT `FK_Jugador_Equipo` FOREIGN KEY (`equipo_id`) REFERENCES `Equipo` (`id`)
 ) ENGINE=INNODB;
 
 -- --------------------------------------------------------
@@ -163,11 +136,14 @@ DROP TABLE IF EXISTS `Titular`;
 CREATE TABLE IF NOT EXISTS  `Titular` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) NULL,
-	`posicion` INT(11) NULL,
+	`posicion` VARCHAR(255) NULL,
 	`jugador_id` INT(11) NULL,
+	`formacion_id` INT(11) NULL,
 	PRIMARY KEY (`id`),
 	KEY `FK_Titular_Jugador` (`jugador_id`),
+	KEY `FK_Titular_Formacion` (`formacion_id`),
 	CONSTRAINT `FK_Titular_Jugador` FOREIGN KEY (`jugador_id`) REFERENCES `Jugador` (`id`)
+	CONSTRAINT `FK_Titular_Formacion` FOREIGN KEY (`formacion_id`) REFERENCES `Formacion` (`id`)
 )
 ENGINE = INNODB;
 
