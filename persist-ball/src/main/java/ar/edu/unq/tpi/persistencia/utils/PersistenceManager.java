@@ -23,11 +23,11 @@ public class PersistenceManager {
     }
 
     private PersistenceManager() {
-//         this.initializeSchema();
+         this.initializeSchema();
         this.build();
     }
 
-    private void initializeSchema() {
+    protected void initializeSchema() {
         SchemaExport exporter = new SchemaExport(cfg);
         exporter.setOutputFile("script-hibernate.sql");
         exporter.drop(true, true);
@@ -36,7 +36,7 @@ public class PersistenceManager {
 
     protected void build() {
         sessionFactory = cfg.buildSessionFactory();
-        session = sessionFactory.openSession();
+//        session = sessionFactory.openSession();
     }
 
     /**
@@ -51,8 +51,8 @@ public class PersistenceManager {
     }
 
     public Session getCurrentSession() {
-        if (!session.isOpen()) {
-            session = sessionFactory.openSession();
+        if (session == null || !session.isOpen()) {
+            openSession();
         }
         return session;
     }
@@ -64,7 +64,11 @@ public class PersistenceManager {
         INSTANCE = null;
     }
 
-    public void close() {
+    public void openSession() {
+    	session = sessionFactory.openSession();
+    }
+    
+    public void closeSession() {
         session.close();
     }
 

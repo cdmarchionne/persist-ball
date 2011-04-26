@@ -8,7 +8,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.PersistentObject;
 import ar.edu.unq.tpi.persistencia.exception.UserException;
 import ar.edu.unq.tpi.persistencia.utils.PersistenceManager;
@@ -24,9 +23,7 @@ public class Home<T extends PersistentObject> {
     public void delete(final T pgo) {
         try {
             Session session = this.session();
-            session.beginTransaction();
             session.delete(pgo);
-            session.getTransaction().commit();
         } catch (final HibernateException e) {
             throw new UserException("Error eliminando el objeto " + pgo, e);
         }
@@ -35,9 +32,7 @@ public class Home<T extends PersistentObject> {
     public void update(final T pgo) {
         try {
             Session session = this.session();
-            session.beginTransaction();
             session.update(pgo);
-            session.getTransaction().commit();
         } catch (final HibernateException e) {
             throw new RuntimeException("Error actualizando el objeto " + pgo, e);
         }
@@ -46,9 +41,7 @@ public class Home<T extends PersistentObject> {
     public void save(final T pgo) {
         try {
             Session session = this.session();
-            session.beginTransaction();
             session.save(pgo);
-            session.getTransaction().commit();
         } catch (final HibernateException e) {
             throw new RuntimeException("Error guardando el objeto " + pgo, e);
         }
@@ -57,15 +50,14 @@ public class Home<T extends PersistentObject> {
     public void saveOrUpdate(final T pgo) {
         try {
             Session session = this.session();
-            session.beginTransaction();
             session.saveOrUpdate(pgo);
-            session.getTransaction().commit();
         } catch (final HibernateException e) {
             throw new RuntimeException("Error guardando/actualizando el objeto " + pgo, e);
         }
     }
 
-    public T getById(final Serializable id) {
+    @SuppressWarnings("unchecked")
+	public T getById(final Serializable id) {
         try {
             final T object = (T) this.session().get(this.getPersistentClass(), id);
             if (object == null)
@@ -93,12 +85,10 @@ public class Home<T extends PersistentObject> {
         }
     }
 
-    public List<T> getAll() {
+    @SuppressWarnings("unchecked")
+	public List<T> getAll() {
         Session session = this.session();
-        session.beginTransaction();
-        List<T> list = session.createQuery("from " + this.getPersistentClass()).list();
-        session.getTransaction().commit();
-        return list;
+        return  session.createQuery("from " + this.getPersistentClass()).list();
     }
 
     protected Session session() {
@@ -112,9 +102,9 @@ public class Home<T extends PersistentObject> {
 	public T getByNameAndDate(String equipo1, String equipo2, Date date) {
 		try {
             Query query = this.session().createQuery(
-                    "FROM " + this.getPersistentClass().getName() + " where (equipo1 = :name1 and equipo2 = name2 or" +
-                    												" equipo1 = :name2 and equipo2 = name1) and" +
-                    												" date = date");
+                    "FROM " + this.getPersistentClass().getName() + " where (equipo1.nombre = :name1 and equipo2.nombre = :name2 or" +
+                    												" equipo1.nombre = :name2 and equipo2.nombre = :name1) and" +
+                    												" date = :date");
             query.setParameter("name1", equipo1);
             query.setParameter("name2", equipo2);
             query.setParameter("date", date);
