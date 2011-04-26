@@ -1,9 +1,18 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Partido extends PersistentObject{
 	private static final long serialVersionUID = 1L;
 	
-	private Equipo equipo1,equipo2;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Equipo equipo1;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Equipo equipo2;
 	
 	public abstract Equipo getGanador();
 

@@ -1,10 +1,21 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+@Entity
 public class PartidoCopa extends Partido {
 	private static final long serialVersionUID = 1L;
 
-	private PartidoSimple partidoIda, partidoVuelta;
+	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
+	private PartidoSimple partidoIda;
+	
+	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
+	private PartidoSimple partidoVuelta;
 
+	@Basic
     private int golesPenalesEquipo1, golesPenalesEquipo2;
 
     public PartidoCopa() {

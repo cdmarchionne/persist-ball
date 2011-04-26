@@ -1,8 +1,13 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+
+@Entity
 public class PartidoSimple extends Partido {
     private static final long serialVersionUID = 1L;
 
+    @Basic
     private int golesEquipo1, golesEquipo2;
 
     public PartidoSimple() {
