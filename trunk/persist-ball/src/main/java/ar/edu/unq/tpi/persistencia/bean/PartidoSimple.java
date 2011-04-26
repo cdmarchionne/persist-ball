@@ -1,7 +1,11 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class PartidoSimple extends Partido {
@@ -9,6 +13,9 @@ public class PartidoSimple extends Partido {
 
     @Basic
     private int golesEquipo1, golesEquipo2;
+    
+    @Temporal(value = TemporalType.DATE)
+    private Date date;
 
     public PartidoSimple() {
     }
@@ -31,6 +38,7 @@ public class PartidoSimple extends Partido {
     public void simularPartido(final int golesEquipo1, final int golesEquipo2) {
         this.golesEquipo1 = golesEquipo1;
         this.golesEquipo2 = golesEquipo2;
+        this.date = new Date();
     }
 
     public int getGolesEquipo1() {
@@ -48,5 +56,13 @@ public class PartidoSimple extends Partido {
     public void setGolesEquipo2(final int golesEquipo2) {
         this.golesEquipo2 = golesEquipo2;
     }
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 }
