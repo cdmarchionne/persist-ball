@@ -2,6 +2,7 @@ package ar.edu.unq.tpi.persistencia.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
@@ -76,6 +77,24 @@ public class Main {
         Formacion armarFormacion = byName.armarFormacion();
         System.out.println(byName.getNombre());
         new Home<Formacion>(Formacion.class).save(armarFormacion);
+    }
+    
+    public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, int golesEquipo1, int golesEquipo2) {
+        final Home<Equipo> home = new Home<Equipo>(Equipo.class);
+        Equipo equipo1 = home.getByName(nombreEquipo1);
+        Equipo equipo2 = home.getByName(nombreEquipo2);
+        PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
+        partido.simularPartido(golesEquipo1, golesEquipo2);
+        new Home<PartidoSimple>(PartidoSimple.class).save(partido);
+    }
+    
+    public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, Date date1, Date date2) {
+        final Home<PartidoSimple> home = new Home<PartidoSimple>(PartidoSimple.class);
+        PartidoSimple partido1 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date1);
+        PartidoSimple partido2 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date2);
+        PartidoCopa partidoCopa = new PartidoCopa(partido1.getEquipo1(), partido1.getEquipo2());
+        partidoCopa.simularPartido(partido1, partido2);
+        new Home<PartidoCopa>(PartidoCopa.class).save(partidoCopa);
     }
 
     protected static PartidoSimple crearPartidoSimple(Equipo equipo1, Equipo equipo2, int golesE1, int golesE2) {
