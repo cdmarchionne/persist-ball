@@ -7,6 +7,10 @@ public class UserException extends RuntimeException {
     public UserException(final String str) {
         super(str);
     }
+    
+    public UserException(Throwable e) {
+    	super(e);
+	}
 
     public UserException(final String string, final Exception e) {
         super(string, e);
