@@ -9,6 +9,8 @@ import java.util.concurrent.Executors;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
+import ar.edu.unq.tpi.persistencia.bean.PartidoCopa;
+import ar.edu.unq.tpi.persistencia.bean.PartidoSimple;
 import ar.edu.unq.tpi.persistencia.bean.Tecnico;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 import ar.edu.unq.tpi.persistencia.home.Home;
@@ -37,9 +39,9 @@ public class Main {
 
     protected static void mainConcurrente() {
         final Home<Jugador> home = new Home<Jugador>(Jugador.class);
-        ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(10);
-        final CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
-        for (int i = 0; i < 10; i++) {
+        ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(90);
+        final CyclicBarrier cyclicBarrier = new CyclicBarrier(90);
+        for (int i = 0; i < 90; i++) {
             newScheduledThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -56,15 +58,16 @@ public class Main {
 
     protected static void crearEquipoConJugadores() {
         final Home<Equipo> home = new Home<Equipo>(Equipo.class);
-
-        Tecnico tecnico = new Tecnico(new FormacionStrategyImpl(Arrays.asList(Posicion.values())), "DT");
-        Equipo equipo = new Equipo(tecnico, "Estrellas");
-
+        Equipo equipo = createEquipo("Estrellas", "DT");
         List<Jugador> jugadores = generatedJugadores(equipo);
-
         equipo.setJugadores(jugadores);
-
-        home.save(equipo);
+		home.save(equipo);
+    }
+    
+    public static Equipo createEquipo(String nombreE, String nombreDT){
+    	Tecnico tecnico = new Tecnico(new FormacionStrategyImpl(Arrays.asList(Posicion.values())), nombreDT);
+        Equipo equipo = new Equipo(tecnico, nombreE);
+        return equipo;
     }
 
     public static void cargarEquipoYGuardarFormacion() {
@@ -75,10 +78,39 @@ public class Main {
         new Home<Formacion>(Formacion.class).save(armarFormacion);
     }
 
+    protected static PartidoSimple crearPartidoSimple(Equipo equipo1, Equipo equipo2, int golesE1, int golesE2) {
+    	PartidoSimple partidoSimple = new PartidoSimple(equipo1, equipo2 );
+    	partidoSimple.simularPartido(golesE1, golesE2);
+    	return partidoSimple;
+    }
+
+    public static void crearPartidoSimpleYGuardar() {
+    	final Home<PartidoSimple> home = new Home<PartidoSimple>(PartidoSimple.class);
+    	PartidoSimple partidoSimple = crearPartidoSimple(createEquipo("Boca", "Bianchi"),createEquipo("River", "Bilardo"),3,2);
+    	home.save(partidoSimple);
+    }
+    
+    public static void crearPartidoDeCopaYGuardar() {
+    	final Home<PartidoCopa> home = new Home<PartidoCopa>(PartidoCopa.class);
+    	Equipo equipo1 = createEquipo("Velez", "Carlos");
+    	Equipo equipo2 = createEquipo("Quilmes", "Pepe");
+    	
+    	PartidoSimple partidoIda = crearPartidoSimple(equipo1, equipo2,3,2);
+    	PartidoSimple partidoVuelta= crearPartidoSimple(equipo1, equipo2,0,3);
+    	
+    	PartidoCopa partidoCopa = new PartidoCopa(equipo1, equipo2);
+    	partidoCopa.simularPartido(partidoIda, partidoVuelta);
+    	
+    	home.save(partidoCopa);
+    }
+
+
     public static void main(final String[] args) {
-        crearEquipoConJugadores();
-        cargarEquipoYGuardarFormacion();
-        // mainConcurrente();
+//        crearEquipoConJugadores();
+//        cargarEquipoYGuardarFormacion();
+//         mainConcurrente();
+    	crearPartidoSimpleYGuardar();
+    	crearPartidoDeCopaYGuardar();
         PersistenceManager.getInstance().close();
     }
 

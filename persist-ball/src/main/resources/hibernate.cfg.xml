@@ -9,7 +9,7 @@
                 <property name="connection.username">root</property>
                 <property name="connection.password">root</property>
                 <!-- JDBC connection pool (use the built-in) -->
-                <property name="connection.pool_size">1</property>
+                <property name="connection.pool_size">20</property>
                 <!-- SQL dialect -->
                 <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
                 <!-- Enable Hibernate's automatic session context management -->
@@ -40,7 +40,12 @@
                <mapping class="ar.edu.unq.tpi.persistencia.logic.FormacionStrategyImpl"/>
                <mapping class="ar.edu.unq.tpi.persistencia.interfaces.FormacionStrategy"/>
                <mapping class="ar.edu.unq.tpi.persistencia.logic.Formacion"/>
-        
+
+
+               <mapping class="ar.edu.unq.tpi.persistencia.bean.Partido"/>
+               <mapping class="ar.edu.unq.tpi.persistencia.bean.PartidoSimple"/>
+               <mapping class="ar.edu.unq.tpi.persistencia.bean.PartidoCopa"/>
+               
         </session-factory>
 </hibernate-configuration>
         
