@@ -1,12 +1,14 @@
 package ar.edu.unq.tpi.persistencia.home;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.PersistentObject;
 import ar.edu.unq.tpi.persistencia.exception.UserException;
 import ar.edu.unq.tpi.persistencia.utils.PersistenceManager;
@@ -106,5 +108,23 @@ public class Home<T extends PersistentObject> {
     private Class<T> getPersistentClass() {
         return clazz;
     }
+
+	public T getByNameAndDate(String equipo1, String equipo2, Date date) {
+		try {
+            Query query = this.session().createQuery(
+                    "FROM " + this.getPersistentClass().getName() + " where (equipo1 = :name1 and equipo2 = name2 or" +
+                    												" equipo1 = :name2 and equipo2 = name1) and" +
+                    												" date = date");
+            query.setParameter("name1", equipo1);
+            query.setParameter("name2", equipo2);
+            query.setParameter("date", date);
+            final T object = (T) query.uniqueResult();
+            if (object == null)
+                throw new UserException("No se encontro el objeto de la clase " + this.getPersistentClass().getName());
+            return object;
+        } catch (final HibernateException e) {
+            throw new UserException("Error cargando el objeto " + this.getPersistentClass().getName(), e);
+        }
+	}
 
 }
