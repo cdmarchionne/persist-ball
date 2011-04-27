@@ -75,12 +75,12 @@ public class GeneradorDeDatos {
 		homeFormacion.save(formacionRiver);
     }
     
-    public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2) {
+    public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2, Date date) {
         final Home<Equipo> home = new Home<Equipo>(Equipo.class);
         Equipo equipo1 = home.getByName(nombreEquipo1);
         Equipo equipo2 = home.getByName(nombreEquipo2);
         PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
-        partido.simularPartido(golesEquipo1, golesEquipo2);
+        partido.simularPartido(golesEquipo1, golesEquipo2, date);
         new Home<PartidoSimple>(PartidoSimple.class).save(partido);
     }
     
