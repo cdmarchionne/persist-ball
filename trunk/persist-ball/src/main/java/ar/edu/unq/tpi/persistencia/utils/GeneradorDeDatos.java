@@ -24,6 +24,7 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_EQUIPO_Y_GUARDAR_FORMACION = "cargarEquipoYGuardarFormacion";
 	public static final String CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE = "cargarEquiposYJugarPartidoSimple";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA = "cargarPartidosSimplesYCrearPartidoCopa";
+	public static final String CARGAR_JUGADORES_CONCURRENTEMENTE = "cargarJugadoresConcurrentemente";
 
     public  void generarEquiposConJugadores() {
         final Home<Equipo> home = new Home<Equipo>(Equipo.class);
@@ -93,7 +94,7 @@ public class GeneradorDeDatos {
         new Home<PartidoCopa>(PartidoCopa.class).save(partidoCopa);
     }
 
-    public  void mainConcurrente() {
+    public  void cargarJugadoresConcurrentemente() {
         final Home<Jugador> home = new Home<Jugador>(Jugador.class);
         ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(90);
         final CyclicBarrier cyclicBarrier = new CyclicBarrier(90);
@@ -112,15 +113,16 @@ public class GeneradorDeDatos {
         }
     }
 
-    public static void main(final String[] args) {
+    @SuppressWarnings("deprecation")
+	public static void main(final String[] args) {
     	GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
     	
     	CasoDeUso.ejecutar(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
     	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
-    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2);
-    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1);
-//    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("10/10/2010"), new Date("20/10/2010"));
-//         mainConcurrente();
+    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new Date("2011/5/5"));
+    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new Date("2011/6/5"));
+    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("2011/5/5"), new Date("2011/6/5"));
+//    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_JUGADORES_CONCURRENTEMENTE); //probar concurrencia
 	}
 
 }

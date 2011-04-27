@@ -1,5 +1,6 @@
 package ar.edu.unq.tpi.persistencia.utils;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -68,8 +69,15 @@ public class PersistenceManager {
     	session = sessionFactory.openSession();
     }
     
+    /**
+     * Se hace try-cath por que hibernate tira {@link HibernateException}} en cualquier operacion 
+     * asi se puede usar en un finally sin hacer try-catch
+     */
     public void closeSession() {
-        session.close();
+    	try {
+    		session.close();
+		} catch (HibernateException e) {
+		}
     }
 
 }
