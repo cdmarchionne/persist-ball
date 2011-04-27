@@ -42,6 +42,11 @@ public class Equipo extends PersistentObject implements Nombrable {
     }
 
     @Override
+    public boolean equals(final Object obj) {
+        return nombre == ((Equipo) obj).getNombre();
+    }
+
+    @Override
     public String getNombre() {
         return nombre;
     }
