@@ -7,13 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.edu.unq.tpi.persistencia.exception.UserException;
+
 @Entity
 public class PartidoSimple extends Partido {
     private static final long serialVersionUID = 1L;
 
     @Basic
     private int golesEquipo1, golesEquipo2;
-    
+
     @Temporal(value = TemporalType.DATE)
     private Date fecha;
 
@@ -39,6 +41,14 @@ public class PartidoSimple extends Partido {
         this.golesEquipo1 = golesEquipo1;
         this.golesEquipo2 = golesEquipo2;
         this.fecha = date;
+    }
+
+    public int getGolesEquipo(final Equipo equipo) {
+        if (equipo.equals(this.getEquipo1()))
+            return this.getGolesEquipo1();
+        else if (equipo.equals(this.getEquipo2()))
+            return this.getGolesEquipo2();
+        throw new UserException("No se encontro el equipo buscado");
     }
 
     public int getGolesEquipo1() {

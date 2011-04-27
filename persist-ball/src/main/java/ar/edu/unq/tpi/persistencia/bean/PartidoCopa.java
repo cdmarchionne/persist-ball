@@ -7,21 +7,21 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class PartidoCopa extends Partido {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-	private PartidoSimple partidoIda;
-	
-	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-	private PartidoSimple partidoVuelta;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private PartidoSimple partidoIda;
 
-	@Basic
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private PartidoSimple partidoVuelta;
+
+    @Basic
     private int golesPenalesEquipo1, golesPenalesEquipo2;
 
     public PartidoCopa() {
     }
 
-    public PartidoCopa(Equipo equipo1, Equipo equipo2) {
+    public PartidoCopa(final Equipo equipo1, final Equipo equipo2) {
         super();
         this.setEquipo1(equipo1);
         this.setEquipo2(equipo2);
@@ -30,32 +30,36 @@ public class PartidoCopa extends Partido {
     @Override
     public Equipo getGanador() {
 
-        if(golesEquipo1() == golesEquipo2()){
-	        if (golesPenalesEquipo1 > golesPenalesEquipo2)
-	        	return this.getEquipo1();
-	        else
-	        	return this.getEquipo2();
-        }else if (golesEquipo1() > golesEquipo2())
+        if (this.golesEquipo1() == this.golesEquipo2()) {
+            if (golesPenalesEquipo1 > golesPenalesEquipo2)
+                return this.getEquipo1();
+            else
+                return this.getEquipo2();
+        } else if (this.golesEquipo1() > this.golesEquipo2())
             return this.getEquipo1();
-        else         
+        else
             return this.getEquipo2();
     }
-    
-    public void simularPartido(PartidoSimple partidoSimple1, PartidoSimple partidoSimple2, int golesPenales1, int golesPenales2){
-    	this.partidoIda = partidoSimple1;
-    	this.partidoVuelta = partidoSimple2;
-    	this.golesPenalesEquipo1 = golesPenales1;
-    	this.golesPenalesEquipo2 = golesPenales2;
+
+    public void simularPartido(final PartidoSimple partidoSimple1, final PartidoSimple partidoSimple2,
+            final int golesPenales1, final int golesPenales2) {
+        partidoIda = partidoSimple1;
+        partidoVuelta = partidoSimple2;
+        golesPenalesEquipo1 = golesPenales1;
+        golesPenalesEquipo2 = golesPenales2;
     }
-    
 
-	protected int golesEquipo2() {
-		return partidoIda.getGolesEquipo2() + partidoVuelta.getGolesEquipo2();
-	}
+    protected int golesEquipo(final Equipo equipo) {
+        return partidoIda.getGolesEquipo(equipo) + partidoVuelta.getGolesEquipo(equipo);
+    }
 
-	protected int golesEquipo1() {
-		return partidoIda.getGolesEquipo1() + partidoVuelta.getGolesEquipo1();
-	}
+    protected int golesEquipo1() {
+        return this.golesEquipo(this.getEquipo1());
+    }
+
+    protected int golesEquipo2() {
+        return this.golesEquipo(this.getEquipo2());
+    }
 
     public PartidoSimple getPartidoIda() {
         return partidoIda;
@@ -89,9 +93,9 @@ public class PartidoCopa extends Partido {
         this.golesPenalesEquipo2 = golesPenalesEquipo2;
     }
 
-	public void simularPartido(PartidoSimple partidoSimple1, PartidoSimple partidoSimple2) {
-		this.simularPartido(partidoSimple1, partidoSimple2, 0, 0);
-		
-	}
+    public void simularPartido(final PartidoSimple partidoSimple1, final PartidoSimple partidoSimple2) {
+        this.simularPartido(partidoSimple1, partidoSimple2, 0, 0);
+
+    }
 
 }
