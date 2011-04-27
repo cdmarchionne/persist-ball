@@ -9,13 +9,12 @@ public class CasoDeUso {
 	public static void ejecutar(Object object, String metodo, Object...objects ){
 		Session session = PersistenceManager.getInstance().getCurrentSession();
     	try {
+    		
     		session.beginTransaction();
 			ReflectionUtils.invokeMethod(object, metodo,objects);
 			session.getTransaction().commit();
 			
-		}catch (UserException e) {
-			throw new UserException(e);
-		} catch (Exception e) {
+		}catch (Exception e) {
     		session.getTransaction().rollback();
     		throw new UserException(e);
     	}finally{
