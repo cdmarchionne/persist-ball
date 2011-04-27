@@ -15,7 +15,7 @@ public class PartidoSimple extends Partido {
     private int golesEquipo1, golesEquipo2;
     
     @Temporal(value = TemporalType.DATE)
-    private Date date;
+    private Date fecha;
 
     public PartidoSimple() {
     }
@@ -35,10 +35,10 @@ public class PartidoSimple extends Partido {
         return null;
     }
 
-    public void simularPartido(final int golesEquipo1, final int golesEquipo2) {
+    public void simularPartido(final int golesEquipo1, final int golesEquipo2, final Date date) {
         this.golesEquipo1 = golesEquipo1;
         this.golesEquipo2 = golesEquipo2;
-        this.date = new Date();
+        this.fecha = date;
     }
 
     public int getGolesEquipo1() {
@@ -57,12 +57,12 @@ public class PartidoSimple extends Partido {
         this.golesEquipo2 = golesEquipo2;
     }
 
-	public Date getDate() {
-		return date;
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setFecha(Date date) {
+		this.fecha = date;
 	}
 
 }
