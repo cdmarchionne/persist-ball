@@ -104,7 +104,7 @@ public class Home<T extends PersistentObject> {
             Query query = this.session().createQuery(
                     "FROM " + this.getPersistentClass().getName() + " where (equipo1.nombre = :name1 and equipo2.nombre = :name2 or" +
                     												" equipo1.nombre = :name2 and equipo2.nombre = :name1) and" +
-                    												" date = :date");
+                    												" fecha = :date");
             query.setParameter("name1", equipo1);
             query.setParameter("name2", equipo2);
             query.setParameter("date", date);
