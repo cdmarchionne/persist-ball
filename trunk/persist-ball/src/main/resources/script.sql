@@ -120,7 +120,7 @@ DROP TABLE IF EXISTS `PartidoSimple`;
 CREATE TABLE IF NOT EXISTS  `PartidoSimple` (
 	`id` INT(11) AUTO_INCREMENT,
 	`stateVersion` BIGINT(20) DEFAULT '0' NOT NULL,
-	`fecha` DATE(20) NOT NULL,
+	`fecha` DATE NOT NULL,
 	`golesEquipo1` INT(11) NOT NULL,
 	`golesEquipo2` INT(11) NOT NULL,
 	`equipo1_id` INT(11) NOT NULL,
