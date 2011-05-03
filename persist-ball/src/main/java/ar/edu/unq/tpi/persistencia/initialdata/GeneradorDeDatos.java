@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
@@ -28,7 +25,7 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_EQUIPO_Y_GUARDAR_FORMACION = "cargarEquipoYGuardarFormacion";
 	public static final String CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE = "cargarEquiposYJugarPartidoSimple";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA = "cargarPartidosSimplesYCrearPartidoCopa";
-	public static final String CARGAR_JUGADOR = "cargarJugador";
+	public static final String CARGAR_JUGADORES_CONCURRENTEMENTE = "cargarJugadoresConcurrentemente";
 
     public  void generarEquiposConJugadores() {
         final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
@@ -97,8 +94,6 @@ public class GeneradorDeDatos {
         partidoCopa.simularPartido(partido1, partido2);
         HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
     }
-    
-    
 
 	public  void cargarJugador() {
     	HomesHibernateRepository.getInstance().getHome(Jugador.class).save(new Jugador("Jugador "));
