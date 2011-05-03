@@ -21,6 +21,7 @@ import ar.edu.unq.tpi.persistencia.logic.FormacionStrategyImpl;
 import ar.edu.unq.tpi.persistencia.persistence.UseCase;
 import ar.edu.unq.tpi.persistencia.utils.JugadorBuilder;
 
+@SuppressWarnings("unchecked")
 public class GeneradorDeDatos {
 	
 	public static final String GENERAR_EQUPOS_CON_JUGADORES = "generarEquiposConJugadores";
@@ -30,7 +31,7 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_JUGADOR = "cargarJugador";
 
     public  void generarEquiposConJugadores() {
-        final HomeHibernateImpl<Equipo> home = new HomeHibernateImpl<Equipo>(Equipo.class);
+        final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
         
         Equipo boca = createEquipo("Boca", "Bilardo");
         Equipo river = createEquipo("River", "Franchela");
@@ -67,8 +68,8 @@ public class GeneradorDeDatos {
     }
 
     public  void cargarEquipoYGuardarFormacion() {
-    	HomeHibernateImpl<Formacion> homeFormacion = new HomeHibernateImpl<Formacion>(Formacion.class);
-        final HomeHibernateImpl<Equipo> homeEquipo = new HomeHibernateImpl<Equipo>(Equipo.class);
+    	HomeHibernateImpl<Formacion> homeFormacion = HomesHibernateRepository.getInstance().getHome(Formacion.class);
+        final HomeHibernateImpl<Equipo> homeEquipo = HomesHibernateRepository.getInstance().getHome(Equipo.class);
 
         Equipo boca = homeEquipo.getByName("Boca");
         Equipo river = homeEquipo.getByName("River");
@@ -80,54 +81,55 @@ public class GeneradorDeDatos {
     }
     
     public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2, Date date) {
-        final HomeHibernateImpl<Equipo> home = new HomeHibernateImpl<Equipo>(Equipo.class);
+        final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
         Equipo equipo1 = home.getByName(nombreEquipo1);
         Equipo equipo2 = home.getByName(nombreEquipo2);
         PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
         partido.simularPartido(golesEquipo1, golesEquipo2, date);
-        new HomeHibernateImpl<PartidoSimple>(PartidoSimple.class).save(partido);
+        HomesHibernateRepository.getInstance().getHome(PartidoSimple.class).save(partido);
     }
     
     public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, Date date1, Date date2) {
-        final HomeHibernateImpl<PartidoSimple> home = new HomeHibernateImpl<PartidoSimple>(PartidoSimple.class);
+        final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
         PartidoSimple partido1 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date1);
         PartidoSimple partido2 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date2);
         PartidoCopa partidoCopa = new PartidoCopa(partido1.getEquipo1(), partido1.getEquipo2());
         partidoCopa.simularPartido(partido1, partido2);
-        new HomeHibernateImpl<PartidoCopa>(PartidoCopa.class).save(partidoCopa);
+        HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
     }
     
     
 
-    public  void cargarJugador() {
+	public  void cargarJugador() {
     	HomesHibernateRepository.getInstance().getHome(Jugador.class).save(new Jugador("Jugador "));
     }
 
+	@SuppressWarnings("deprecation")
 	public static void main(final String[] args) {
     	final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
     	
-//    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
-//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
-//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new Date("2011/5/5"));
-//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new Date("2011/6/5"));
-//    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("2011/5/5"), new Date("2011/6/5"));
+    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new Date("2011/5/5"));
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new Date("2011/6/5"));
+    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("2011/5/5"), new Date("2011/6/5"));
     	
-    	int nThreads = 10;
-		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
-        final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
-        for (int i = 0; i < nThreads; i++) {
-            newScheduledThreadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        cyclicBarrier.await();
-                        UseCase.execute(generadorDeDatos, CARGAR_JUGADOR);
-                    } catch (Exception e) {
-                        throw new RuntimeException("el cyclicBarrier tuvo problemas ", e);
-                    }
-                }
-            });
-        } 
+//    	int nThreads = 10;
+//		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
+//        final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
+//        for (int i = 0; i < nThreads; i++) {
+//            newScheduledThreadPool.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        cyclicBarrier.await();
+//                        UseCase.execute(generadorDeDatos, CARGAR_JUGADOR);
+//                    } catch (Exception e) {
+//                        throw new RuntimeException("el cyclicBarrier tuvo problemas ", e);
+//                    }
+//                }
+//            });
+//        } 
 	}
 
 }
