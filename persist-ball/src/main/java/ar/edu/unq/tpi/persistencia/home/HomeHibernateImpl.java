@@ -1,7 +1,7 @@
 package ar.edu.unq.tpi.persistencia.home;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -104,7 +104,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T>{
         return clazz;
     }
 
-	public T getByNameAndDate(String equipo1, String equipo2, Date date) {
+	public T getByNameAndDate(String equipo1, String equipo2, GregorianCalendar date) {
 		try {
             Query query = this.session().createQuery(
                     "FROM " + this.getPersistentClass().getName() + " where (equipo1.nombre = :name1 and equipo2.nombre = :name2 or" +

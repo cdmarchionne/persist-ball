@@ -3,6 +3,7 @@ package ar.edu.unq.tpi.persistencia.bean;
 import static org.mockito.Mockito.mock;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,17 +23,17 @@ public class TestPartidoSimple {
 	
 	@Test
 	public void testGanadorEquipo1(){
-		partidoSimple.simularPartido(3, 2, new Date());
+		partidoSimple.simularPartido(3, 2, new GregorianCalendar());
 		Assert.assertEquals("", equipo1, partidoSimple.getGanador());
 	}
 	@Test
 	public void testGanadorEquipo2(){
-		partidoSimple.simularPartido(1, 4, new Date());
+		partidoSimple.simularPartido(1, 4, new GregorianCalendar());
 		Assert.assertEquals("", equipo2, partidoSimple.getGanador());
 	}
 	@Test
 	public void testEmpate(){
-		partidoSimple.simularPartido(2, 2, new Date());
+		partidoSimple.simularPartido(2, 2, new GregorianCalendar());
 		Assert.assertEquals("", null, partidoSimple.getGanador());
 	}
 }

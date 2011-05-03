@@ -1,6 +1,7 @@
 package ar.edu.unq.tpi.persistencia.bean;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ public class PartidoSimple extends Partido {
     private int golesEquipo1, golesEquipo2;
 
     @Temporal(value = TemporalType.DATE)
-    private Date fecha;
+    private Calendar fecha;
 
     public PartidoSimple() {
     }
@@ -37,7 +38,7 @@ public class PartidoSimple extends Partido {
         return null;
     }
 
-    public void simularPartido(final int golesEquipo1, final int golesEquipo2, final Date date) {
+    public void simularPartido(final int golesEquipo1, final int golesEquipo2, final GregorianCalendar date) {
         this.golesEquipo1 = golesEquipo1;
         this.golesEquipo2 = golesEquipo2;
         this.fecha = date;
@@ -67,11 +68,11 @@ public class PartidoSimple extends Partido {
         this.golesEquipo2 = golesEquipo2;
     }
 
-	public Date getFecha() {
+	public Calendar getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date date) {
+	public void setFecha(Calendar date) {
 		this.fecha = date;
 	}
 

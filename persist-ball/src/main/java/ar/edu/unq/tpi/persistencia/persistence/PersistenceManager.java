@@ -26,7 +26,7 @@ public class PersistenceManager {
     }
 
     private PersistenceManager() {
-         this.initializeSchema();
+//         this.initializeSchema();
         this.build();
     }
 

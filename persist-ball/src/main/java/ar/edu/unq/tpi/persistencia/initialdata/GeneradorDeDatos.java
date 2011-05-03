@@ -2,7 +2,7 @@ package ar.edu.unq.tpi.persistencia.initialdata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
@@ -25,7 +25,7 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_EQUIPO_Y_GUARDAR_FORMACION = "cargarEquipoYGuardarFormacion";
 	public static final String CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE = "cargarEquiposYJugarPartidoSimple";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA = "cargarPartidosSimplesYCrearPartidoCopa";
-	public static final String CARGAR_JUGADORES_CONCURRENTEMENTE = "cargarJugadoresConcurrentemente";
+	public static final String CARGAR_JUGADOR = "cargarJugador";
 
     public  void generarEquiposConJugadores() {
         final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
@@ -77,7 +77,7 @@ public class GeneradorDeDatos {
 		homeFormacion.save(formacionRiver);
     }
     
-    public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2, Date date) {
+    public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2, GregorianCalendar date) {
         final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
         Equipo equipo1 = home.getByName(nombreEquipo1);
         Equipo equipo2 = home.getByName(nombreEquipo2);
@@ -86,7 +86,7 @@ public class GeneradorDeDatos {
         HomesHibernateRepository.getInstance().getHome(PartidoSimple.class).save(partido);
     }
     
-    public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, Date date1, Date date2) {
+    public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, GregorianCalendar date1, GregorianCalendar date2) {
         final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
         PartidoSimple partido1 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date1);
         PartidoSimple partido2 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date2);
@@ -94,20 +94,20 @@ public class GeneradorDeDatos {
         partidoCopa.simularPartido(partido1, partido2);
         HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
     }
+       
 
 	public  void cargarJugador() {
     	HomesHibernateRepository.getInstance().getHome(Jugador.class).save(new Jugador("Jugador "));
     }
 
-	@SuppressWarnings("deprecation")
 	public static void main(final String[] args) {
     	final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
     	
     	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
     	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
-    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new Date("2011/5/5"));
-    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new Date("2011/6/5"));
-    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("2011/5/5"), new Date("2011/6/5"));
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new GregorianCalendar(2011,5,5));
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new GregorianCalendar(2011,6,5));
+    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5));
     	
 //    	int nThreads = 10;
 //		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
