@@ -36,11 +36,11 @@ public class TestPartidoCopa {
 
     @Test
     public void testGanadorConPenales() {
-        when(partidoSimple1.getGolesEquipo1()).thenReturn(5);
-        when(partidoSimple1.getGolesEquipo2()).thenReturn(2);
+        when(partidoSimple1.getGolesEquipo(equipo1)).thenReturn(5);
+        when(partidoSimple1.getGolesEquipo(equipo2)).thenReturn(2);
 
-        when(partidoSimple2.getGolesEquipo1()).thenReturn(2);
-        when(partidoSimple2.getGolesEquipo2()).thenReturn(5);
+        when(partidoSimple2.getGolesEquipo(equipo1)).thenReturn(2);
+        when(partidoSimple2.getGolesEquipo(equipo2)).thenReturn(5);
 
         partidoCopa.simularPartido(partidoSimple1, partidoSimple2, 5, 4);
 
