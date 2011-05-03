@@ -86,12 +86,12 @@ public class GeneradorDeDatos {
         HomesHibernateRepository.getInstance().getHome(PartidoSimple.class).save(partido);
     }
     
-    public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, GregorianCalendar date1, GregorianCalendar date2) {
+    public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, GregorianCalendar date1, GregorianCalendar date2, Integer penales1, Integer penales2) {
         final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
         PartidoSimple partido1 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date1);
         PartidoSimple partido2 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date2);
         PartidoCopa partidoCopa = new PartidoCopa(partido1.getEquipo1(), partido1.getEquipo2());
-        partidoCopa.simularPartido(partido1, partido2);
+        partidoCopa.simularPartido(partido1, partido2, penales1, penales2);
         HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
     }
        
