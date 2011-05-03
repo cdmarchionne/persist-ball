@@ -3,9 +3,7 @@ package ar.edu.unq.tpi.persistencia.home;
 import java.io.Serializable;
 import java.util.List;
 
-import ar.edu.unq.tpi.persistencia.enums.PersistenObject;
-
-public interface Home<T extends PersistenObject> {
+public interface Home<T> {
 
 
     public void delete(final T pgo);

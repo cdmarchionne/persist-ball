@@ -22,7 +22,6 @@ public class UseCase {
 	public static void execute(TransactionManager transactionManager, Object object, String metodo, Object...objects){
 		UnitOfWork unitOfWork = PersistenceManager.getInstance().initUnitOfWork(transactionManager);
 		try {
-			
 			unitOfWork.getTransaction().begin();
 			ReflectionUtils.invokeMethod(object, metodo,objects);
 			unitOfWork.commit();
