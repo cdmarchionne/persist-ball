@@ -1,4 +1,4 @@
-package ar.edu.unq.tpi.persistencia.utils;
+package ar.edu.unq.tpi.persistencia.initialdata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +14,12 @@ import ar.edu.unq.tpi.persistencia.bean.PartidoCopa;
 import ar.edu.unq.tpi.persistencia.bean.PartidoSimple;
 import ar.edu.unq.tpi.persistencia.bean.Tecnico;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
-import ar.edu.unq.tpi.persistencia.home.Home;
+import ar.edu.unq.tpi.persistencia.home.HomeHibernateImpl;
+import ar.edu.unq.tpi.persistencia.home.HomesHibernateRepository;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 import ar.edu.unq.tpi.persistencia.logic.FormacionStrategyImpl;
+import ar.edu.unq.tpi.persistencia.persistence.UseCase;
+import ar.edu.unq.tpi.persistencia.utils.JugadorBuilder;
 
 public class GeneradorDeDatos {
 	
@@ -24,10 +27,10 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_EQUIPO_Y_GUARDAR_FORMACION = "cargarEquipoYGuardarFormacion";
 	public static final String CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE = "cargarEquiposYJugarPartidoSimple";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA = "cargarPartidosSimplesYCrearPartidoCopa";
-	public static final String CARGAR_JUGADORES_CONCURRENTEMENTE = "cargarJugadoresConcurrentemente";
+	public static final String CARGAR_JUGADOR = "cargarJugador";
 
     public  void generarEquiposConJugadores() {
-        final Home<Equipo> home = new Home<Equipo>(Equipo.class);
+        final HomeHibernateImpl<Equipo> home = new HomeHibernateImpl<Equipo>(Equipo.class);
         
         Equipo boca = createEquipo("Boca", "Bilardo");
         Equipo river = createEquipo("River", "Franchela");
@@ -64,8 +67,8 @@ public class GeneradorDeDatos {
     }
 
     public  void cargarEquipoYGuardarFormacion() {
-    	Home<Formacion> homeFormacion = new Home<Formacion>(Formacion.class);
-        final Home<Equipo> homeEquipo = new Home<Equipo>(Equipo.class);
+    	HomeHibernateImpl<Formacion> homeFormacion = new HomeHibernateImpl<Formacion>(Formacion.class);
+        final HomeHibernateImpl<Equipo> homeEquipo = new HomeHibernateImpl<Equipo>(Equipo.class);
 
         Equipo boca = homeEquipo.getByName("Boca");
         Equipo river = homeEquipo.getByName("River");
@@ -77,52 +80,54 @@ public class GeneradorDeDatos {
     }
     
     public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1, String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2, Date date) {
-        final Home<Equipo> home = new Home<Equipo>(Equipo.class);
+        final HomeHibernateImpl<Equipo> home = new HomeHibernateImpl<Equipo>(Equipo.class);
         Equipo equipo1 = home.getByName(nombreEquipo1);
         Equipo equipo2 = home.getByName(nombreEquipo2);
         PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
         partido.simularPartido(golesEquipo1, golesEquipo2, date);
-        new Home<PartidoSimple>(PartidoSimple.class).save(partido);
+        new HomeHibernateImpl<PartidoSimple>(PartidoSimple.class).save(partido);
     }
     
     public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, Date date1, Date date2) {
-        final Home<PartidoSimple> home = new Home<PartidoSimple>(PartidoSimple.class);
+        final HomeHibernateImpl<PartidoSimple> home = new HomeHibernateImpl<PartidoSimple>(PartidoSimple.class);
         PartidoSimple partido1 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date1);
         PartidoSimple partido2 = home.getByNameAndDate(nombreEquipo1, nombreEquipo2, date2);
         PartidoCopa partidoCopa = new PartidoCopa(partido1.getEquipo1(), partido1.getEquipo2());
         partidoCopa.simularPartido(partido1, partido2);
-        new Home<PartidoCopa>(PartidoCopa.class).save(partidoCopa);
+        new HomeHibernateImpl<PartidoCopa>(PartidoCopa.class).save(partidoCopa);
+    }
+    
+    
+
+    public  void cargarJugador() {
+    	HomesHibernateRepository.getInstance().getHome(Jugador.class).save(new Jugador("Jugador "));
     }
 
-    public  void cargarJugadoresConcurrentemente() {
-        final Home<Jugador> home = new Home<Jugador>(Jugador.class);
-        ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(90);
-        final CyclicBarrier cyclicBarrier = new CyclicBarrier(90);
-        for (int i = 0; i < 90; i++) {
+	public static void main(final String[] args) {
+    	final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
+    	
+//    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
+//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
+//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new Date("2011/5/5"));
+//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new Date("2011/6/5"));
+//    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("2011/5/5"), new Date("2011/6/5"));
+    	
+    	int nThreads = 10;
+		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
+        final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
+        for (int i = 0; i < nThreads; i++) {
             newScheduledThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         cyclicBarrier.await();
-                        home.save(new Jugador("Jugador "));
+                        UseCase.execute(generadorDeDatos, CARGAR_JUGADOR);
                     } catch (Exception e) {
                         throw new RuntimeException("el cyclicBarrier tuvo problemas ", e);
                     }
                 }
             });
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-	public static void main(final String[] args) {
-    	GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
-    	
-    	CasoDeUso.ejecutar(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
-    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
-    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new Date("2011/5/5"));
-    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new Date("2011/6/5"));
-    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new Date("2011/5/5"), new Date("2011/6/5"));
-//    	CasoDeUso.ejecutar(generadorDeDatos, CARGAR_JUGADORES_CONCURRENTEMENTE); //probar concurrencia
+        } 
 	}
 
 }

@@ -1,4 +1,4 @@
-package ar.edu.unq.tpi.persistencia.utils;
+package ar.edu.unq.tpi.persistencia.persistence;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -6,11 +6,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+
 public class PersistenceManager {
 
     private static PersistenceManager INSTANCE;
 
     private org.hibernate.classic.Session session;
+    private UnitOfWork unitOfWork;
 
     private AnnotationConfiguration cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
 
@@ -57,8 +59,14 @@ public class PersistenceManager {
         }
         return session;
     }
+    
+    public UnitOfWork initUnitOfWork(TransactionManager transactionManager){
+    	unitOfWork = new UnitOfWork(getNewSession(), transactionManager);
+    	return unitOfWork;
+    }
 
-    /**
+
+	/**
      * This destroys the sessionFactory and forces hibernate to a full reload.
      */
     public void destroy() {
@@ -66,8 +74,12 @@ public class PersistenceManager {
     }
 
     public void openSession() {
-    	session = sessionFactory.openSession();
+    	session = getNewSession();
     }
+
+	public org.hibernate.classic.Session getNewSession() {
+		return sessionFactory.openSession();
+	}
     
     /**
      * Se hace try-cath por que hibernate tira {@link HibernateException}} en cualquier operacion 
@@ -79,5 +91,13 @@ public class PersistenceManager {
 		} catch (HibernateException e) {
 		}
     }
+
+	public void setUnitOfWork(UnitOfWork unitOfWork) {
+		this.unitOfWork = unitOfWork;
+	}
+
+	public UnitOfWork getUnitOfWork() {
+		return unitOfWork;
+	}
 
 }
