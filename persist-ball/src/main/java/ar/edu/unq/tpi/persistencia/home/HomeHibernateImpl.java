@@ -104,6 +104,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T>{
         return clazz;
     }
 
+    @SuppressWarnings("unchecked")
 	public T getByNameAndDate(String equipo1, String equipo2, GregorianCalendar date) {
 		try {
             Query query = this.session().createQuery(
@@ -113,7 +114,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T>{
             query.setParameter("name1", equipo1);
             query.setParameter("name2", equipo2);
             query.setParameter("date", date);
-            final T object = (T) query.uniqueResult();
+			final T object = (T) query.uniqueResult();
             if (object == null)
                 throw new UserException("No se encontro el objeto de la clase " + this.getPersistentClass().getName());
             return object;
