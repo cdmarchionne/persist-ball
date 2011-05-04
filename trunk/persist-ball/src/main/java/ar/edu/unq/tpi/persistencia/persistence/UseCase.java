@@ -25,7 +25,6 @@ public class UseCase {
 			unitOfWork.getTransaction().begin();
 			ReflectionUtils.invokeMethod(object, metodo,objects);
 			unitOfWork.commit();
-			
 		}catch (Exception e) {
 			unitOfWork.rollback();
 			throw new UserException(e);

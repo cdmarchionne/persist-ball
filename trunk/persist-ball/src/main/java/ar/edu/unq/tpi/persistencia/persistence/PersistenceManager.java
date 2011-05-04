@@ -1,6 +1,5 @@
 package ar.edu.unq.tpi.persistencia.persistence;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -11,14 +10,13 @@ public class PersistenceManager {
 
     private static PersistenceManager INSTANCE;
 
-    private org.hibernate.classic.Session session;
-    private UnitOfWork unitOfWork;
+    private ThreadLocal<UnitOfWork> unitsOfWork = new ThreadLocal<UnitOfWork>();
 
     private AnnotationConfiguration cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
 
     private SessionFactory sessionFactory;
 
-    public static PersistenceManager getInstance() {
+    public synchronized static PersistenceManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new PersistenceManager();
         }
@@ -53,15 +51,9 @@ public class PersistenceManager {
         return sessionFactory;
     }
 
-    public Session getCurrentSession() {
-        if (session == null || !session.isOpen()) {
-            openSession();
-        }
-        return session;
-    }
-    
     public UnitOfWork initUnitOfWork(TransactionManager transactionManager){
-    	unitOfWork = new UnitOfWork(getNewSession(), transactionManager);
+    	UnitOfWork unitOfWork = new UnitOfWork(getNewSession(), transactionManager);
+    	this.unitsOfWork.set(unitOfWork);
     	return unitOfWork;
     }
 
@@ -73,31 +65,13 @@ public class PersistenceManager {
         INSTANCE = null;
     }
 
-    public void openSession() {
-    	session = getNewSession();
-    }
 
-	public org.hibernate.classic.Session getNewSession() {
+	public Session getNewSession() {
 		return sessionFactory.openSession();
-	}
-    
-    /**
-     * Se hace try-cath por que hibernate tira {@link HibernateException}} en cualquier operacion 
-     * asi se puede usar en un finally sin hacer try-catch
-     */
-    public void closeSession() {
-    	try {
-    		session.close();
-		} catch (HibernateException e) {
-		}
-    }
-
-	public void setUnitOfWork(UnitOfWork unitOfWork) {
-		this.unitOfWork = unitOfWork;
 	}
 
 	public UnitOfWork getUnitOfWork() {
-		return unitOfWork;
+		return this.unitsOfWork.get();
 	}
 
 }
