@@ -5,7 +5,6 @@ import java.util.Map;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
-import ar.edu.unq.tpi.persistencia.bean.Partido;
 import ar.edu.unq.tpi.persistencia.bean.PartidoCopa;
 import ar.edu.unq.tpi.persistencia.bean.PartidoSimple;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;

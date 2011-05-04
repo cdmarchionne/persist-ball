@@ -3,9 +3,7 @@ package ar.edu.unq.tpi.persistencia.utils;
 import ar.edu.unq.tpi.persistencia.exception.UserException;
 
 
-/**
- * 
- */
+@SuppressWarnings("rawtypes")
 public class ReflectionUtils {
 
 
@@ -25,7 +23,7 @@ public class ReflectionUtils {
         }
     }
     
-    public static void invokeMethod(Object object, String method, Object[] args) {
+	public static void invokeMethod(Object object, String method, Object[] args) {
         Class[] clazz = new Class[args.length] ;
         int i = 0;
         for (Object object2 : args) {

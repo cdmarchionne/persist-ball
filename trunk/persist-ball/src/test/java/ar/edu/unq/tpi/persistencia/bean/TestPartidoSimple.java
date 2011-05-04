@@ -2,7 +2,6 @@ package ar.edu.unq.tpi.persistencia.bean;
 
 import static org.mockito.Mockito.mock;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.junit.Assert;

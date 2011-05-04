@@ -106,10 +106,10 @@ public class GeneradorDeDatos {
     	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
     	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
     	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new GregorianCalendar(2011,5,5));
-    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 1,new GregorianCalendar(2011,6,5));
-    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5));
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 2,new GregorianCalendar(2011,6,5));
+    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
     	
-//    	int nThreads = 10;
+//    	int nThreads = 50;
 //		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
 //        final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
 //        for (int i = 0; i < nThreads; i++) {
@@ -124,7 +124,8 @@ public class GeneradorDeDatos {
 //                    }
 //                }
 //            });
-//        } 
+//        }
+//        newScheduledThreadPool.shutdown();
 	}
 
 }
