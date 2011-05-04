@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
@@ -18,7 +15,6 @@ import ar.edu.unq.tpi.persistencia.home.HomeHibernateImpl;
 import ar.edu.unq.tpi.persistencia.home.HomesHibernateRepository;
 import ar.edu.unq.tpi.persistencia.logic.Formacion;
 import ar.edu.unq.tpi.persistencia.logic.FormacionStrategyImpl;
-import ar.edu.unq.tpi.persistencia.persistence.PersistenceManager;
 import ar.edu.unq.tpi.persistencia.persistence.UseCase;
 import ar.edu.unq.tpi.persistencia.utils.JugadorBuilder;
 
@@ -107,29 +103,29 @@ public class GeneradorDeDatos {
 	public static void main(final String[] args) {
     	final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
     	
-//    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
-//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
-//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new GregorianCalendar(2011,5,5));
-//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 2,new GregorianCalendar(2011,6,5));
-//    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
+    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new GregorianCalendar(2011,5,5));
+    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 2,new GregorianCalendar(2011,6,5));
+    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
     	
-    	int nThreads = 50;
-		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
-        final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
-        for (int i = 0; i < nThreads; i++) {
-            newScheduledThreadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        cyclicBarrier.await();
-                        UseCase.execute(generadorDeDatos, CARGAR_JUGADOR);
-                    } catch (Exception e) {
-                        throw new RuntimeException("el cyclicBarrier tuvo problemas ", e);
-                    }
-                }
-            });
-        }
-        newScheduledThreadPool.shutdown();
+//    	int nThreads = 50;
+//		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
+//        final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
+//        for (int i = 0; i < nThreads; i++) {
+//            newScheduledThreadPool.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        cyclicBarrier.await();
+//                        UseCase.execute(generadorDeDatos, CARGAR_JUGADOR);
+//                    } catch (Exception e) {
+//                        throw new RuntimeException("el cyclicBarrier tuvo problemas ", e);
+//                    }
+//                }
+//            });
+//        }
+//        newScheduledThreadPool.shutdown();
 	}
 
 }
