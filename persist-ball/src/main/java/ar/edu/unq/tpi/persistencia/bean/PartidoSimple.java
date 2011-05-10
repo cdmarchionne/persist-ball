@@ -51,6 +51,14 @@ public class PartidoSimple extends Partido {
             return this.getGolesEquipo2();
         throw new UserException("No se encontro el equipo buscado");
     }
+    
+    public boolean tieneLosMismosEquipos(PartidoSimple partidoSimple) {
+    	return (partidoSimple.getEquipo1().equals(this.getEquipo1()) ||
+    				partidoSimple.getEquipo1().equals(this.getEquipo2())) 
+    			  &&
+    		   (partidoSimple.getEquipo2().equals(this.getEquipo1()) ||
+    				partidoSimple.getEquipo2().equals(this.getEquipo2())); 
+    }
 
     public int getGolesEquipo1() {
         return golesEquipo1;
