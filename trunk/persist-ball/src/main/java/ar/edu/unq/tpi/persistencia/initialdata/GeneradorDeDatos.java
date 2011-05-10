@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 import ar.edu.unq.tpi.persistencia.bean.Equipo;
 import ar.edu.unq.tpi.persistencia.bean.Jugador;
@@ -26,6 +27,13 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE = "cargarEquiposYJugarPartidoSimple";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA = "cargarPartidosSimplesYCrearPartidoCopa";
 	public static final String CARGAR_JUGADOR = "cargarJugador";
+	public static final String GENERAR_N_PARTIDOS_SIMPLES = "generarNPartidosSimples";
+	
+	public static final	String BOCA = "Boca";
+	public static final String RIVER = "River";
+	public static final String RACING = "Racing";
+	public static final String INDEPENDIENTE = "Independiente";
+	
 
     public  void generarEquiposConJugadores() {
         final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
@@ -81,10 +89,18 @@ public class GeneradorDeDatos {
         final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
         Equipo equipo1 = home.getByName(nombreEquipo1);
         Equipo equipo2 = home.getByName(nombreEquipo2);
-        PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
+        persistirPartidoSimple(golesEquipo1, golesEquipo2, date, equipo1,
+				equipo2);
+    }
+
+
+	private static void persistirPartidoSimple(Integer golesEquipo1,
+			Integer golesEquipo2, GregorianCalendar date, Equipo equipo1,
+			Equipo equipo2) {
+		PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
         partido.simularPartido(golesEquipo1, golesEquipo2, date);
         HomesHibernateRepository.getInstance().getHome(PartidoSimple.class).save(partido);
-    }
+	}
     
     public static void cargarPartidosSimplesYCrearPartidoCopa(String nombreEquipo1, String nombreEquipo2, GregorianCalendar date1, GregorianCalendar date2, Integer penales1, Integer penales2) {
         final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
@@ -94,7 +110,37 @@ public class GeneradorDeDatos {
         partidoCopa.simularPartido(partido1, partido2, penales1, penales2);
         HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
     }
+    
+    public static void generarNPartidosSimples(Integer n){
+    	final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
+    	
+    	List<Equipo> equipos = home.getAll(); 
+   	
+    	Random random = new Random();
+    	
+    	Par<Equipo, Equipo> rivales;
+    	for (int i = 0; i < n; i++) {
+    		rivales = gerRamdonRivales(equipos);
+			persistirPartidoSimple(random.nextInt(5), random.nextInt(5), new GregorianCalendar(random.nextInt(1000)+2000, random.nextInt(12), random.nextInt(28)), rivales.getX(), rivales.getY());
+		}
+    	
+    }
        
+
+	private static Par<Equipo, Equipo> gerRamdonRivales(List<Equipo> equipos) {
+		Random random = new Random();
+		int cantEquipos = equipos.size();
+		int random1 = random.nextInt(cantEquipos);
+		int random2 = random.nextInt(cantEquipos );
+		Equipo equipo1 = equipos.get(random1);
+		while (random1 == random2) {
+			random2 = random.nextInt(cantEquipos);
+		}
+		Equipo equipo2 = equipos.get(random2);
+		
+		return new Par<Equipo, Equipo>(equipo1, equipo2);
+	}
+
 
 	public  void cargarJugador() {
     	HomesHibernateRepository.getInstance().getHome(Jugador.class).save(new Jugador("Jugador "));
@@ -103,11 +149,14 @@ public class GeneradorDeDatos {
 	public static void main(final String[] args) {
     	final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
     	
-    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
-    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
-    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 3, 2, new GregorianCalendar(2011,5,5));
-    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,"Boca", "River", 1, 2,new GregorianCalendar(2011,6,5));
-    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,"Boca", "River", new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
+//    	UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
+//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
+//    	
+//		UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 3, 2, new GregorianCalendar(2011,5,5));
+//    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 1, 2,new GregorianCalendar(2011,6,5));
+//    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,BOCA, RIVER, new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
+    	
+//    	UseCase.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 30000);
     	
 //    	int nThreads = 50;
 //		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);

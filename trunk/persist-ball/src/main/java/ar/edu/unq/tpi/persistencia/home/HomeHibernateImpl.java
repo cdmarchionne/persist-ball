@@ -93,7 +93,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T>{
     @Override
 	public List<T> getAll() {
         Session session = this.session();
-        return  session.createQuery("from " + this.getPersistentClass()).list();
+        return  session.createQuery("from " + this.getPersistentClass().getSimpleName()).list();
     }
 
     protected Session session() {
