@@ -112,6 +112,46 @@ public class GeneradorDeDatos {
         HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
     }
     
+    public static List<PartidoSimple> cargarTodosLosPartidosSimples() {
+    	final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
+    	return home.getAll();
+    }
+    
+    public static void cargarPartidosSimplesYGenerarNPartidosDeCopa(int n) {
+    	List<PartidoSimple> partidosSimples = cargarTodosLosPartidosSimples();
+        
+    	for (int i = 0; i < n; i++) {
+    		// BUSCAR 2 PARTIDOS SIMPLES
+    		int size = partidosSimples.size();
+    		int ida = ((int) Math.random() * size);
+    		int vuelta = ((int) Math.random() * size);
+    		PartidoSimple partido1 = partidosSimples.get(ida) ;
+    		PartidoSimple partido2 = partidosSimples.get(vuelta) ;
+    		while (partido1.tieneLosMismosEquipos(partido2) &&
+    				partido1.getFecha().equals(partido2.getFecha())
+    				||
+    				! partido1.tieneLosMismosEquipos(partido2)){
+    			vuelta = ((int) Math.random() * size);
+    			partido2 = partidosSimples.get(vuelta) ;
+    		}
+
+    		PartidoCopa partidoCopa = new PartidoCopa(partido1.getEquipo1(), partido1.getEquipo2());
+    		
+    		// GENERAR PENALES
+    		int penales1 = ((int) Math.random() * 5) + 1;
+    		int penales2 = ((int) Math.random() * 5) + 1;
+    		while (penales2 == penales1){
+    			penales2 = ((int) Math.random() * 5) + 1;
+    		}
+    		
+    		// SIMULAR PARTIDO
+            partidoCopa.simularPartido(partido1, partido2, penales1, penales2);
+            
+            // GUARDARLO
+            HomesHibernateRepository.getInstance().getHome(PartidoCopa.class).save(partidoCopa);
+		}
+    }
+
     public static void generarNPartidosSimples(Integer n){
     	final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
     	
