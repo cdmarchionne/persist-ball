@@ -1,4 +1,4 @@
-package ar.edu.unq.tpi.persistencia.initialdata;
+package ar.edu.unq.tpi.persistencia.utils;
 
 public class Par<X ,Y> {
 	private X x;

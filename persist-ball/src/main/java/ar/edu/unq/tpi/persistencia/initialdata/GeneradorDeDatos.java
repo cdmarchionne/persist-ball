@@ -18,6 +18,7 @@ import ar.edu.unq.tpi.persistencia.logic.Formacion;
 import ar.edu.unq.tpi.persistencia.logic.FormacionStrategyImpl;
 import ar.edu.unq.tpi.persistencia.persistence.UseCase;
 import ar.edu.unq.tpi.persistencia.utils.JugadorBuilder;
+import ar.edu.unq.tpi.persistencia.utils.Par;
 
 @SuppressWarnings("unchecked")
 public class GeneradorDeDatos {
@@ -120,14 +121,14 @@ public class GeneradorDeDatos {
     	
     	Par<Equipo, Equipo> rivales;
     	for (int i = 0; i < n; i++) {
-    		rivales = gerRamdonRivales(equipos);
+    		rivales = getRamdonRivales(equipos);
 			persistirPartidoSimple(random.nextInt(5), random.nextInt(5), new GregorianCalendar(random.nextInt(1000)+2000, random.nextInt(12), random.nextInt(28)), rivales.getX(), rivales.getY());
 		}
     	
     }
        
 
-	private static Par<Equipo, Equipo> gerRamdonRivales(List<Equipo> equipos) {
+	private static Par<Equipo, Equipo> getRamdonRivales(List<Equipo> equipos) {
 		Random random = new Random();
 		int cantEquipos = equipos.size();
 		int random1 = random.nextInt(cantEquipos);
@@ -156,7 +157,7 @@ public class GeneradorDeDatos {
 //    	UseCase.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 1, 2,new GregorianCalendar(2011,6,5));
 //    	UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,BOCA, RIVER, new GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
     	
-//    	UseCase.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 30000);
+    	UseCase.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 30000);
     	
 //    	int nThreads = 50;
 //		ExecutorService newScheduledThreadPool = Executors.newFixedThreadPool(nThreads);
