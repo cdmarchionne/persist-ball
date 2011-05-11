@@ -25,7 +25,6 @@ import ar.edu.unq.tpi.persistencia.utils.Par;
 @SuppressWarnings("unchecked")
 public class GeneradorDeDatos {
 
-	public static final String GENERAR_EQUPOS_CON_JUGADORES = "generarEquiposConJugadores";
 	public static final String CARGAR_EQUIPO_Y_GUARDAR_FORMACION = "cargarEquipoYGuardarFormacion";
 	public static final String CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE = "cargarEquiposYJugarPartidoSimple";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA = "cargarPartidosSimplesYCrearPartidoCopa";
@@ -49,45 +48,59 @@ public class GeneradorDeDatos {
 
 	private static final String TECNICO_INDEPENDIENTE = "Bochinni";
 
-	public static final String GENERAR_EQUPOS_FULL = "generarEquiposFull";
+	public static final String GENERAR_EQUIPOS_FULL = "generarEquiposFull";
+	public static final String GENERAR_4_EQUIPOS = "generar4EquiposFull";
 	public static final int TAMANIO_DE_PAGINA = 100;;
 
-	public void generarEquiposFull() {
-		final HomeHibernateImpl<Equipo> home = HomesHibernateRepository
-				.getInstance().getHome(Equipo.class);
-		Random random = new Random();
+	 public void generarEquiposFull(final Integer cantidad) {
+	        List<String> equipos = new ArrayList<String>();
+	        List<String> tecnicos = new ArrayList<String>();
 
-		List<String> equipos = new ArrayList<String>();
-		List<String> tecnicos = new ArrayList<String>();
-		List<Jugador> jugadores;
-		List<Posicion> posiciones;
-		equipos.add(BOCA);
-		tecnicos.add(TECNICO_BOCA);
-		equipos.add(RIVER);
-		tecnicos.add(TECNICO_RIVER);
-		equipos.add(RACING);
-		tecnicos.add(TECNICO_RACING);
-		equipos.add(INDEPENDIENTE);
-		tecnicos.add(TECNICO_INDEPENDIENTE);
+	        for (int i = 0; i < cantidad; i++) {
+	            equipos.add("Equipo" + (i + 1));
+	            tecnicos.add("TecnicoDel" + equipos.get(i));
+	        }
+	        generarJugadoresPorEquipos(equipos, tecnicos);
 
-		for (int i = 0; i < equipos.size(); i++) {
-			Equipo equipo = createEquipo(equipos.get(i), tecnicos.get(i));
-			posiciones = ListUtils.posicionRandom();
-			jugadores = new ArrayList<Jugador>();
+	    }
 
-			for (int j = 0; j < posiciones.size(); j++) {
-				Posicion pos = (Posicion) ListUtils.random(posiciones);
-				jugadores.add(new JugadorBuilder()
-						.withHabilidad(pos,
-								random.nextInt(Habilidad.HABILIDAD_MAXIMA))
-						.withName("Jugador" + equipo.getNombre() + (j + 1))
-						.build());
-			}
-			equipo.setJugadores(jugadores);
-			home.save(equipo);
-		}
-	}
+	    public void generar4EquiposFull() {
 
+	        List<String> equipos = new ArrayList<String>();
+	        List<String> tecnicos = new ArrayList<String>();
+	        equipos.add(BOCA);
+	        tecnicos.add(TECNICO_BOCA);
+	        equipos.add(RIVER);
+	        tecnicos.add(TECNICO_RIVER);
+	        equipos.add(RACING);
+	        tecnicos.add(TECNICO_RACING);
+	        equipos.add(INDEPENDIENTE);
+	        tecnicos.add(TECNICO_INDEPENDIENTE);
+
+	        generarJugadoresPorEquipos(equipos, tecnicos);
+	    }
+
+	    private void generarJugadoresPorEquipos(final List<String> equipos, final List<String> tecnicos) {
+	        final HomeHibernateImpl<Equipo> home = HomesHibernateRepository.getInstance().getHome(Equipo.class);
+	        Random random = new Random();
+	        List<Jugador> jugadores;
+	        List<Posicion> posiciones;
+
+	        for (int i = 0; i < equipos.size(); i++) {
+	            Equipo equipo = createEquipo(equipos.get(i), tecnicos.get(i));
+	            posiciones = ListUtils.posicionRandom();
+	            jugadores = new ArrayList<Jugador>();
+
+	            for (int j = 0; j < posiciones.size(); j++) {
+	                Posicion pos = (Posicion) ListUtils.random(posiciones);
+	                jugadores.add(new JugadorBuilder().withHabilidad(pos, random.nextInt(Habilidad.HABILIDAD_MAXIMA))
+	                        .withName("Jugador" + equipo.getNombre() + (j + 1)).build());
+	            }
+	            equipo.setJugadores(jugadores);
+	            home.save(equipo);
+	        }
+	    }
+	
 	public void generarEquiposConJugadores() {
 		final HomeHibernateImpl<Equipo> home = HomesHibernateRepository
 				.getInstance().getHome(Equipo.class);
@@ -288,7 +301,7 @@ public class GeneradorDeDatos {
 	public static void main(final String[] args) {
 		final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
 		//
-		UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_CON_JUGADORES);
+		UseCase.execute(generadorDeDatos, GENERAR_4_EQUIPOS);
 		UseCase.execute(generadorDeDatos, CARGAR_EQUIPO_Y_GUARDAR_FORMACION);
 		//
 		// UseCase.execute(generadorDeDatos,
@@ -301,10 +314,9 @@ public class GeneradorDeDatos {
 		// CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,BOCA, RIVER, new
 		// GregorianCalendar(2011,5,5), new GregorianCalendar(2011,6,5), 5, 4);
 
-		UseCase.execute(generadorDeDatos, GENERAR_EQUPOS_FULL);
+		UseCase.execute(generadorDeDatos, GENERAR_EQUIPOS_FULL, 10);
 		UseCase.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 350);
-		UseCase.execute(generadorDeDatos,
-				CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 201);
+		UseCase.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 201);
 
 		// int nThreads = 50;
 		// ExecutorService newScheduledThreadPool =
