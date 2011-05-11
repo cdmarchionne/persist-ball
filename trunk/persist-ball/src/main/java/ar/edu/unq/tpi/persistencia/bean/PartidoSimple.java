@@ -53,11 +53,17 @@ public class PartidoSimple extends Partido {
     }
     
     public boolean tieneLosMismosEquipos(PartidoSimple partidoSimple) {
-    	return (partidoSimple.getEquipo1().equals(this.getEquipo1()) ||
-    				partidoSimple.getEquipo1().equals(this.getEquipo2())) 
+//    	return (partidoSimple.getEquipo1().equals(this.getEquipo1()) ||
+//    			partidoSimple.getEquipo1().equals(this.getEquipo2())) 
+//    			&&
+//    			(partidoSimple.getEquipo2().equals(this.getEquipo1()) ||
+//    					partidoSimple.getEquipo2().equals(this.getEquipo2())); 
+    	return (partidoSimple.getEquipo1().equals(this.getEquipo1()) &&
+    			partidoSimple.getEquipo2().equals(this.getEquipo2())
+    			||
+    				(partidoSimple.getEquipo1().equals(this.getEquipo2()) 
     			  &&
-    		   (partidoSimple.getEquipo2().equals(this.getEquipo1()) ||
-    				partidoSimple.getEquipo2().equals(this.getEquipo2())); 
+    		   partidoSimple.getEquipo2().equals(this.getEquipo1()))); 
     }
 
     public int getGolesEquipo1() {
