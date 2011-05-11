@@ -10,33 +10,39 @@ import ar.edu.unq.tpi.persistencia.bean.PersistentObject;
 import ar.edu.unq.tpi.persistencia.enums.Posicion;
 
 @Entity
-@Table(name="Habilidad")
+@Table(name = "Habilidad")
 public abstract class Habilidad extends PersistentObject {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
+    public static final int HABILIDAD_MAXIMA = 10;
+
     @Enumerated(EnumType.STRING)
-	private Posicion posicion;
+    private Posicion posicion;
+
     @Basic
-	private int valor;
-    
+    private int valor;
 
-	public abstract int getValor(Posicion posicion);
+    public abstract int getValor(Posicion posicion);
 
+    public void setPosicion(final Posicion posicion) {
+        this.posicion = posicion;
+    }
 
-	public void setPosicion(Posicion posicion) {
-		this.posicion = posicion;
-	}
+    public Posicion getPosicion() {
+        return posicion;
+    }
 
-	public Posicion getPosicion() {
-		return posicion;
-	}
+    public void setValor(final int valor) {
+        if (valor > HABILIDAD_MAXIMA) {
+            this.valor = HABILIDAD_MAXIMA;
+        } else {
+            this.valor = valor;
+        }
 
-	public void setValor(int valor) {
-		this.valor = valor;
-	}
+    }
 
-	protected int getValor() {
-		return valor;
-	}
+    protected int getValor() {
+        return valor;
+    }
 
 }
