@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ar.edu.unq.tpi</groupId>
+	<artifactId>persist-ball</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>ar.edu.unq.tpi</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<scm>
+		<connection>scm:svn:https://devapp-doppler-effect.googlecode.com/svn/trunk/dopplereffect</connection>
+		<url>https://devapp-doppler-effect.googlecode.com/svn/trunk</url>
+	</scm>
+
+	<name>${artifactId}</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>persist-ball.domain</module>
+		<module>persist-ball.persistencia</module>
+	</modules>
+</project>
