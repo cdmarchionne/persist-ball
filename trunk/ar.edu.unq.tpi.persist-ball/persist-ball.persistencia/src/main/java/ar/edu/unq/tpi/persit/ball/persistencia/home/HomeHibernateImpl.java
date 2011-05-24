@@ -23,8 +23,8 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 
 	private Class<T> clazz;
 
-	public HomeHibernateImpl(final Class<T> anClass) {
-		this.clazz = anClass;
+	public HomeHibernateImpl(final Class<T> aClass) {
+		this.clazz = aClass;
 	}
 
 	@Override
@@ -76,8 +76,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 	@Override
 	public T getById(final Serializable id) {
 		try {
-			final T object = (T) this.session().get(this.getPersistentClass(),
-					id);
+			final T object = (T) this.session().get(this.getPersistentClass(),id);
 			if (object == null)
 				throw new UserException("No se encontro un objeto de la clase "
 						+ this.getPersistentClass().getName() + " con id " + id);
@@ -92,12 +91,10 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 	@Override
 	public T getByName(final String name) {
 		try {
-			T object = createCriteria().add(new CriteriaHibernateImpl().equals("nombre", name))
-					.uniqueResult();
+			T object = createCriteria().add(new CriteriaHibernateImpl().equals("nombre", name)).uniqueResult();
 			if (object == null)
 				throw new UserException("No se encontro un objeto de la clase "
-						+ this.getPersistentClass().getName() + " con nombre "
-						+ name);
+						+ this.getPersistentClass().getName() + " con nombre "	+ name);
 			logear("Looking for the name ", name);
 			return object;
 		} catch (final HibernateException e) {
@@ -118,9 +115,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 	}
 
 	public List<T> getPag(int desde, int hasta) {
-//		logear("Paged desde "+desde, "hasta "+ hasta);
-		return createCriteria().setFirstResult(desde).setMaxresults(hasta)
-				.list();
+		return createCriteria().setFirstResult(desde).setMaxresults(hasta).list();
 	}
 
 	protected Session session() {

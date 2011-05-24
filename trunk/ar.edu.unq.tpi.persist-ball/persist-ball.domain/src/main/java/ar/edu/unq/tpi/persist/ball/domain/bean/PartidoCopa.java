@@ -1,8 +1,11 @@
 package ar.edu.unq.tpi.persist.ball.domain.bean;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -28,6 +31,8 @@ public class PartidoCopa extends Partido {
     }
 
     @Override
+	@ManyToOne(cascade=CascadeType.ALL)
+	@Access(AccessType.PROPERTY)
     public Equipo getGanador() {
 
         if (this.golesEquipo1() == this.golesEquipo2()) {
@@ -96,6 +101,9 @@ public class PartidoCopa extends Partido {
     public void simularPartido(final PartidoSimple partidoSimple1, final PartidoSimple partidoSimple2) {
         this.simularPartido(partidoSimple1, partidoSimple2, 0, 0);
 
+    }
+    
+    public void setGanador(Equipo equipo) {
     }
 
 }

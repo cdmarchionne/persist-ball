@@ -61,5 +61,10 @@ public class Equipo extends PersistentObject implements Nombrable {
     public List<Jugador> getJugadores() {
         return jugadores;
     }
+    
+    @Override
+    public String toString() {
+    	return getNombre();
+    }
 
 }

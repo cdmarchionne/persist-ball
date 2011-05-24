@@ -1,24 +1,25 @@
 package ar.edu.unq.tpi.persist.ball.domain.utils;
 
 public class Par<X ,Y> {
-	private X x;
-	private Y y;
+	private X first;
+	private Y second;
 	
 	public Par(X x, Y y) {
-		this.x = x;
-		this.y = y;
+		this.first = x;
+		this.second = y;
 	}
 	
-	public void setY(Y y) {
-		this.y = y;
+	public void setFirst(X x) {
+		this.first = x;
 	}
-	public Y getY() {
-		return y;
+	public X getFirst() {
+		return first;
 	}
-	public void setX(X x) {
-		this.x = x;
+	
+	public void setSecond(Y y) {
+		this.second = y;
 	}
-	public X getX() {
-		return x;
+	public Y getSecond() {
+		return second;
 	}
 }
