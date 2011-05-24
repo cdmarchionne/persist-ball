@@ -355,7 +355,6 @@ public class GeneradorDeDatos {
 		PartidoSimpleHome partidoHome = (PartidoSimpleHome) HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
 		
 		DatosHistoricos datosHistoricos = partidoHome.getDatosHistoricos(equipo1, equipo2);
-		System.out.println(datosHistoricos);
 		Logger.log(datosHistoricos);
 		
 	}
@@ -375,8 +374,8 @@ public class GeneradorDeDatos {
 //				 	new GregorianCalendar(2011,5,11), new GregorianCalendar(2011,6,5), 5, 4);
 
 //		UseCaseManager.execute(generadorDeDatos, GENERAR_EQUIPOS_FULL, 10);
-		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 300);
-		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 10);
+//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 300);
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 10);
 		UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA, RIVER);
 	}
 

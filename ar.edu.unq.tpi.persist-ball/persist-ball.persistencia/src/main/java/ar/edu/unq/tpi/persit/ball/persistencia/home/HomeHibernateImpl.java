@@ -17,11 +17,11 @@ import ar.edu.unq.tpi.persist.ball.domain.home.Home;
 import ar.edu.unq.tpi.persit.ball.persistencia.PersistenceManager;
 import ar.edu.unq.tpi.persit.ball.persistencia.criteria.hibernate.CriteriaHibernateImpl;
 import ar.edu.unq.tpi.persit.ball.persistencia.criteria.hibernate.CriteriaHibernateRestictions;
+import ar.edu.unq.tpi.persit.ball.persistencia.logger.Logger;
 
 public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 
 	private Class<T> clazz;
-	private static final Log LOG = LogFactory.getLog(HomeHibernateImpl.class);
 
 	public HomeHibernateImpl(final Class<T> anClass) {
 		this.clazz = anClass;
@@ -118,7 +118,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 	}
 
 	public List<T> getPag(int desde, int hasta) {
-		logear("Paged desde "+desde, "hasta "+ hasta);
+//		logear("Paged desde "+desde, "hasta "+ hasta);
 		return createCriteria().setFirstResult(desde).setMaxresults(hasta)
 				.list();
 	}
@@ -132,7 +132,7 @@ public class HomeHibernateImpl<T extends PersistentObject> implements Home<T> {
 	}
 	
 	protected void logear(String action, Object object){
-		LOG.debug(action +"   " + object);
+		Logger.log(action +"   " + object);
 	}
 
 }
