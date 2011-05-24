@@ -26,7 +26,7 @@ public class HomesHibernateRepository {
 		homes.put(Jugador.class, new HomeHibernateImpl<Jugador>(Jugador.class));
 		homes.put(Formacion.class, new HomeHibernateImpl<Formacion>(Formacion.class));
 		homes.put(PartidoSimple.class, new PartidoSimpleHome());
-		homes.put(PartidoCopa.class, new HomeHibernateImpl<PartidoCopa>(PartidoCopa.class));
+		homes.put(PartidoCopa.class, new PartidoCopaHome());
 	}
 	
 	public  HomeHibernateImpl getHome(Class clazz){

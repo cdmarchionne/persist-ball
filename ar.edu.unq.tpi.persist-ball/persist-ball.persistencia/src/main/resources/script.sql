@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS  `PartidoSimple` (
 	`golesEquipo2` INT(11),
 	`equipo1_id` INT(11),
 	`equipo2_id` INT(11),
+	`ganador_id` INT(11),
 	PRIMARY KEY (`id`),
 	KEY `FK_PartidoSimple_Equipo1` (`equipo1_id`),
 	KEY `FK_PartidoSimple_Equipo2` (`equipo2_id`),
@@ -146,14 +147,17 @@ CREATE TABLE IF NOT EXISTS  `PartidoCopa` (
 	`equipo2_id` INT(11),
 	`partidoIda_id` INT(11),
 	`partidoVuelta_id` INT(11),
+	`ganador_id` INT(11),
 	PRIMARY KEY (`id`),
 	KEY `FK_PartidoCopa_Equipo1` (`equipo1_id`),
 	KEY `FK_PartidoCopa_Equipo2` (`equipo2_id`),
 	KEY `FK_PartidoCopa_PartidoIda` (`partidoIda_id`),
 	KEY `FK_PartidoCopa_PartidoVueta` (`partidoVuelta_id`),
+	KEY `FK_PartidoCopa_EquipoGanador` (`ganador_id`),
 	CONSTRAINT `FK_PartidoCopa_Equipo1` FOREIGN KEY (`equipo1_id`) REFERENCES `Equipo` (`id`),
 	CONSTRAINT `FK_PartidoCopa_Equipo2` FOREIGN KEY (`equipo2_id`) REFERENCES `Equipo` (`id`),
 	CONSTRAINT `FK_PartidoCopa_PartidoIda` FOREIGN KEY (`partidoIda_id`) REFERENCES `PartidoSimple` (`id`),
+	CONSTRAINT `FK_PartidoCopa_EquipoGanador` FOREIGN KEY (`ganador_id`) REFERENCES `Equipo` (`id`),
 	CONSTRAINT `FK_PartidoCopa_PartidoVueta` FOREIGN KEY (`partidoVuelta_id`) REFERENCES `PartidoSimple` (`id`)
 )
 ENGINE = INNODB;

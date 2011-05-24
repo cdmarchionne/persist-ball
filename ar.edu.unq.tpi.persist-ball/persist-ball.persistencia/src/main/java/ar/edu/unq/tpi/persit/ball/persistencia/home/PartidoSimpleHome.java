@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Projections;
+import org.hibernate.impl.CriteriaImpl;
 
 import ar.edu.unq.tpi.persist.ball.domain.bean.Equipo;
 import ar.edu.unq.tpi.persist.ball.domain.bean.PartidoSimple;
@@ -53,7 +54,7 @@ public class PartidoSimpleHome extends HomeHibernateImpl<PartidoSimple>{
 								criteria.equals("equipo2", equipo1))))
 								
 				.addProjection(Projections.groupProperty("ganador"))
-				.addProjection(Projections.count("equipo1"))
+				.addProjection(Projections.rowCount())
 				.buildProjections()
 				.list();
 		return new DatosHistoricos((List<Object[]>) list);

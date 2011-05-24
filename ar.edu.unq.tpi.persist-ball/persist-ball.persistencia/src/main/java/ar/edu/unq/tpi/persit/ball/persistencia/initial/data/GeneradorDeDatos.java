@@ -27,9 +27,11 @@ import ar.edu.unq.tpi.persit.ball.persistencia.UseCase;
 import ar.edu.unq.tpi.persit.ball.persistencia.UseCaseManager;
 import ar.edu.unq.tpi.persit.ball.persistencia.home.HomeHibernateImpl;
 import ar.edu.unq.tpi.persit.ball.persistencia.home.HomesHibernateRepository;
+import ar.edu.unq.tpi.persit.ball.persistencia.home.PartidoCopaHome;
 import ar.edu.unq.tpi.persit.ball.persistencia.home.PartidoSimpleHome;
 import ar.edu.unq.tpi.persit.ball.persistencia.logger.DatosHistoricos;
 import ar.edu.unq.tpi.persit.ball.persistencia.logger.Logger;
+import ar.edu.unq.tpi.persit.ball.persistencia.logger.RankingPartidoCopa;
 
 @SuppressWarnings("unchecked")
 public class GeneradorDeDatos {
@@ -62,7 +64,7 @@ public class GeneradorDeDatos {
 
 	}
 
-	public UseCase generar4EquiposFull() {
+	public UseCase generar4EquiposDePrimera() {
 		return new UseCase() {
 			@Override
 			public void run() {
@@ -294,8 +296,8 @@ public class GeneradorDeDatos {
 					random.nextInt(5),
 					random.nextInt(5),
 					new GregorianCalendar(random.nextInt(1000) + 2000, random
-							.nextInt(12), random.nextInt(28)), rivales.getX(),
-					rivales.getY());
+							.nextInt(12), random.nextInt(28)), rivales.getFirst(),
+					rivales.getSecond());
 		}
 
 	}
@@ -356,14 +358,32 @@ public class GeneradorDeDatos {
 		
 		DatosHistoricos datosHistoricos = partidoHome.getDatosHistoricos(equipo1, equipo2);
 		Logger.log(datosHistoricos);
-		
+	}
+	
+	public UseCase rankingPartidoCopa(){
+		return new UseCase() {
+			
+			@Override
+			public void run() {
+				PartidoCopaHome partidoCopaHome = (PartidoCopaHome) HomesHibernateRepository.getInstance().getHome(PartidoCopa.class);
+				
+				RankingPartidoCopa ranking = partidoCopaHome.getRankingPartidoCopa();
+				
+				Logger.log(ranking);
+			}
+		};
 	}
 
 	public static void main(final String[] args) {
-//		 BasicConfigurator.configure();
 		final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
 		
-//		UseCaseManager.execute(generadorDeDatos.generar4EquiposFull());
+		UseCaseManager.execute(generadorDeDatos.generar4EquiposDePrimera());
+		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 3000);
+		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 1);
+		UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA, RIVER);
+		UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+		
+		
 //		UseCaseManager.execute(generadorDeDatos.cargarEquipoYGuardarFormacion());
 //		
 //		UseCaseManager.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 2, 2, 
@@ -372,11 +392,7 @@ public class GeneradorDeDatos {
 //				 									new GregorianCalendar(2011,6,1));
 //		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,BOCA, RIVER, 
 //				 	new GregorianCalendar(2011,5,11), new GregorianCalendar(2011,6,5), 5, 4);
-
 //		UseCaseManager.execute(generadorDeDatos, GENERAR_EQUIPOS_FULL, 10);
-//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 300);
-//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 10);
-		UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA, RIVER);
 	}
 
 }
