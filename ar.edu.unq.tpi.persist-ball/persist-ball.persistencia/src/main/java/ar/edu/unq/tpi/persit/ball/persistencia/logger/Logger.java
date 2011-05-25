@@ -9,8 +9,8 @@ import ar.edu.unq.tpi.persist.ball.domain.utils.Par;
 public class Logger {
 	private static final Log LOG = LogFactory.getLog(Logger.class);
 	
-	public static void log(String string){
-		LOG.debug(string);
+	public static void log(Object object){
+		LOG.debug(object);
 	}
 
 	public static void log(DatosHistoricos datos) {

@@ -7,13 +7,15 @@ public class HibernateOrder implements Order<org.hibernate.criterion.Order>{
 	private org.hibernate.criterion.Order order;
 
 	@Override
-	public void asc(String property) {
+	public HibernateOrder asc(String property) {
 		this.order =  org.hibernate.criterion.Order.asc(property);
+		return this;
 	}
 
 	@Override
-	public void desc(String property) {
+	public HibernateOrder desc(String property) {
 		this.order =  org.hibernate.criterion.Order.desc(property);
+		return this;
 	}
 
 	@Override
