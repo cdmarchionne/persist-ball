@@ -2,6 +2,7 @@ package ar.edu.unq.tpi.persit.ball.persistencia;
 
 import ar.edu.unq.tpi.persist.ball.domain.exception.UserException;
 import ar.edu.unq.tpi.persist.ball.domain.utils.ReflectionUtils;
+import ar.edu.unq.tpi.persit.ball.persistencia.logger.Reporter;
 
 public class UseCaseManager {
 	
@@ -42,6 +43,7 @@ public class UseCaseManager {
 	public static void execute(TransactionManager transactionManager, UseCase useCase){
 		UnitOfWork unitOfWork = PersistenceManager.getInstance().initUnitOfWork(transactionManager);
 		try {
+			Reporter.startTime();
 			unitOfWork.getTransaction().begin();
 			new Thread(useCase).run();
 			unitOfWork.commit();
@@ -50,6 +52,8 @@ public class UseCaseManager {
 			throw new UserException(e);
 		}finally{
 			unitOfWork.close();
+			Reporter.finishTime();
+			Reporter.show();
 		}
 	}
 	

@@ -9,8 +9,6 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.log4j.BasicConfigurator;
-
 import ar.edu.unq.tpi.persist.ball.domain.bean.Equipo;
 import ar.edu.unq.tpi.persist.ball.domain.bean.Jugador;
 import ar.edu.unq.tpi.persist.ball.domain.bean.PartidoCopa;
@@ -377,12 +375,11 @@ public class GeneradorDeDatos {
 	public static void main(final String[] args) {
 		final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
 		
-		UseCaseManager.execute(generadorDeDatos.generar4EquiposDePrimera());
-		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 3000);
-		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 1);
+//		UseCaseManager.execute(generadorDeDatos.generar4EquiposDePrimera());
+//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 3000);
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 1);
 		UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA, RIVER);
 		UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
-		
 		
 //		UseCaseManager.execute(generadorDeDatos.cargarEquipoYGuardarFormacion());
 //		

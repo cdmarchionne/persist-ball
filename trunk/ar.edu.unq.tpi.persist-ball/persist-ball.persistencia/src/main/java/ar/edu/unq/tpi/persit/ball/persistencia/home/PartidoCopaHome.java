@@ -18,12 +18,10 @@ public class PartidoCopaHome extends HomeHibernateImpl<PartidoCopa>{
 	
 	public RankingPartidoCopa getRankingPartidoCopa(){
 		CriteriaHibernateImpl criteria = new CriteriaHibernateImpl();
-		HibernateOrder order = new HibernateOrder();
-		order.desc("partidosGanados");
 		List<?> list = createCriteria()
 				.addProjection(Projections.groupProperty("ganador"))
 				.addProjection(Projections.alias(Projections.rowCount(), "partidosGanados"))
-				.addOrder(order)
+				.addOrder(new HibernateOrder().desc("partidosGanados"))
 				.buildProjections()
 				.list();
 		
