@@ -129,6 +129,7 @@ CREATE TABLE IF NOT EXISTS  `PartidoSimple` (
 	PRIMARY KEY (`id`),
 	KEY `FK_PartidoSimple_Equipo1` (`equipo1_id`),
 	KEY `FK_PartidoSimple_Equipo2` (`equipo2_id`),
+	-- KEY `Buqueda_Ganador` (`ganador_id`),
 	CONSTRAINT `FK_PartidoSimple_Equipo1` FOREIGN KEY (`equipo1_id`) REFERENCES `Equipo` (`id`),
 	CONSTRAINT `FK_PartidoSimple_Equipo2` FOREIGN KEY (`equipo2_id`) REFERENCES `Equipo` (`id`)
 )
