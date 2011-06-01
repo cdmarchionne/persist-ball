@@ -30,6 +30,7 @@ import ar.edu.unq.tpi.persit.ball.persistencia.home.PartidoSimpleHome;
 import ar.edu.unq.tpi.persit.ball.persistencia.logger.DatosHistoricos;
 import ar.edu.unq.tpi.persit.ball.persistencia.logger.Logger;
 import ar.edu.unq.tpi.persit.ball.persistencia.logger.RankingPartidoCopa;
+import ar.edu.unq.tpi.persit.ball.persistencia.logger.Reporter;
 
 @SuppressWarnings("unchecked")
 public class GeneradorDeDatos {
@@ -76,8 +77,13 @@ public class GeneradorDeDatos {
 				tecnicos.add(TECNICO_RACING);
 				equipos.add(INDEPENDIENTE);
 				tecnicos.add(TECNICO_INDEPENDIENTE);
-
+				
 				generarJugadoresPorEquipos(equipos, tecnicos);
+			}
+
+			@Override
+			public String getName() {
+				return "generar4EquiposDePrimera";
 			}
 		};
 	}
@@ -161,10 +167,15 @@ public class GeneradorDeDatos {
 				home.save(boca);
 				home.save(river);
 			}
+
+			@Override
+			public String getName() {
+				return "generarEquiposConJugadores";
+			}
 		};
 	}
 
-	public Equipo createEquipo(final String nombreE, final String nombreDT) {
+	public Equipo createEquipo(String nombreE, String nombreDT) {
 		Tecnico tecnico = new Tecnico(new FormacionStrategyImpl(
 				Arrays.asList(Posicion.values())), nombreDT);
 		Equipo equipo = new Equipo(tecnico, nombreE);
@@ -189,13 +200,17 @@ public class GeneradorDeDatos {
 				homeFormacion.save(formacionRiver);
 
 			}
+
+			@Override
+			public String getName() {
+				return "cargarEquipoYGuardarFormacion";
+			}
 		};
 	}
 
-	public static void cargarEquiposYJugarPartidoSimple(
-			final String nombreEquipo1, final String nombreEquipo2,
-			final Integer golesEquipo1, final Integer golesEquipo2,
-			final GregorianCalendar date) {
+	public static void cargarEquiposYJugarPartidoSimple(String nombreEquipo1,
+			String nombreEquipo2, Integer golesEquipo1, Integer golesEquipo2,
+			GregorianCalendar date) {
 		final HomeHibernateImpl<Equipo> home = HomesHibernateRepository
 				.getInstance().getHome(Equipo.class);
 		Equipo equipo1 = home.getByName(nombreEquipo1);
@@ -204,9 +219,9 @@ public class GeneradorDeDatos {
 				equipo2);
 	}
 
-	private static void persistirPartidoSimple(final Integer golesEquipo1,
-			final Integer golesEquipo2, final GregorianCalendar date,
-			final Equipo equipo1, final Equipo equipo2) {
+	private static void persistirPartidoSimple(Integer golesEquipo1,
+			Integer golesEquipo2, GregorianCalendar date, Equipo equipo1,
+			Equipo equipo2) {
 		PartidoSimple partido = new PartidoSimple(equipo1, equipo2);
 		partido.simularPartido(golesEquipo1, golesEquipo2, date);
 		HomesHibernateRepository.getInstance().getHome(PartidoSimple.class)
@@ -214,9 +229,9 @@ public class GeneradorDeDatos {
 	}
 
 	public static void cargarPartidosSimplesYCrearPartidoCopa(
-			final String nombreEquipo1, final String nombreEquipo2,
-			final GregorianCalendar date1, final GregorianCalendar date2,
-			final Integer penales1, final Integer penales2) {
+			String nombreEquipo1, String nombreEquipo2,
+			GregorianCalendar date1, GregorianCalendar date2, Integer penales1,
+			Integer penales2) {
 		final PartidoSimpleHome home = (PartidoSimpleHome) HomesHibernateRepository
 				.getInstance().getHome(PartidoSimple.class);
 		PartidoSimple partido1 = home.getByNameAndDate(nombreEquipo1,
@@ -230,8 +245,7 @@ public class GeneradorDeDatos {
 				.save(partidoCopa);
 	}
 
-	public static void cargarPartidosSimplesYGenerarNPartidosDeCopa(
-			final Integer n) {
+	public static void cargarPartidosSimplesYGenerarNPartidosDeCopa(Integer n) {
 		final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository
 				.getInstance().getHome(PartidoSimple.class);
 		int desde = 0;
@@ -281,7 +295,7 @@ public class GeneradorDeDatos {
 		}
 	}
 
-	public static void generarNPartidosSimples(final Integer n) {
+	public static void generarNPartidosSimples(Integer n) {
 		final HomeHibernateImpl<Equipo> home = HomesHibernateRepository
 				.getInstance().getHome(Equipo.class);
 
@@ -296,14 +310,13 @@ public class GeneradorDeDatos {
 					random.nextInt(5),
 					random.nextInt(5),
 					new GregorianCalendar(random.nextInt(1000) + 2000, random
-							.nextInt(12), random.nextInt(28)),
-					rivales.getFirst(), rivales.getSecond());
+							.nextInt(12), random.nextInt(28)), rivales.getFirst(),
+					rivales.getSecond());
 		}
 
 	}
 
-	private static Par<Equipo, Equipo> getRamdonRivales(
-			final List<Equipo> equipos) {
+	private static Par<Equipo, Equipo> getRamdonRivales(List<Equipo> equipos) {
 		Random random = new Random();
 		int cantEquipos = equipos.size();
 		int random1 = random.nextInt(cantEquipos);
@@ -325,10 +338,15 @@ public class GeneradorDeDatos {
 				HomesHibernateRepository.getInstance().getHome(Jugador.class)
 						.save(new Jugador("Jugador "));
 			}
+
+			@Override
+			public String getName() {
+				return "cargarJugador";
+			}
 		};
 	}
 
-	public void pruebaConcurrente(final int nThreads) {
+	public void pruebaConcurrente(int nThreads) {
 		ExecutorService newScheduledThreadPool = Executors
 				.newFixedThreadPool(nThreads);
 		final CyclicBarrier cyclicBarrier = new CyclicBarrier(nThreads);
@@ -349,60 +367,68 @@ public class GeneradorDeDatos {
 		}
 		newScheduledThreadPool.shutdown();
 	}
-
-	public void datosHistoricos(final String nombreEqipo1,
-			final String nombreEquipo2) {
-		HomeHibernateImpl<Equipo> equipoHome = HomesHibernateRepository
-				.getInstance().getHome(Equipo.class);
+	
+	public void datosHistoricos(String nombreEqipo1, String nombreEquipo2){
+		HomeHibernateImpl<Equipo> equipoHome = HomesHibernateRepository.getInstance().getHome(Equipo.class);
 		Equipo equipo1 = equipoHome.getByName(nombreEqipo1);
 		Equipo equipo2 = equipoHome.getByName(nombreEquipo2);
-
-		PartidoSimpleHome partidoHome = (PartidoSimpleHome) HomesHibernateRepository
-				.getInstance().getHome(PartidoSimple.class);
-
-		DatosHistoricos datosHistoricos = partidoHome.getDatosHistoricos(
-				equipo1, equipo2);
+		
+		PartidoSimpleHome partidoHome = (PartidoSimpleHome) HomesHibernateRepository.getInstance().getHome(PartidoSimple.class);
+		
+		DatosHistoricos datosHistoricos = partidoHome.getDatosHistoricos(equipo1, equipo2);
 		Logger.log(datosHistoricos);
 	}
-
-	public UseCase rankingPartidoCopa() {
+	
+	public UseCase rankingPartidoCopa(){
 		return new UseCase() {
-
+			
 			@Override
 			public void run() {
-				PartidoCopaHome partidoCopaHome = (PartidoCopaHome) HomesHibernateRepository
-						.getInstance().getHome(PartidoCopa.class);
-
-				RankingPartidoCopa ranking = partidoCopaHome
-						.getRankingPartidoCopa();
-
+				PartidoCopaHome partidoCopaHome = (PartidoCopaHome) HomesHibernateRepository.getInstance().getHome(PartidoCopa.class);
+				
+				RankingPartidoCopa ranking = partidoCopaHome.getRankingPartidoCopa();
+				
 				Logger.log(ranking);
+			}
+
+			@Override
+			public String getName() {
+				return "rankingPartidoCopa";
 			}
 		};
 	}
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) { 
 		final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
-
+		
 //		UseCaseManager.execute(generadorDeDatos.generar4EquiposDePrimera());
-//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES,30000);
-		 UseCaseManager.execute(generadorDeDatos,CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 10000);
-		// UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA,
-		// RIVER);
-		// UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
-
-		// UseCaseManager.execute(generadorDeDatos.cargarEquipoYGuardarFormacion());
-		//
-		// UseCaseManager.execute(generadorDeDatos,
-		// CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 2, 2,
-		// new GregorianCalendar(2011,5,25));
-		// UseCaseManager.execute(generadorDeDatos,
-		// CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 2, 2,
-		// new GregorianCalendar(2011,6,1));
-		// UseCaseManager.execute(generadorDeDatos,
-		// CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,BOCA, RIVER,
-		// new GregorianCalendar(2011,5,11), new GregorianCalendar(2011,6,5), 5,
-		// 4);
-		// UseCaseManager.execute(generadorDeDatos, GENERAR_EQUIPOS_FULL, 10);
+//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 30000);
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 10000);
+//		UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA, RIVER);
+//		for (int i = 0; i < 10; i++) {
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
+//		}
+		Reporter.logAverageQueryDelay();
+		
+//		UseCaseManager.execute(generadorDeDatos.cargarEquipoYGuardarFormacion());
+//		
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 2, 2, 
+//				 								new GregorianCalendar(2011,5,25));
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_EQUIPOS_Y_JUGAR_PARTIDO_SIMPLE,BOCA, RIVER, 2, 2,
+//				 									new GregorianCalendar(2011,6,1));
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_CREAR_PARTIDO_COPA,BOCA, RIVER, 
+//				 	new GregorianCalendar(2011,5,11), new GregorianCalendar(2011,6,5), 5, 4);
+//		UseCaseManager.execute(generadorDeDatos, GENERAR_EQUIPOS_FULL, 10);
 	}
+
 }

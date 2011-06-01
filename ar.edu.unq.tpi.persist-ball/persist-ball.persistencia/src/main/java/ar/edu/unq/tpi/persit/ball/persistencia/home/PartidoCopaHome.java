@@ -2,6 +2,7 @@ package ar.edu.unq.tpi.persit.ball.persistencia.home;
 
 import java.util.List;
 
+import org.hibernate.cache.NoCacheProvider;
 import org.hibernate.criterion.Projections;
 
 import ar.edu.unq.tpi.persist.ball.domain.bean.PartidoCopa;
@@ -23,8 +24,8 @@ public class PartidoCopaHome extends HomeHibernateImpl<PartidoCopa>{
 				.addProjection(Projections.alias(Projections.rowCount(), "partidosGanados"))
 				.addOrder(new HibernateOrder().desc("partidosGanados"))
 				.buildProjections()
+				.setCacheable(true)
 				.list();
-		
 		return new RankingPartidoCopa((List<Object[]>) list);
 	}
 

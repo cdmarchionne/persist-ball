@@ -1,5 +1,7 @@
 package ar.edu.unq.tpi.persit.ball.persistencia;
 
+import org.hibernate.usertype.UserCollectionType;
+
 import ar.edu.unq.tpi.persist.ball.domain.exception.UserException;
 import ar.edu.unq.tpi.persist.ball.domain.utils.ReflectionUtils;
 import ar.edu.unq.tpi.persit.ball.persistencia.logger.Reporter;
@@ -38,6 +40,11 @@ public class UseCaseManager {
 				public void run() {
 					ReflectionUtils.invokeMethod(object, metodo,objects);
 				}
+
+				@Override
+				public String getName() {
+					return metodo;
+				}
 			});
 	}
 	public static void execute(TransactionManager transactionManager, UseCase useCase){
@@ -52,7 +59,7 @@ public class UseCaseManager {
 			throw new UserException(e);
 		}finally{
 			unitOfWork.close();
-			Reporter.finishTime();
+			Reporter.finishTime(useCase.getName());
 			Reporter.show();
 		}
 	}
