@@ -64,6 +64,10 @@ public class PersistenceManager {
     public void destroy() {
         INSTANCE = null;
     }
+    
+    public boolean isLogFile(){
+    	return Boolean.parseBoolean(cfg.getProperty("log.file"));
+    }
 
 
 	public Session getNewSession() {

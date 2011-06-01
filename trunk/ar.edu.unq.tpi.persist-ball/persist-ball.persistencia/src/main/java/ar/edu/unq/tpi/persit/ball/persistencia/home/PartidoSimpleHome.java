@@ -56,6 +56,7 @@ public class PartidoSimpleHome extends HomeHibernateImpl<PartidoSimple>{
 				.addProjection(Projections.groupProperty("ganador"))
 				.addProjection(Projections.rowCount())
 				.buildProjections()
+				.setCacheable(true)
 				.list();
 		return new DatosHistoricos((List<Object[]>) list);
 	}
