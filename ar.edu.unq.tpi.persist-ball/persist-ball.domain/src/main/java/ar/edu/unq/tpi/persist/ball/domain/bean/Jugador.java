@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import ar.edu.unq.tpi.persist.ball.domain.bean.enums.Posicion;
 import ar.edu.unq.tpi.persist.ball.domain.interfaces.Habilidad;
 import ar.edu.unq.tpi.persist.ball.domain.interfaces.Nombrable;
