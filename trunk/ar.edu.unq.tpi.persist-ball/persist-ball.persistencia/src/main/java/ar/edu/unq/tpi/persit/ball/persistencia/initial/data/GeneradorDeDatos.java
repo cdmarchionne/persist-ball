@@ -3,6 +3,7 @@ package ar.edu.unq.tpi.persit.ball.persistencia.initial.data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CyclicBarrier;
@@ -40,14 +41,27 @@ public class GeneradorDeDatos {
 	public static final String CARGAR_JUGADOR = "cargarJugador";
 	public static final String GENERAR_N_PARTIDOS_SIMPLES = "generarNPartidosSimples";
 	public static final String CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA = "cargarPartidosSimplesYGenerarNPartidosDeCopa";
+	public static final String CREAR_PARTIDOS_SIMPLES_Y_CREAR_N_PARTIDOS_DE_COPA = "crearPartidosSimplesYCrearNPartidosDeCopa";
 	public static final String BOCA = "Boca";
 	public static final String RIVER = "River";
 	public static final String RACING = "Racing";
 	public static final String INDEPENDIENTE = "Independiente";
-	private static final String TECNICO_BOCA = "Bilardo";
-	private static final String TECNICO_RIVER = "Pasarella";
-	private static final String TECNICO_RACING = "Mostazo Merlo";
-	private static final String TECNICO_INDEPENDIENTE = "Bochinni";
+	public static final String GIMNASIA = "Gimnasia";
+	public static final String ESTUDIANTES = "Estudiantes";
+	public static final String HURACAN = "Huracan";
+	public static final String TIGRE = "Tigre";
+	public static final String QUILMES = "Quilmes";
+	public static final String GODOYCRUZ = "GodoyCruz";
+	private static final String TECNICO_BOCA = "Tecnico_Boca";
+	private static final String TECNICO_RIVER = "Tecnico_River";
+	private static final String TECNICO_RACING = "Tecnico_Racing";
+	private static final String TECNICO_INDEPENDIENTE = "Tecnico_Independiente";
+	private static final String TECNICO_GIMNASIA = "Tecnico_Gimnasia";
+	private static final String TECNICO_ESTUDIANTES = "Tecnico_Estudiantes";
+	private static final String TECNICO_HURACAN = "Tecnico_Huracan";
+	private static final String TECNICO_TIGRE = "Tecnico_Tigre";
+	private static final String TECNICO_QUILMES = "Tecnico_Quilmes";
+	private static final String TECNICO_GODOYCRUZ = "Tecnico_GodoyCruz";
 	public static final String GENERAR_EQUIPOS_FULL = "generarEquiposFull";
 	public static final int TAMANIO_DE_PAGINA = 100;;
 
@@ -63,7 +77,7 @@ public class GeneradorDeDatos {
 
 	}
 
-	public UseCase generar4EquiposDePrimera() {
+	public UseCase generar10EquiposDePrimera() {
 		return new UseCase() {
 			@Override
 			public void run() {
@@ -77,6 +91,18 @@ public class GeneradorDeDatos {
 				tecnicos.add(TECNICO_RACING);
 				equipos.add(INDEPENDIENTE);
 				tecnicos.add(TECNICO_INDEPENDIENTE);
+				equipos.add(GIMNASIA);
+				tecnicos.add(TECNICO_GIMNASIA);
+				equipos.add(ESTUDIANTES);
+				tecnicos.add(TECNICO_ESTUDIANTES);
+				equipos.add(HURACAN);
+				tecnicos.add(TECNICO_HURACAN);
+				equipos.add(TIGRE);
+				tecnicos.add(TECNICO_TIGRE);
+				equipos.add(QUILMES);
+				tecnicos.add(TECNICO_QUILMES);
+				equipos.add(GODOYCRUZ);
+				tecnicos.add(TECNICO_GODOYCRUZ);
 				
 				generarJugadoresPorEquipos(equipos, tecnicos);
 			}
@@ -244,6 +270,41 @@ public class GeneradorDeDatos {
 		HomesHibernateRepository.getInstance().getHome(PartidoCopa.class)
 				.save(partidoCopa);
 	}
+	
+	public UseCase  jugarTorneo(){
+		return new UseCase() {
+			
+			@Override
+			public void run() {
+				HomeHibernateImpl<Equipo> homeEquipo = HomesHibernateRepository.getInstance().getHome(Equipo.class);
+				HomeHibernateImpl<PartidoCopa> homePartidoCopa = HomesHibernateRepository.getInstance().getHome(PartidoCopa.class);
+				List<Equipo> equipos = homeEquipo.getAll();
+				Random random = new Random();
+				PartidoSimple partidoSimple1;
+				PartidoSimple partidoSimple2;
+				PartidoCopa partidoCopa;
+				
+				for (Equipo equipo1 : equipos) {
+					for (Equipo equipo2 : equipos) {
+						partidoSimple1 = new PartidoSimple(equipo1, equipo2);
+						partidoSimple1.simularPartido(random.nextInt(5), random.nextInt(5), new GregorianCalendar());
+						partidoSimple2 = new PartidoSimple(equipo2, equipo1);
+						partidoSimple2.simularPartido(random.nextInt(5), random.nextInt(5), new GregorianCalendar());
+						
+						partidoCopa = new PartidoCopa(equipo1, equipo2);
+						partidoCopa.simularPartido(partidoSimple1, partidoSimple2);
+						homePartidoCopa.save(partidoCopa);			
+					}
+				}
+				
+			}
+			
+			@Override
+			public String getName() {
+				return "Jugar torneo";
+			}
+		};
+	}
 
 	public static void cargarPartidosSimplesYGenerarNPartidosDeCopa(Integer n) {
 		final HomeHibernateImpl<PartidoSimple> home = HomesHibernateRepository
@@ -385,9 +446,7 @@ public class GeneradorDeDatos {
 			@Override
 			public void run() {
 				PartidoCopaHome partidoCopaHome = (PartidoCopaHome) HomesHibernateRepository.getInstance().getHome(PartidoCopa.class);
-				
 				RankingPartidoCopa ranking = partidoCopaHome.getRankingPartidoCopa();
-				
 				Logger.log(ranking);
 			}
 
@@ -401,11 +460,13 @@ public class GeneradorDeDatos {
 	public static void main(final String[] args) { 
 		final GeneradorDeDatos generadorDeDatos = new GeneradorDeDatos();
 		
-//		UseCaseManager.execute(generadorDeDatos.generar4EquiposDePrimera());
-//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 30000);
-//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 10000);
+//		UseCaseManager.execute(generadorDeDatos.generar10EquiposDePrimera());
+//		UseCaseManager.execute(generadorDeDatos, GENERAR_N_PARTIDOS_SIMPLES, 200000);
+//		UseCaseManager.execute(generadorDeDatos, CARGAR_PARTIDOS_SIMPLES_Y_GENERAR_N_PARTIDOS_DE_COPA, 100000);
 //		UseCaseManager.execute(generadorDeDatos, "datosHistoricos",BOCA, RIVER);
-//		for (int i = 0; i < 10; i++) {
+//			UseCaseManager.execute(generadorDeDatos, CREAR_PARTIDOS_SIMPLES_Y_CREAR_N_PARTIDOS_DE_COPA, 100000);
+		for (int i = 0; i < 5; i++) {
+//			UseCaseManager.execute(generadorDeDatos.jugarTorneo());
 			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
 			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
 			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
@@ -417,7 +478,7 @@ public class GeneradorDeDatos {
 			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
 			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
 			UseCaseManager.execute(generadorDeDatos.rankingPartidoCopa());
-//		}
+		}
 		Reporter.logAverageQueryDelay();
 		
 //		UseCaseManager.execute(generadorDeDatos.cargarEquipoYGuardarFormacion());

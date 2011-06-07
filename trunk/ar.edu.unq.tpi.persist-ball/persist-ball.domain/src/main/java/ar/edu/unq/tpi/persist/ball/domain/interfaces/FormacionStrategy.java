@@ -3,8 +3,6 @@ package ar.edu.unq.tpi.persist.ball.domain.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Cascade;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,6 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import ar.edu.unq.tpi.persist.ball.domain.bean.Equipo;
 import ar.edu.unq.tpi.persist.ball.domain.bean.PersistentObject;
 import ar.edu.unq.tpi.persist.ball.domain.bean.enums.Posicion;
@@ -20,6 +23,7 @@ import ar.edu.unq.tpi.persist.ball.domain.logica.Formacion;
 
 @Entity
 @Table(name = "FormacionStrategy")
+@Cache(region = "FormacionStrategy", usage = CacheConcurrencyStrategy.READ_ONLY)
 public abstract class FormacionStrategy extends PersistentObject {
     private static final long serialVersionUID = 1L;
 

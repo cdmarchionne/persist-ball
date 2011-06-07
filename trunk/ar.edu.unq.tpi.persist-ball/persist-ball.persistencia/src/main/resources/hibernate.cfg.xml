@@ -14,18 +14,21 @@
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<!-- Enable Hibernate's automatic session context management -->
 		<property name="current_session_context_class">thread</property>
+
+
+<!-- Optimizacion -->
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
 		<!-- Echo all executed SQL to stdout -->
-		<property name="show_sql">false</property>
 		<property name="hibernate.cache.use_query_cache">true</property>
-		<property name="hibernate.bytecode.use_reflection_optimizer">true</property>
-		<property name="hibernate.jdbc.use_streams_for_binary">true</property>
+<!-- 		<property name="hibernate.bytecode.use_reflection_optimizer">true</property> -->
+<!-- /Optimizacion -->
+
+		<property name="show_sql">false</property>
 		<property name="hibernate.max_fetch_depth">10</property>
 		<property name="hibernate.jdbc.batch_size">20</property>
 		<property name="hibernate.jdbc.fetch_size">10</property>
 
-		<property name="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</property>
 
 		<property name="hibernate.generate_statistics">true</property>
 		<property name="log.file">true</property>
