@@ -1,6 +1,0 @@
-Adaptaciones realizadas para poder persistir nuestros datos:
-
-Interfaz Habilidad: Tuvimos que transformarla en una clase abstracta. Teniamos problemas para persistir una interfaz
-Interfaz FormacionStrategy: Tuvimos que transformarla en una clase abstracta. Teniamos problemas para persistir una interfaz
-
-Clase PartidoSimple: Se le agregó una variable fecha para buscar los partidos.
