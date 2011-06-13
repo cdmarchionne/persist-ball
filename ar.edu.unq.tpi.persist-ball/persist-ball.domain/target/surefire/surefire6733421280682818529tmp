@@ -1,0 +1,5 @@
+#surefire
+#Mon Jun 13 20:00:32 ART 2011
+user.dir=/home/usuario/dev-app/workspace/ar.edu.unq.tpi.persist-ball/persist-ball.domain
+localRepository=/home/usuario/dev-app/repository
+basedir=/home/usuario/dev-app/workspace/ar.edu.unq.tpi.persist-ball/persist-ball.domain
