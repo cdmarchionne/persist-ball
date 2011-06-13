@@ -1,0 +1,19 @@
+package ar.edu.unq.tpi.persist.ball.domain.exception;
+
+
+public class UserException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public UserException(final String str) {
+        super(str);
+    }
+    
+    public UserException(Throwable e) {
+    	super(e);
+	}
+
+    public UserException(final String string, final Exception e) {
+        super(string, e);
+    }
+
+}
