@@ -19,5 +19,8 @@ class Player:
 
     def getTotalGames(self):
         return self.totalGames
+    
+    def __repr__(self):
+        return self.name
 
 
