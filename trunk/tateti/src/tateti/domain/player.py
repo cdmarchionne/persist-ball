@@ -9,6 +9,7 @@ class Player:
 
     def incWonGames(self):
         self.wonGames += 1
+        self.totalGames += 1
 
     def getWonGames(self):
         return self.wonGames
