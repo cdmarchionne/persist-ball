@@ -5,9 +5,9 @@ class SingleGame:
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
-        self.symbolRelationships = {Board.CROSS : self.player1,
+        self.symbolRelationships = {Board.CROSS: self.player1,
                                     Board.CIRCLE : self.player2,
-                                    None : None
+                                    None : None                                    
                                     }
         self.board = Board(3, 3)
         self.height = 3
@@ -42,6 +42,7 @@ class SingleGame:
                 symbol = Board.CIRCLE
             else:
                 symbol = Board.CROSS
+            crossPlayed = not crossPlayed
             winner = self.board.put(tuple[0], tuple[1], symbol)
             
             if winner != None:

@@ -1,5 +1,6 @@
 from  matrix import Matrix
-
+    
+    
 class Board:
     CROSS = 1
     CIRCLE = 0
@@ -11,7 +12,7 @@ class Board:
     def getEmptySlots(self):
         return self.emptySlots
     
-    def getEmptySlott(self, index):
+    def getEmptySlot(self, index):
         return self.emptySlots[index]
     
     def getEmptySlotsSize(self):
