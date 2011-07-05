@@ -15,6 +15,7 @@ class UseCaseManager:
         except Exception:
             unitOfWork.rollback()
         unitOfWork.close()
+        raise
             
         
         
