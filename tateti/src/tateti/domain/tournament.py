@@ -3,7 +3,7 @@ class Tournament:
     def __init__(self, players):
         self.players = players
         
-    def getPlayers(self):
+    def getAll(self):
         return self.players
 
     
