@@ -13,6 +13,15 @@ class TournamentGame:
         
     def getWinner(self):
         return self.winner
+    
+    def getLooser(self):
+        winner = self.getWinner()
+        if winner == self.player1:
+            return self.player2
+        elif winner == self.player2 :
+            return self.player1
+        else:
+            return None;
         
     def autoPlay(self):
         self.simpleGame1.autoPlay()

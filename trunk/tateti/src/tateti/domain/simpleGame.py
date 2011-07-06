@@ -26,10 +26,13 @@ class SingleGame:
         return self.symbolRelationships[self.board.getWinnerSymbol()]
     
     def getLooser(self):
-        if self.getWinner() == self.player1:
+        winner = self.getWinner()
+        if winner == self.player1:
             return self.player2
-        else:
+        elif winner == self.player2 :
             return self.player1
+        else:
+            return None;
     
     def autoPlay(self):
         random = Random()
