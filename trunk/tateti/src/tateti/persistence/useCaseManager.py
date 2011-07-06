@@ -8,13 +8,15 @@ class UseCaseManager:
     def execute(self, operation):
         unitOfWork = self.persistenceManager.createUnitOfWork()
         unitOfWork.beginTransaction()
+        result = None
         try:
-            operation()
+            result = operation()
             unitOfWork.comit()
 #        Falta hacer un finally y tirar la exception devuelta
         except Exception:
             unitOfWork.rollback()
         unitOfWork.close()
+        return result
             
         
         

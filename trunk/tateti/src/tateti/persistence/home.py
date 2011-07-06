@@ -1,22 +1,24 @@
 from tateti.persistence.persistentManager import persistentManager
 class Home:
+    def __init__(self, type):
+        self.type = type
             
     def getPersistentObject(self):
         return persistentManager.getPersistentRoot()
     
-    def savePlayer(self, object):
-        if not "player" in self.getPersistentObject():
-            self.getPersistentObject()["player"] = []
-        players = self.getPersistentObject()["player"]
-        players.append(object)
-        self.getPersistentObject()["player"] = players
+    def saveObject(self, object):
+        if not self.type in self.getPersistentObject():
+            self.getPersistentObject()[self.type] = []
+        objects = self.getPersistentObject()[self.type]
+        objects.append(object)
+        self.getPersistentObject()[self.type] = objects
         
-##        self.getPersistentObject()["player"].append(object)
-##        self.getPersistentObject()["player"]._p_changed = True
+#        self.getPersistentObject()[self.type].append(object)
+#        self.getPersistentObject()[self.type]._p_changed = True
 
     
-    def getPlayers(self):
-        return self.getPersistentObject()["player"]
+    def getAll(self):
+        return self.getPersistentObject()[self.type]
         
         
         
