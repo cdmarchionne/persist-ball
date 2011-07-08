@@ -1,4 +1,4 @@
-from simpleGame import SingleGame
+from simpleGame import SimpleGame
 
 
 class TournamentGame:
@@ -7,9 +7,9 @@ class TournamentGame:
         self.player2 = player2
         self.winner = None
         
-        self.simpleGame1 = SingleGame(player1, player2)
-        self.simpleGame2 = SingleGame(player2, player1)
-        self.simpleGame3 = SingleGame(player1, player2)
+        self.simpleGame1 = SimpleGame(player1, player2)
+        self.simpleGame2 = SimpleGame(player2, player1)
+        self.simpleGame3 = SimpleGame(player1, player2)
         
     def getWinner(self):
         return self.winner

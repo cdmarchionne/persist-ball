@@ -5,12 +5,10 @@ Created on 06/07/2011
 '''
 
 import pygame
-from pygame.locals import *
 
 from mainWindow import MainWindow
         
 class Screen:
-    SS = 100
     def __init__(self):
         # Fonts
         if not pygame.font.get_init():
@@ -28,7 +26,6 @@ class Screen:
         
     def render(self):
         self.currentWindow.renderBackground()
-        pygame.display.flip()
 #        self.screen.blit(self.arialFnt.render('player x: %4d' % (self.player.x / 80), True, (0,0,0)), (10, 10))
 #        self.screen.blit(self.arialFnt.render('player y: %4d' % (self.player.y / 80), True, (0,0,0)), (10, 30))
         

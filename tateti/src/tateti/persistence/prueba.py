@@ -1,7 +1,7 @@
 from tateti.persistence.home import Home
 from tateti.domain.player import Player
 from tateti.persistence.useCaseManager import UseCaseManager
-from tateti.domain.simpleGame import SingleGame
+from tateti.domain.simpleGame import SimpleGame
 from tateti.domain.tournamentGame import TournamentGame
 
 
