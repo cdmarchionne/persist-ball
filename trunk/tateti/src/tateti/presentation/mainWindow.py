@@ -23,18 +23,10 @@ class MainWindow(Window):
         self.player2 = Player("Player 2")
         
         self.background = pygame.image.load("backgrounds/ta te ti main.jpg").convert()
-        self.buttons = [Button(GameWindow, ((1,1),(4,2))),
-                        Button(TournamentGameWindow, ((1,1),(4,2))),
-                        Button(StatisticsWindow, ((1,1),(4,2)))]
+        self.buttons = [Button(GameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
+                        Button(TournamentGameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
+                        Button(StatisticsWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2)))]
         
-    def checkForClickedButton(self, point):
-        for b in self.buttons:
-            window = b.getNextWindow(point)
-            if window != None:
-                self.screen.currentWindow = window(self.screen, self.player1, self.player2, self)
-                break
-        self.render()
-                
     def useEventsIterations(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             point = (event.pos[0], event.pos[1])

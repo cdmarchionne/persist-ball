@@ -11,6 +11,7 @@ from tateti.domain.simpleGame import SimpleGame
 
 from window import Window
 from tateti.domain.board import Board
+from button import Button
 from globals import *
 
 class GameWindow(Window):
@@ -19,8 +20,13 @@ class GameWindow(Window):
         self.simpleGame = SimpleGame(player1, player2)
         self.background = pygame.image.load("backgrounds/ta te ti grid.jpg").convert()
         
+        self.finished = False
+        
+        self.buttons = []
+        
         self.images = {Board.CROSS:pygame.image.load("images/ta te ti cross.gif").convert(),
-                       Board.CIRCLE:pygame.image.load("images/ta te ti circle.gif").convert()}
+                       Board.CIRCLE:pygame.image.load("images/ta te ti circle.gif").convert(),
+                       "volver":pygame.image.load("images/ta te ti boton volver.gif").convert()}
     
         self.turn = self.simpleGame.getTurn()
         self.boardBounds = ((1,1),(4,4))
@@ -50,22 +56,29 @@ class GameWindow(Window):
     def isEmptySlot(self, point):
         return point in self.simpleGame.getBoard().getEmptySlots()
     
+    def addBackButton(self):
+        self.buttons.append(Button(self.mainWindow, ((1,5),(4,5))))
+        self.addSymbolToBackGround(self.images["volver"], (1,5))
+    
     def useEventsIterations(self, event):
 #        if event.type == pygame.MOUSEMOTION:
 #            pass
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             point = (event.pos[0], event.pos[1])
-            if not self.clickedOutsideTheBoard(point):
-                boardPoint = ( int(point[0]/100) - self.boardBounds[0][0],
-                               int(point[1]/100) - self.boardBounds[0][1] )
-                if self.isEmptySlot(boardPoint):
-                    self.putSymbolInSlot(point)
-                    finished = self.simpleGame.playTurn(boardPoint)
-                    self.changeTurn()
-                    if finished:
-                        print self.simpleGame.getWinner()
-                        self.returnToMainWindow()
-            
+            if not self.finished:
+                if not self.clickedOutsideTheBoard(point):
+                    boardPoint = ( int(point[0]/100) - self.boardBounds[0][0],
+                                   int(point[1]/100) - self.boardBounds[0][1] )
+                    if self.isEmptySlot(boardPoint):
+                        self.putSymbolInSlot(point)
+                        self.finished = self.simpleGame.playTurn(boardPoint)
+                        self.changeTurn()
+                        if self.finished:
+                            print self.simpleGame.getWinner()
+                            self.addBackButton()
+                            #self.returnToMainWindow()
+            else:
+                self.checkForClickedButton(point)
             
             
             
