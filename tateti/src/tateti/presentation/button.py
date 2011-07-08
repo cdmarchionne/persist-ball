@@ -7,8 +7,8 @@ Created on 08/07/2011
 from globals import *
 
 class Button:
-    def __init__(self, windowClass, bounds):
-        self.windowClass = windowClass
+    def __init__(self, window, bounds):
+        self.window = window
         self.bounds = bounds
         
     def getNextWindow(self, point):
@@ -17,6 +17,6 @@ class Button:
         
         if (start[0] <= point[0] and end[0] >= point[0]) and \
            (start[1] <= point[1] and end[1] >= point[1]):
-            return self.windowClass
+            return self.window
     
         

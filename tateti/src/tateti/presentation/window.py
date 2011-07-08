@@ -17,6 +17,14 @@ class Window:
         self.screen.blit(self.background, (0,0))
         pygame.display.flip()
         
+    def checkForClickedButton(self, point):
+        for b in self.buttons:
+            window = b.getNextWindow(point)
+            if window != None:
+                self.screen.currentWindow = window
+                break
+        self.render()
+        
     def render(self):
         self.screen.render()
         
