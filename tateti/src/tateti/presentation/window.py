@@ -19,7 +19,6 @@ class Window:
         pygame.display.flip()
         
     def checkForClickedButton(self, point):
-        print self.buttons
         for b in self.buttons:
             window = b.getNextWindow(point)
             if window != None:

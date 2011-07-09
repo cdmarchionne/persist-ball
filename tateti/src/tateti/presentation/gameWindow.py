@@ -43,7 +43,7 @@ class GameWindow(Window):
         self.turn = self.simpleGame.getTurn()
             
     def putSymbolInSlot(self, point):
-        sPoint = ( (int(point[0]/100))*100 , (int(point[1]/100))*100 )
+        sPoint = ( (int(point[0]/SS))*SS , (int(point[1]/SS))*SS )
         self.addSymbolToBackGround(self.images[self.turn], sPoint)
     
     def clickedOutsideTheBoard(self, point):
@@ -67,8 +67,8 @@ class GameWindow(Window):
             point = (event.pos[0], event.pos[1])
             if not self.finished:
                 if not self.clickedOutsideTheBoard(point):
-                    boardPoint = ( int(point[0]/100) - self.boardBounds[0][0],
-                                   int(point[1]/100) - self.boardBounds[0][1] )
+                    boardPoint = ( int(point[0]/SS) - self.boardBounds[0][0],
+                                   int(point[1]/SS) - self.boardBounds[0][1] )
                     if self.isEmptySlot(boardPoint):
                         self.putSymbolInSlot(point)
                         self.finished = self.simpleGame.playTurn(boardPoint)
