@@ -13,7 +13,7 @@ class Screen:
         # Fonts
         if not pygame.font.get_init():
             pygame.font.init()
-        self.arialFnt = pygame.font.SysFont('Arial', 16)
+#        self.arialFnt = pygame.font.SysFont('Arial', 16)
         
         # Screen y ventana actual
         self.screen = pygame.display.set_mode((500, 700))
