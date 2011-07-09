@@ -8,7 +8,6 @@ class UseCaseManager:
     def execute(self, operation):
         unitOfWork = self.persistenceManager.createUnitOfWork()
         unitOfWork.beginTransaction()
-        result = None
         try:
             result = operation()
             unitOfWork.comit()

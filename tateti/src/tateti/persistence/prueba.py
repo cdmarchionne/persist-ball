@@ -3,6 +3,7 @@ from tateti.domain.player import Player
 from tateti.persistence.useCaseManager import UseCaseManager
 from tateti.domain.simpleGame import SimpleGame
 from tateti.domain.tournamentGame import TournamentGame
+from threading import Thread
 
 
 class Prueba:
@@ -23,6 +24,7 @@ class Prueba:
         print "looser ", game.getLooser()
         TournamentGameHome.saveObject(game)
     
+    
     def retrivePlayers(self):
         home = Home(Player)
         print home.getAll()
@@ -33,13 +35,28 @@ class Prueba:
         return home.getAll()
 
 
+class ThreadPrueba(Thread):
+    
+    def __init__(self, method):
+        Thread.__init__(self)
+        self.method = method
+        
+    def run(self):
+        tournamentGames = useCaseManager.execute(self.method)
+        game = tournamentGames[0] 
+        print "winner ", game.getWinner()
+        print "looser ", game.getLooser()
+        
+
 useCaseManager = UseCaseManager()
 prueba = Prueba()
-#useCaseManager.execute(prueba.saveTournamentGames)
-tournamentGames = useCaseManager.execute(prueba.retriveTournamentGames)
-game = tournamentGames[0] 
-print "winner ", game.getWinner()
-print "looser ", game.getLooser()
+#ThreadPrueba(prueba.saveTournamentGames)
+ThreadPrueba(prueba.retriveTournamentGames).start()
+ThreadPrueba(prueba.retriveTournamentGames).start()
+ThreadPrueba(prueba.retriveTournamentGames).start()
+#game = tournamentGames[0] 
+#print "winner ", game.getWinner()
+#print "looser ", game.getLooser()
 #print "matrix ", game.board.matrix.dictionary
 
 
