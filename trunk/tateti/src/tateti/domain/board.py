@@ -51,11 +51,11 @@ class Board:
                (self.matrix.get(0,2)==symbol and self.matrix.get(1,2)==symbol and self.matrix.get(2,2)==symbol)
         
     def wonVertical(self, symbol):
-        return (self.matrix.get(0,0)==symbol and self.matrix.get(1,0)==symbol and self.matrix.get(0,2)==symbol) or \
+        return (self.matrix.get(0,0)==symbol and self.matrix.get(0,1)==symbol and self.matrix.get(0,2)==symbol) or \
                (self.matrix.get(1,0)==symbol and self.matrix.get(1,1)==symbol and self.matrix.get(1,2)==symbol) or \
                (self.matrix.get(2,0)==symbol and self.matrix.get(2,1)==symbol and self.matrix.get(2,2)==symbol)
         
     def wonDiagonal(self, symbol):
         return (self.matrix.get(0,0)==symbol and self.matrix.get(1,1)==symbol and self.matrix.get(2,2)==symbol) or \
-               (self.matrix.get(0,0)==symbol and self.matrix.get(1,1)==symbol and self.matrix.get(2,0)==symbol)
+               (self.matrix.get(2,0)==symbol and self.matrix.get(1,1)==symbol and self.matrix.get(0,2)==symbol)
                 

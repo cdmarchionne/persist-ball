@@ -23,9 +23,14 @@ class MainWindow(Window):
         self.player2 = Player("Player 2")
         
         self.background = pygame.image.load("backgrounds/ta te ti main.jpg").convert()
-        self.buttons = [Button(GameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
-                        Button(TournamentGameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
-                        Button(StatisticsWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2)))]
+        
+        self.buttons = None
+        self.resetButtons()
+        
+    def resetButtons(self):
+        self.buttons = [Button(GameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2)))]
+                        #Button(TournamentGameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
+                        #Button(StatisticsWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2)))]
         
     def useEventsIterations(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:

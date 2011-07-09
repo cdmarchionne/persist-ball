@@ -11,6 +11,7 @@ class Window:
     def __init__(self, screen, mainWindow):
         self.screen = screen
         self.mainWindow = mainWindow
+        self.buttons = []
         self.background = None
         
     def renderBackground(self):    
@@ -18,6 +19,7 @@ class Window:
         pygame.display.flip()
         
     def checkForClickedButton(self, point):
+        print self.buttons
         for b in self.buttons:
             window = b.getNextWindow(point)
             if window != None:

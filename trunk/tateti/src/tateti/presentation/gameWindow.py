@@ -57,8 +57,8 @@ class GameWindow(Window):
         return point in self.simpleGame.getBoard().getEmptySlots()
     
     def addBackButton(self):
-        self.buttons.append(Button(self.mainWindow, ((1,5),(4,5))))
-        self.addSymbolToBackGround(self.images["volver"], (1,5))
+        self.buttons.append(Button(self.mainWindow, ((1,5),(4,6))))
+        self.addSymbolToBackGround(self.images["volver"], (1*SS,5*SS))
     
     def useEventsIterations(self, event):
 #        if event.type == pygame.MOUSEMOTION:
@@ -78,7 +78,9 @@ class GameWindow(Window):
                             self.addBackButton()
                             #self.returnToMainWindow()
             else:
+                self.mainWindow.resetButtons()
                 self.checkForClickedButton(point)
+                
             
             
             
