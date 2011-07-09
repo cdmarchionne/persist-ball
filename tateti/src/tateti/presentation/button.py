@@ -19,4 +19,7 @@ class Button:
            (start[1] <= point[1] and end[1] >= point[1]):
             return self.window
     
+    def __repr__(self):
+        print self.bounds
+        return ""
         
