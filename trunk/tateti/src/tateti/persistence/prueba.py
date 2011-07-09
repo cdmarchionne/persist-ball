@@ -23,7 +23,6 @@ class Prueba:
         print "looser ", game.getLooser()
         TournamentGameHome.saveObject(game)
     
-    
     def retrivePlayers(self):
         home = Home(Player)
         print home.getAll()
