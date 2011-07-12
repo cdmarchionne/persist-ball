@@ -17,10 +17,10 @@ class StatisticsWindow(Window):
         Window.__init__(self, screen, mainWindow)
         self.background = pygame.image.load("backgrounds/ta te ti statistics.jpg").convert()
         self.buttons = [Button(self.mainWindow, ((1,5),(4,6)))]
-        self.showStatistics()
+        useCaseManager.execute(self.showStatistics)
         
     def showStatistics(self):
-        players = useCaseManager.execute(self.getPlayers)
+        players = self.getPlayers()
         x = 10
         y = 160
 
