@@ -5,6 +5,7 @@ Created on 06/07/2011
 '''
 
 import pygame
+from tateti.persistence.useCaseManager import UseCaseManager
 
 # Sprite Size
 SS = 100
@@ -17,3 +18,6 @@ RIGHT = 3
 if not pygame.font.get_init():
     pygame.font.init()
 FONT = pygame.font.SysFont('Arial', 32)
+
+# UseCaseManager
+useCaseManager = UseCaseManager()

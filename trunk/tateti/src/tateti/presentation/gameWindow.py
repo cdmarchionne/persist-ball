@@ -22,8 +22,11 @@ class GameWindow(Window):
         Window.__init__(self, screen, mainWindow)
         self.simpleGame = SimpleGame(player1, player2)
         self.background = pygame.image.load("backgrounds/ta te ti grid.jpg").convert()
-        self.background.blit(FONT.render('%4s            vs' % player1.getName(), True, (0,0,0)), (40, 30))
-        self.background.blit(FONT.render('%4s' % player2.getName(), True, (0,0,0)), (310, 30))
+        
+        self.background.blit(FONT.render('%4s' % player1.getName(), True, (0,0,0)), (40, 30))
+        self.background.blit(FONT.render('VS', True, (0,0,0)), (240, 30))
+        self.background.blit(FONT.render('%4s' % player2.getName(), True, (0,0,0)), (350, 30))
+        
         self.finished = False
         
         self.buttons = []
@@ -88,11 +91,15 @@ class GameWindow(Window):
     def saveGame(self):
         homeGame = Home(SimpleGame)
         homePlayer = PlayerHome()
-        self.simpleGame.pointsSpread()
-        print self.simpleGame.getWinner()
+        self.simpleGame.pointsDistribution()
         homeGame.saveObject(self.simpleGame) 
         homePlayer.updateObject(self.simpleGame.getPlayer1()) 
         homePlayer.updateObject(self.simpleGame.getPlayer2()) 
+        print "winner:", self.simpleGame.getWinner()
+        print "player1 total:", self.simpleGame.getPlayer1().getTotalGames() 
+        print "player1 wins:", self.simpleGame.getPlayer1().getWonGames() 
+        print "player1 ties:", self.simpleGame.getPlayer1().getTieGames() 
+        print "player1 loses:", self.simpleGame.getPlayer1().getLostGames() 
 
                 
             

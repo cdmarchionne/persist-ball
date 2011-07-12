@@ -9,13 +9,16 @@ from tateti.persistence.useCaseManager import useCaseManager
 import pygame
 from pygame.locals import *
 
+from tateti.domain.player import Player
+
+from tateti.persistence.useCaseManager import UseCaseManager
+
 from window import Window
 from gameWindow import GameWindow 
 from tournamentGameWindow import TournamentGameWindow
 from statisticsWindow import StatisticsWindow
 from globals import *
 from button import Button
-from tateti.domain.player import Player
 
 class MainWindow(Window):
     def __init__(self, screen):

@@ -1,9 +1,8 @@
-from tateti.persistence.persistentManager import persistentManager
+from home import Home
 
 class UseCaseManager:
-    
     def __init__(self):
-        self.persistenceManager = persistentManager
+        self.persistenceManager = Home.persistentManager
     
     def execute(self, operation):
         unitOfWork = self.persistenceManager.createUnitOfWork()
