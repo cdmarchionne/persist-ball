@@ -1,7 +1,10 @@
-class Player:
+from persistent import Persistent
+
+class Player(Persistent):
     def __init__(self, name):
         self.name = name
         self.wonGames = 0
+        self.tieGames = 0
         self.totalGames = 0
 
     def getName(self):
@@ -16,11 +19,20 @@ class Player:
 
     def incTotalGames(self):
         self.totalGames += 1
+        
+    def incTieGames(self):
+        self.tieGames += 1
 
     def getTotalGames(self):
         return self.totalGames
     
+    def getTieGames(self):
+        return self.tieGames
+    
+    def getLoseGames(self):
+        return self.totalGames - (self.wonGames + self.tieGames)
+    
     def __repr__(self):
-        return self.name
-
+        return self.name + " ganados: "+ str(self.getWonGames()) + " empatados: " +str(self.getTieGames()) +" perdidos: "+ str(self.getLoseGames())
+  
 

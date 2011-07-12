@@ -7,18 +7,27 @@ class Home:
         return persistentManager.getPersistentRoot()
     
     def saveObject(self, object):
-        if not self.type in self.getPersistentObject():
-            self.getPersistentObject()[self.type] = []
-        objects = self.getPersistentObject()[self.type]
-        objects.append(object)
-        self.getPersistentObject()[self.type] = objects
+        persistentObject = self.getPersistentObject()
+        if not str(self.type) in persistentObject:
+            persistentObject[str(self.type)] = []
+#        objects = self.getPersistentObject()[self.type]
+#        objects.append(object)
+#        self.getPersistentObject()[self.type] = objects
         
-#        self.getPersistentObject()[self.type].append(object)
-#        self.getPersistentObject()[self.type]._p_changed = True
+        persistentObject[str(self.type)].append(object)
+        persistentObject._p_changed = True
+        
+    def updateObject(self, object):
+        persistentObject = self.getPersistentObject()
+        persistentObject[str(self.type)].remove(object)
+        persistentObject[str(self.type)].append(object)
+        self.getPersistentObject()._p_changed = True
+        
+    
 
     
     def getAll(self):
-        return self.getPersistentObject()[self.type]
+        return self.getPersistentObject()[str(self.type)]
         
         
         

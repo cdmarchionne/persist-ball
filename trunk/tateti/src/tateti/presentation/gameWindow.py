@@ -3,6 +3,9 @@ Created on 06/07/2011
 
 @author: Cristian Suarez
 '''
+from tateti.persistence.home import Home
+from tateti.persistence.playerHome import PlayerHome
+from tateti.persistence.useCaseManager import useCaseManager
 
 import pygame
 from pygame.locals import *
@@ -74,14 +77,24 @@ class GameWindow(Window):
                         self.finished = self.simpleGame.playTurn(boardPoint)
                         self.changeTurn()
                         if self.finished:
-                            print self.simpleGame.getWinner()
+                            useCaseManager.execute(self.saveGame);
                             self.addBackButton()
                             #self.returnToMainWindow()
             else:
                 self.mainWindow.resetButtons()
+                self.mainWindow.initGame()
                 self.checkForClickedButton(point)
                 
-            
+    def saveGame(self):
+        homeGame = Home(SimpleGame)
+        homePlayer = PlayerHome()
+        self.simpleGame.pointsSpread()
+        print self.simpleGame.getWinner()
+        homeGame.saveObject(self.simpleGame) 
+        homePlayer.updateObject(self.simpleGame.getPlayer1()) 
+        homePlayer.updateObject(self.simpleGame.getPlayer2()) 
+
+                
             
             
             
