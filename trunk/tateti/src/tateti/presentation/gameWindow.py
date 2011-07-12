@@ -22,7 +22,8 @@ class GameWindow(Window):
         Window.__init__(self, screen, mainWindow)
         self.simpleGame = SimpleGame(player1, player2)
         self.background = pygame.image.load("backgrounds/ta te ti grid.jpg").convert()
-        
+        self.background.blit(FONT.render('%4s            vs' % player1.getName(), True, (0,0,0)), (40, 30))
+        self.background.blit(FONT.render('%4s' % player2.getName(), True, (0,0,0)), (310, 30))
         self.finished = False
         
         self.buttons = []
@@ -36,7 +37,7 @@ class GameWindow(Window):
     
     def addSymbolToBackGround(self, aLoadedImage, tuple):
         self.background.blit(aLoadedImage, tuple)
-        self.renderBackground()
+        self.render()
         
     def renderImage(self, aLoadedImage, tuple):
         self.screen.blit(aLoadedImage, tuple)
@@ -79,9 +80,8 @@ class GameWindow(Window):
                         if self.finished:
                             useCaseManager.execute(self.saveGame);
                             self.addBackButton()
-                            #self.returnToMainWindow()
+                            self.mainWindow.resetButtons()
             else:
-                self.mainWindow.resetButtons()
                 self.mainWindow.initGame()
                 self.checkForClickedButton(point)
                 
