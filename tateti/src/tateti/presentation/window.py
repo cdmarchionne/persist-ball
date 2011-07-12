@@ -14,7 +14,7 @@ class Window:
         self.buttons = []
         self.background = None
         
-    def renderBackground(self):    
+    def render(self):    
         self.screen.blit(self.background, (0,0))
         pygame.display.flip()
         
@@ -24,11 +24,5 @@ class Window:
             if window != None:
                 self.screen.currentWindow = window
                 break
-        self.render()
+        self.screen.currentWindow.render()
         
-    def render(self):
-        self.screen.render()
-        
-    def returnToMainWindow(self):
-        self.screen.currentWindow = self.mainWindow
-        self.render()
