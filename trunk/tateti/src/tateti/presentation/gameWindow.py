@@ -96,10 +96,10 @@ class GameWindow(Window):
         homePlayer.updateObject(self.simpleGame.getPlayer1()) 
         homePlayer.updateObject(self.simpleGame.getPlayer2()) 
         print "winner:", self.simpleGame.getWinner()
-        print "player1 total:", self.simpleGame.getPlayer1().getTotalGames() 
-        print "player1 wins:", self.simpleGame.getPlayer1().getWonGames() 
-        print "player1 ties:", self.simpleGame.getPlayer1().getTieGames() 
-        print "player1 loses:", self.simpleGame.getPlayer1().getLostGames() 
+#        print "player1 total:", self.simpleGame.getPlayer1().getTotalGames() 
+#        print "player1 wins:", self.simpleGame.getPlayer1().getWonGames() 
+#        print "player1 ties:", self.simpleGame.getPlayer1().getTieGames() 
+#        print "player1 loses:", self.simpleGame.getPlayer1().getLostGames() 
 
                 
             
