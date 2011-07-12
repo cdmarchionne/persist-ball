@@ -51,17 +51,23 @@ class SimpleGame:
         self.changeTurn()
         
         if winner != None:
-            self.getWinner().incWonGames()
-            self.getLooser().incTotalGames()
             return True
 
         elif self.board.getEmptySlotsSize() == 0:
+            return True
+        return False
+    
+    def pointsSpread(self):
+        if self.getWinner() != None:
+            self.getWinner().incWonGames()
+            self.getLooser().incTotalGames()
+        elif self.getWinner() == None:
+            self.player1.incTieGames()
+            self.player2.incTieGames()
+        elif self.board.getEmptySlotsSize() == 0:
             self.player1.incTotalGames()
             self.player2.incTotalGames()
-            return True
         
-        return False
-            
     
     def autoPlay(self):
         random = Random()

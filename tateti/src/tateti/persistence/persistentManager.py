@@ -4,7 +4,7 @@ import threading
 
 class PersistentManager:
     def __init__(self):        
-        self.storage = FileStorage.FileStorage('database/database.fs')
+        self.storage = FileStorage.FileStorage('../database/database.fs')
         self.db = DB(self.storage)
         self.threadLocal =  threading.local();
 
