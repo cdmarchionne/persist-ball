@@ -23,9 +23,9 @@ class GameWindow(Window):
         self.simpleGame = SimpleGame(player1, player2)
         self.background = pygame.image.load("backgrounds/ta te ti grid.jpg").convert()
         
-        self.background.blit(FONT.render('%4s' % player1.getName(), True, (0,0,0)), (40, 30))
-        self.background.blit(FONT.render('VS', True, (0,0,0)), (240, 30))
-        self.background.blit(FONT.render('%4s' % player2.getName(), True, (0,0,0)), (350, 30))
+        self.background.blit(FONT.render('%4s' % player1.getName(), True, (224,0,16)), (60, 30))
+        self.background.blit(FONT.render('VS', True, (0,0,0)), (232, 30))
+        self.background.blit(FONT.render('%4s' % player2.getName(), True, (4,174,0)), (355, 30))
         
         self.finished = False
         
@@ -81,25 +81,29 @@ class GameWindow(Window):
                         self.finished = self.simpleGame.playTurn(boardPoint)
                         self.changeTurn()
                         if self.finished:
-                            useCaseManager.execute(self.saveGame);
+                            useCaseManager.execute(self.saveGame)
                             self.addBackButton()
+                            self.showWinner()
                             self.mainWindow.resetButtons()
             else:
                 self.mainWindow.initGame()
                 self.checkForClickedButton(point)
-                
+               
+    def showWinner(self):
+        winner = self.simpleGame.getWinner()
+        if winner != None:
+            self.addSymbolToBackGround(FONT.render('¡¡ %4s gana !!' % winner.getName(), True, (0,0,0)), (150, 430))
+        else:
+            self.addSymbolToBackGround(FONT.render('¡¡ Empate !!', True, (0,0,0)), (180, 430))
+                            
+     
     def saveGame(self):
-        homeGame = Home(SimpleGame)
-        homePlayer = PlayerHome()
+        gameHome = Home(SimpleGame)
+        playerHome = PlayerHome()
         self.simpleGame.pointsDistribution()
-        homeGame.saveObject(self.simpleGame) 
-        homePlayer.updateObject(self.simpleGame.getPlayer1()) 
-        homePlayer.updateObject(self.simpleGame.getPlayer2()) 
-        print "winner:", self.simpleGame.getWinner()
-#        print "player1 total:", self.simpleGame.getPlayer1().getTotalGames() 
-#        print "player1 wins:", self.simpleGame.getPlayer1().getWonGames() 
-#        print "player1 ties:", self.simpleGame.getPlayer1().getTieGames() 
-#        print "player1 loses:", self.simpleGame.getPlayer1().getLostGames() 
+        gameHome.saveObject(self.simpleGame) 
+        playerHome.updateObject(self.simpleGame.getPlayer1()) 
+        playerHome.updateObject(self.simpleGame.getPlayer2()) 
 
                 
             
