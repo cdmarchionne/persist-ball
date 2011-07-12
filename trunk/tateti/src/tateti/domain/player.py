@@ -27,13 +27,13 @@ class Player(Persistent):
     def getTotalGames(self):
         return self.totalGames
     
-    def getTieGames(self):
+    def getTiedGames(self):
         return self.tieGames
     
     def getLostGames(self):
         return self.totalGames - (self.wonGames + self.tieGames)
     
     def __repr__(self):
-        return self.name + " ganados: "+ str(self.getWonGames()) + " empatados: " +str(self.getTieGames()) +" perdidos: "+ str(self.getLostGames())
+        return self.name + " ganados: "+ str(self.getWonGames()) + " empatados: " +str(self.getTiedGames()) +" perdidos: "+ str(self.getLostGames())
   
 

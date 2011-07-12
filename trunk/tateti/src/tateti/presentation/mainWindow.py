@@ -43,9 +43,9 @@ class MainWindow(Window):
 
         
     def resetButtons(self):
-        self.buttons = [Button(GameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2)))]
+        self.buttons = [Button(GameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
+                        Button(StatisticsWindow(self.screen, self), ((1,5),(4,6)))]
                         #Button(TournamentGameWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2))),
-                        #Button(StatisticsWindow(self.screen, self.player1, self.player2, self), ((1,1),(4,2)))]
         
     def useEventsIterations(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:

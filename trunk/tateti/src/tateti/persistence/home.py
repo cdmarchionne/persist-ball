@@ -24,9 +24,6 @@ class Home:
         persistentObject[str(self.type)].append(object)
         self.getPersistentObject()._p_changed = True
         
-    
-
-    
     def getAll(self):
         return self.getPersistentObject()[str(self.type)]
         
