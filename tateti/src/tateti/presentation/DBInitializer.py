@@ -15,4 +15,4 @@ class DBInitializer:
         home.saveObject(Player("player3"))
 
 dbi = DBInitializer()
-print useCaseManager.execute(dbi.savePlayers)
+useCaseManager.execute(dbi.savePlayers)
