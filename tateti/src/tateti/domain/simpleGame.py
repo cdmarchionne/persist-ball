@@ -57,16 +57,15 @@ class SimpleGame:
             return True
         return False
     
-    def pointsSpread(self):
-        if self.getWinner() != None:
-            self.getWinner().incWonGames()
-            self.getLooser().incTotalGames()
-        elif self.getWinner() == None:
+    def pointsDistribution(self):
+        winner = self.getWinner()
+        looser = self.getLooser()
+        if winner != None:
+            winner.incWonGames()
+            looser.incTotalGames()
+        elif winner == None:
             self.player1.incTieGames()
             self.player2.incTieGames()
-        elif self.board.getEmptySlotsSize() == 0:
-            self.player1.incTotalGames()
-            self.player2.incTotalGames()
         
     
     def autoPlay(self):

@@ -14,5 +14,3 @@ class PersistentManager:
     
     def getPersistentRoot(self):
         return self.threadLocal.unitOfWork.getRoot()
-               
-persistentManager = PersistentManager() 

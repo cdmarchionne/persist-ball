@@ -1,10 +1,11 @@
-from tateti.persistence.persistentManager import persistentManager
+from tateti.persistence.persistentManager import PersistentManager
 class Home:
+    persistentManager = PersistentManager()
     def __init__(self, type):
         self.type = type
             
     def getPersistentObject(self):
-        return persistentManager.getPersistentRoot()
+        return Home.persistentManager.getPersistentRoot()
     
     def saveObject(self, object):
         persistentObject = self.getPersistentObject()

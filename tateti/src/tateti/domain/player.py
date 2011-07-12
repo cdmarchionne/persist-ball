@@ -22,6 +22,7 @@ class Player(Persistent):
         
     def incTieGames(self):
         self.tieGames += 1
+        self.totalGames += 1
 
     def getTotalGames(self):
         return self.totalGames
@@ -29,10 +30,10 @@ class Player(Persistent):
     def getTieGames(self):
         return self.tieGames
     
-    def getLoseGames(self):
+    def getLostGames(self):
         return self.totalGames - (self.wonGames + self.tieGames)
     
     def __repr__(self):
-        return self.name + " ganados: "+ str(self.getWonGames()) + " empatados: " +str(self.getTieGames()) +" perdidos: "+ str(self.getLoseGames())
+        return self.name + " ganados: "+ str(self.getWonGames()) + " empatados: " +str(self.getTieGames()) +" perdidos: "+ str(self.getLostGames())
   
 

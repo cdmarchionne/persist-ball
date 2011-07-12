@@ -6,9 +6,7 @@ from tateti.domain.tournamentGame import TournamentGame
 from threading import Thread
 from tateti.persistence.playerHome import PlayerHome
 
-
 class Prueba:
-            
     def savePlayers(self):
         home = Home(Player)
         home.saveObject(Player("player1"))
@@ -26,7 +24,7 @@ class Prueba:
         TournamentGameHome.saveObject(game)
     
     
-    def retrivePlayers(self):
+    def retrievePlayers(self):
         home = Home(Player)
         print home.getAll()
         return home.getAll()
@@ -62,7 +60,7 @@ def updateJugador3():
 #useCaseManager.execute(prueba.saveTournamentGames)
 #ThreadPrueba(prueba.retriveTournamentGames).start()
 #print useCaseManager.execute(updateJugador3)
-#print useCaseManager.execute(prueba.retrivePlayers)
+#print useCaseManager.execute(prueba.retrievePlayers)
 
 """PARA CUANDO SE CORRE POR PRIMERA VEZ!!!!!!"""
 prueba = Prueba()
